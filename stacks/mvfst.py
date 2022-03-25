@@ -3,6 +3,9 @@ from utils.remote_cmd import get_remote_cmd
 from stacks.stack import Stack
 
 class Mvfst(Stack):
+    CUBIC = "cubic"
+    BBR = "bbr"
+    RENO = "newreno"
 
     def __init__(self, server_ip, server_hostname, server_path, client_path):
         self.server_ip = server_ip
