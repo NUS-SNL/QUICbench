@@ -3,6 +3,7 @@ import sys
 import argparse
 import json
 import subprocess
+from operator import itemgetter
 
 from stacks.chromium import Chromium
 from stacks.msquic import Msquic
@@ -60,13 +61,20 @@ def main():
         stacks_conf = json.load(f)
     with open(args.general_conf) as f:
         general_conf = json.load(f)
-    
-    server_ip, server_hostname, interface = general_conf["server_ip"], general_conf["server_hostname"], general_conf["interface"]
+    with open(args.exp_conf) as f:
+        exp_conf = json.load(f)        
+    server_ip, server_hostname, interface, server_ingress_interface = itemgetter("server_ip", "server_hostname", "interface", "server_ingress_interface")(general_conf)
+
     server_pw_path = general_conf["server_pw_path"]    
     check_sudo_privileges(server_hostname, server_pw_path)
     
-    stacks = init_stacks(stacks_conf, general_conf["server_ip"], general_conf["server_hostname"])
+    stacks = init_stacks(stacks_conf, server_ip, server_hostname)
     set_kernel_params(general_conf["kernel_params"], server_hostname, server_pw_path)
+
+    experiment_results_dir, num_trials, netem_conf, flow_duration_s = \
+        itemgetter("experiment_results_dir", "num_trials", "netem_conf", "flow_duration_s")(exp_conf)
+
+
 
 
 if __name__ == "__main__":

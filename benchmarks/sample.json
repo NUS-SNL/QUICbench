@@ -1,0 +1,11 @@
+{
+    "experiment_name": "sample",
+    "experiment_results_dir": "/home/quic/quic_bench_results/sample",
+    "num_trials": 2,
+    "netem_conf": {
+        "RTT_ms": 50,
+        "bandwidth_Mbps": 20,
+        "buffer_bdp": 1
+    },
+    "flow_duration_s": 120
+}
