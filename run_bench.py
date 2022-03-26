@@ -11,6 +11,9 @@ from stacks.mvfst import Mvfst
 from stacks.quiche import Quiche
 from stacks.tcp import Tcp
 from utils.remote_cmd import get_remote_cmd, get_remote_cmd_sudo
+from network.set_netem import set_netem
+from network.clear_netem import clear_netem
+from network.test_network import *
 
 
 def get_prog_args():
@@ -74,7 +77,10 @@ def main():
     experiment_results_dir, num_trials, netem_conf, flow_duration_s = \
         itemgetter("experiment_results_dir", "num_trials", "netem_conf", "flow_duration_s")(exp_conf)
 
-
+    set_netem(server_hostname, server_pw_path, interface, server_ingress_interface, netem_conf)
+    test_rtt(server_ip)
+    test_bandwidth(server_hostname, server_ip)
+    clear_netem(server_hostname, server_pw_path, interface, server_ingress_interface)
 
 
 if __name__ == "__main__":
