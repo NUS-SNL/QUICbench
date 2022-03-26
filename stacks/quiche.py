@@ -3,6 +3,7 @@ from utils.remote_cmd import get_remote_cmd
 from stacks.stack import Stack
 
 class Quiche(Stack):
+    NAME = "quiche"
     CUBIC = "cubic"
     RENO = "reno"
 
@@ -31,18 +32,18 @@ class Quiche(Stack):
         return subprocess.Popen(" ".join(cmd), shell=True)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
-        return [
+        return map(str, [
             "timeout", duration_s,
             "{} run --manifest-path={} --bin quiche-server --".format(self.server_cargo_path, self.server_path),
             "--cert {}".format(self.server_cert_path), "--key {}".format(self.server_key_path),
             "--listen 0.0.0.0:{}".format(port_no), "--root {}".format(self.server_static_file_dir),
             "--index {}".format(self.server_static_filename), "--cc-algorithm {}".format(cc_algo)
-        ]
+        ])
 
     def run_client_cmd(self, port_no, duration_s):
-        return [
+        return map(str, [
             "timeout", duration_s,
             "{} run --manifest-path={} --bin quiche-client --".format(self.client_cargo_path, self.client_path),
             "--no-verify", "https://{}:{}".format(self.server_ip, port_no),
             "> /dev/null 2>&1"
-        ]
+        ])

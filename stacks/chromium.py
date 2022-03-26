@@ -3,6 +3,7 @@ from utils.remote_cmd import get_remote_cmd
 from stacks.stack import Stack
 
 class Chromium(Stack):
+    NAME = "chromium"
     CUBIC = "cubic"
     BBR = "bbr"
     BBRV2 = "bbrv2"
@@ -32,17 +33,17 @@ class Chromium(Stack):
         return subprocess.Popen(cmd)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
-        return [
+        return map(str, [
             "timeout", duration_s,
             self.server_paths[cc_algo], "--certificate_file={}".format(self.server_cert_path),
             "--key_file={}".format(self.server_key_path), "--port={}".format(port_no),
             "--quic_ietf_draft=true", "--generate_dynamic_responses=true"
-        ]
+        ])
 
     def run_client_cmd(self, port_no, duration_s):
-        return [
+        return map(str, [
             "timeout", duration_s,
             self.client_path, "--host={}".format(self.server_ip), "--port={}".format(port_no),
             "--disable_certificate_verification", "--quic_ietf_draft=true", "--num_requests=1",
             "--drop_response_body=true", "https://{}/{}".format(self.server_ip, Chromium.NUM_BYTES_TO_TRANSFER)
-        ]
+        ])

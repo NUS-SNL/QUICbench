@@ -3,6 +3,7 @@ from utils.remote_cmd import get_remote_cmd
 from stacks.stack import Stack
 
 class Mvfst(Stack):
+    NAME = "mvfst"
     CUBIC = "cubic"
     BBR = "bbr"
     RENO = "newreno"
@@ -23,14 +24,14 @@ class Mvfst(Stack):
         return subprocess.Popen(cmd)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
-        return [
+        return map(str, [
             "timeout", duration_s,
             self.server_path, "-mode=server", "-host=0.0.0.0", "-pacing=true",
             "-port={}".format(port_no), "-congestion={}".format(cc_algo)
-        ]
+        ])
 
     def run_client_cmd(self, port_no, duration_s):
-        return [
+        return map(str, [
             self.client_path, "-mode=client", "-duration={}".format(duration_s),
             "-host={}".format(self.server_ip), "-port={}".format(port_no)
-        ]
+        ])

@@ -3,6 +3,7 @@ from utils.remote_cmd import get_remote_cmd
 from stacks.stack import Stack
 
 class Tcp(Stack):
+    NAME = "tcp"
     CUBIC = "cubic"
     BBR = "bbr"
     RENO = "reno"
@@ -21,13 +22,13 @@ class Tcp(Stack):
         return subprocess.Popen(cmd)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
-        return [
+        return map(str, [
             "timeout", duration_s,
             "iperf3", "-s", "-p", port_no, "-1", "-i", "60"
-        ]
+        ])
 
     def run_client_cmd(self, port_no, cc_algo, duration_s):
-        return [
+        return map(str, [
             "iperf3", "-c", self.server_ip, "-p", port_no, "-C", cc_algo,
             "-t", duration_s, "-R", "-i", "60"
-        ]
+        ])
