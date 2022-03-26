@@ -23,7 +23,7 @@ class Msquic(Stack):
         cmd = get_remote_cmd(self.server_hostname, cmd)
         return subprocess.Popen(cmd)
 
-    def run_client(self, port_no, duration_s):
+    def run_client(self, port_no, cc_algo, duration_s):
         cmd = self.run_client_cmd(port_no, duration_s)
         return subprocess.Popen(" ".join(cmd), shell=True)
 
