@@ -69,7 +69,7 @@ def main():
     with open(args.general_conf) as f:
         general_conf = json.load(f)
     with open(args.exp_conf) as f:
-        exp_conf = json.load(f)        
+        exp_conf = json.load(f)
     server_ip, server_hostname, interface, server_ingress_interface = itemgetter("server_ip", "server_hostname", "interface", "server_ingress_interface")(general_conf)
 
     server_pw_path = general_conf["server_pw_path"]    
