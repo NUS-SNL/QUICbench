@@ -163,7 +163,7 @@ def output_delay_traces(port_no_packets_map, veth_port_no_packets_map, trial_dir
         veth_packets_df = veth_port_no_packets_map[port_no]
         delay_trace = get_delay_trace(packets_df, veth_packets_df, flow_duration_s, window_size_s)
 
-        delay_trace = [[x[0], x[1] - delay_to_sub] for x in delay_trace] # subtract delay (account for netem delay)
+        delay_trace = [[x[0], round(x[1] - delay_to_sub, 5)] for x in delay_trace] # subtract delay (account for netem delay)
 
         delay_trace_path = os.path.join(trial_dir, port_no + DELAY_TRACE_SUFFIX)
         write_to_csv(delay_trace_path, ["time (s)", "delay (ms)"], delay_trace)
