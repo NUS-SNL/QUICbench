@@ -21,10 +21,13 @@ def set_netem(server_hostname, server_pw_path, interface, ingress_interface, net
     RTT_ms, bandwidth_Mbps, buffer_bdp = itemgetter("RTT_ms", "bandwidth_Mbps", "buffer_bdp")(netem_conf)
     delay_ms = RTT_ms / 2
     buffer_bytes = int(RTT_ms * bandwidth_Mbps * 1000 / 8)
+    bandwidth_Kbps = bandwidth_Mbps * 1000
+    burst_bytes = int(bandwidth_Mbps * 1000000 / 250 / 8) # https://unix.stackexchange.com/questions/100785/bucket-size-in-tbf
     cmd = (
-        "sudo tc qdisc add dev {interface} root handle 1:0 netem delay {delay_ms}ms rate {bandwidth_Mbps}Mbit limit 12500;"
-        "sudo tc qdisc add dev {interface} parent 1:1 handle 10: bfifo limit {buffer_bytes};"
+        "sudo tc qdisc add dev {interface} root handle 1:0 netem delay {delay_ms}ms limit 12500;"
+        "sudo tc qdisc add dev {interface} parent 1:1 handle 10: tbf rate {bandwidth_Kbps}kbit limit {buffer_bytes} burst {burst_bytes};"
         "sudo tc qdisc add dev {ingress_interface} root netem delay {delay_ms}ms;"
         "sudo tc qdisc show dev {interface} && sudo tc qdisc show dev {ingress_interface}"
-    ).format(interface=interface, ingress_interface=ingress_interface, delay_ms=delay_ms, bandwidth_Mbps=bandwidth_Mbps, buffer_bytes=buffer_bytes)
+    ).format(interface=interface, ingress_interface=ingress_interface,
+        delay_ms=delay_ms, bandwidth_Kbps=bandwidth_Kbps, buffer_bytes=buffer_bytes, burst_bytes=burst_bytes)
     subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, cmd), shell=True)
