@@ -70,7 +70,8 @@ def main():
         general_conf = json.load(f)
     with open(args.exp_conf) as f:
         exp_conf = json.load(f)
-    server_ip, server_hostname, interface, server_ingress_interface = itemgetter("server_ip", "server_hostname", "interface", "server_ingress_interface")(general_conf)
+    server_ip, server_hostname, interface, server_ingress_interface, server_repo_path = \
+        itemgetter("server_ip", "server_hostname", "interface", "server_ingress_interface", "server_repo_path")(general_conf)
 
     server_pw_path = general_conf["server_pw_path"]    
     check_sudo_privileges(server_hostname, server_pw_path)
@@ -130,6 +131,13 @@ def main():
 
                 # stop tcpdump
                 tcpdump_interface.stop()
+
+                subprocess.run(get_remote_cmd(server_hostname,
+                    ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
+                    "--exp_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.exp_conf))),
+                    "--name={}".format(combi_name), "--trial_dir={}".format(trial_results_dir)
+                    ]
+                ), check=True)
 
                 successful_trials += 1
 

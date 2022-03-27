@@ -74,6 +74,9 @@ def output_throughput_traces(port_no_packets_map, trial_dir, flow_duration_s, wi
         trace_duration_s = average_rates[-1][0] - average_rates[0][0]
         if trace_duration_s < flow_duration_s * 0.85:
             raise RuntimeError("flow terminated prematurely.")
+        else:
+            # truncate flow duration
+            trace_duration_s = list(filter(lambda row : row[0] < flow_duration_s * 0.95, trace_duration_s))
 
         throughput_trace_path = os.path.join(trial_dir, port_no + THROUGHPUT_TRACE_SUFFIX)
         write_to_csv(throughput_trace_path, ["time (s)", "throughput (Mbps)"], average_rates)
