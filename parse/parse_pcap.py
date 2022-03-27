@@ -51,6 +51,7 @@ def obtain_packets_from_pcap(pcap_path, valid_port_nos):
     df = pd.read_csv(pcap_csv_path, dtype=str)
     df[RELATIVE_TIME] = df[RELATIVE_TIME].astype(dtype=float)
     df[FRAME_LEN] = df[FRAME_LEN].astype(dtype=float)
+    df.fillna('', inplace=True)
 
     port_no_packets_map = {}
     for port_no in valid_port_nos:
@@ -87,14 +88,83 @@ def output_throughput_traces(port_no_packets_map, trial_dir, flow_duration_s, wi
         
          # check for premature flow termination
         trace_duration_s = average_rates[-1][0] - average_rates[0][0]
-        if trace_duration_s < flow_duration_s * 0.85:
+        if trace_duration_s < flow_duration_s * 0.9 * TRUNCATE_TRACES_BY:
             raise RuntimeError("flow terminated prematurely.")
         else:
             # truncate flow duration
-            average_rates = list(filter(lambda row : row[0] < flow_duration_s * 0.95, average_rates))
+            average_rates = list(filter(lambda row : row[0] < flow_duration_s * TRUNCATE_TRACES_BY, average_rates))
 
         throughput_trace_path = os.path.join(trial_dir, port_no + THROUGHPUT_TRACE_SUFFIX)
         write_to_csv(throughput_trace_path, ["time (s)", "throughput (Mbps)"], average_rates)
+
+
+def get_delay_trace(packets_df, veth_packets_df, flow_duration_s, window_size_s):
+    def get_hash(pkt):
+        return (pkt[IP_IDENTIFIER], pkt[UDP_CHECKSUM], pkt[UDP_DATA], pkt[TCP_SEQNO],
+                pkt[TCP_CHECKSUM], pkt[TCP_TIMESTAMP], pkt[TCP_TIMESTAMP_VAL])
+    def time_difference_ms(time1, time2):    
+        def convert_time_to_s(time):
+            h_m_s = time.replace(',', '.').split(':')
+            multipliers = [3600, 60, 1]
+            tot = 0
+            for i in range(len(h_m_s)):
+                tot += float(h_m_s[i]) * multipliers[i]
+            return tot
+        time1 = convert_time_to_s(time1)
+        time2 = convert_time_to_s(time2)
+        mod = 24 * 3600
+        return round(((time1 - time2 + mod) % mod) * 1000, 5)
+
+    veth_packets_hashmap = {}
+    for index, veth_packet in veth_packets_df.iterrows():
+        if veth_packet[UDP_SRCPORT] and not veth_packet[UDP_DATA]:
+            continue
+        pkt_hash = get_hash(veth_packet)
+        if pkt_hash in veth_packets_hashmap:
+            raise RuntimeError("hash collision")
+        veth_packets_hashmap[pkt_hash] = veth_packet[TIME]
+
+    delay_trace = []
+    delay_moving_window_trace = []
+    window_size_sum = 0
+    window_start_pointer = 0
+    window_start_time = 0
+    packets_hashset = set()
+    
+    for index, packet in packets_df.iterrows():
+        if packet[RELATIVE_TIME] >= TRUNCATE_TRACES_BY * flow_duration_s: # truncate trace
+            break
+        if packet[UDP_SRCPORT] and not packet[UDP_DATA]:
+            continue
+        pkt_hash = get_hash(packet)
+        if pkt_hash not in veth_packets_hashmap:
+            continue
+        if pkt_hash in packets_hashset:
+            raise RuntimeError("hash collision")
+        packets_hashset.add(pkt_hash)
+
+        time = packet[RELATIVE_TIME]
+        delay = time_difference_ms(packet[TIME], veth_packets_hashmap[pkt_hash])
+        delay_trace.append((time, delay))
+
+        window_size_sum += delay
+        if time - window_start_time > window_size_s:
+            avg_delay = round(window_size_sum / (len(delay_trace) - window_start_pointer), 5)
+            delay_moving_window_trace.append([time, avg_delay])
+            window_size_sum -= delay_trace[window_start_pointer][1]
+            window_start_pointer += 1
+            window_start_time = delay_trace[window_start_pointer][0]
+
+    return delay_moving_window_trace
+
+
+def output_delay_traces(port_no_packets_map, veth_port_no_packets_map, trial_dir, flow_duration_s, window_size_s):
+    for port_no, packets_df in port_no_packets_map.items():
+        veth_packets_df = veth_port_no_packets_map[port_no]
+        delay_trace = get_delay_trace(packets_df, veth_packets_df, flow_duration_s, window_size_s)
+
+        delay_trace_path = os.path.join(trial_dir, port_no + DELAY_TRACE_SUFFIX)
+        write_to_csv(delay_trace_path, ["time (s)", "delay (ms)"], delay_trace)
 
 
 def main():
@@ -111,11 +181,12 @@ def main():
     window_size_s = exp_conf["netem_conf"]["RTT_ms"] / 100 # 10 RTT
     output_throughput_traces(port_no_packets_map, args.trial_dir, exp_conf["flow_duration_s"], window_size_s)
 
-    # obtain loss traces
+    # obtain delay traces
     veth_pcap_path = os.path.join(args.trial_dir, VETH_PCAP_FILENAME)
     if not os.path.exists(veth_pcap_path):
         return
     veth_port_no_packets_map = obtain_packets_from_pcap(veth_pcap_path, valid_port_nos)
+    output_delay_traces(port_no_packets_map, veth_port_no_packets_map, args.trial_dir, exp_conf["flow_duration_s"], window_size_s)
 
 
 if __name__ == "__main__":
