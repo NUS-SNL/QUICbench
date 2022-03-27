@@ -119,13 +119,13 @@ def main():
                 time.sleep(2) # wait for servers to start
 
                 # start tcpdump
-                tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
-                tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file)
-                tcpdump_interface.start()
                 if has_veth:
                     tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
                     tcpdump_veth = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_veth_output_file)
-                    tcpdump_veth.start()                    
+                    tcpdump_veth.start()
+                tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
+                tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file)
+                tcpdump_interface.start()
 
                 # start clients
                 for stack in combi_stacks:

@@ -8,6 +8,7 @@
         "buffer_bdp": 1
     },
     "flow_duration_s": 120,
+    "virtual_interface": "enp1s0f1-br0",
     "stacks_combinations": [
         {
             "name": "mvfst-cubic_tcp-cubic",
