@@ -44,6 +44,21 @@ def convert_pcap_to_csv(pcap_path, pcap_csv_path):
     subprocess.run(cmd, shell=True, check=True)
 
 
+def obtain_packets_from_pcap(pcap_path, valid_port_nos):
+    pcap_csv_path = pcap_path + ".csv"
+    convert_pcap_to_csv(pcap_path, pcap_csv_path)
+
+    df = pd.read_csv(pcap_csv_path, dtype=str)
+    df[RELATIVE_TIME] = df[RELATIVE_TIME].astype(dtype=float)
+    df[FRAME_LEN] = df[FRAME_LEN].astype(dtype=float)
+
+    port_no_packets_map = {}
+    for port_no in valid_port_nos:
+        port_no_packets_map[port_no] = df.loc[(df[UDP_SRCPORT] == port_no) | (df[TCP_SRCPORT] == port_no)]
+    
+    return port_no_packets_map
+
+
 def get_moving_window_average_rates(packets_df, window_size_s):
     average_rates = []
     window_size_sum = 0
@@ -89,20 +104,18 @@ def main():
     stack_combi = get_stack_combi(exp_conf, args.name)
     valid_port_nos = get_port_nos_from_combi(stack_combi)
     
+    # obtain throughput traces
     interface_pcap_path = os.path.join(args.trial_dir, INTERFACE_PCAP_FILENAME)
-    interface_pcap_csv_path = interface_pcap_path + ".csv"
-    convert_pcap_to_csv(interface_pcap_path, interface_pcap_csv_path)
-
-    df = pd.read_csv(interface_pcap_csv_path, dtype=str)
-    df[RELATIVE_TIME] = df[RELATIVE_TIME].astype(dtype=float)
-    df[FRAME_LEN] = df[FRAME_LEN].astype(dtype=float)
-
-    port_no_packets_map = {}
-    for port_no in valid_port_nos:
-        port_no_packets_map[port_no] = df.loc[(df[UDP_SRCPORT] == port_no) | (df[TCP_SRCPORT] == port_no)]
+    port_no_packets_map = obtain_packets_from_pcap(interface_pcap_path, valid_port_nos)
 
     window_size_s = exp_conf["netem_conf"]["RTT_ms"] / 100 # 10 RTT
     output_throughput_traces(port_no_packets_map, args.trial_dir, exp_conf["flow_duration_s"], window_size_s)
+
+    # obtain loss traces
+    veth_pcap_path = os.path.join(args.trial_dir, VETH_PCAP_FILENAME)
+    if not os.path.exists(veth_pcap_path):
+        return
+    veth_port_no_packets_map = obtain_packets_from_pcap(veth_pcap_path, valid_port_nos)
 
 
 if __name__ == "__main__":
