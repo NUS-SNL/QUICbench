@@ -7,6 +7,7 @@ import time
 from datetime import datetime
 from operator import itemgetter
 
+from constants import *
 from stacks.chromium import Chromium
 from stacks.msquic import Msquic
 from stacks.mvfst import Mvfst
@@ -113,7 +114,7 @@ def main():
                 time.sleep(2) # wait for servers to start
 
                 # start tcpdump
-                tcpdump_interface_output_file = os.path.join(trial_results_dir, "packets.pcap")
+                tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
                 tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file)
                 tcpdump_interface.start()
 
