@@ -7,3 +7,8 @@ def get_remote_cmd_sudo(remote_hostname, remote_pw_path, cmd):
 
 def get_scp_file_to_remote_cmd(remote_hostname, local_file_path, remote_dir):
     return ["scp", local_file_path, "{}:{}".format(remote_hostname, remote_dir)]
+
+def get_pkill_remote_cmd(remote_hostname, pattern):
+    kill_cmd = "pkill -f \"{}\"".format(pattern)
+    kill_cmd = get_remote_cmd(remote_hostname, [kill_cmd])
+    return kill_cmd

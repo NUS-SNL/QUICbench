@@ -16,6 +16,7 @@ from utils.remote_cmd import get_remote_cmd, get_remote_cmd_sudo, get_scp_file_t
 from network.set_netem import set_netem
 from network.clear_netem import clear_netem
 from network.test_network import *
+from network.tcpdump import TCPDump
 
 
 def get_prog_args():
@@ -111,6 +112,11 @@ def main():
                 
                 time.sleep(2) # wait for servers to start
 
+                # start tcpdump
+                tcpdump_interface_output_file = os.path.join(trial_results_dir, "packets.pcap")
+                tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file)
+                tcpdump_interface.start()
+
                 # start clients
                 for stack in combi_stacks:
                     stack_name, stack_cc_algo, stack_port_no = itemgetter("name", "cc_algo", "port_no")(stack)
@@ -120,6 +126,9 @@ def main():
                 # wait for all server/client processes to finish
                 for proc in stack_processes:
                     proc.wait()
+
+                # stop tcpdump
+                tcpdump_interface.stop()
 
                 successful_trials += 1
 
