@@ -79,7 +79,10 @@ def main():
     stacks_kls = init_stacks(stacks_conf, server_ip, server_hostname)
     set_kernel_params(general_conf["kernel_params"], server_hostname, server_pw_path)
 
-    set_netem(server_hostname, server_pw_path, interface, server_ingress_interface, exp_conf["netem_conf"])
+    has_veth, virtual_interface = "virtual_interface" in exp_conf, exp_conf.get("virtual_interface")
+    set_netem(server_hostname, server_pw_path, server_ip, interface, 
+        server_ingress_interface, exp_conf["netem_conf"], virtual_interface)
+    
     test_rtt(server_ip)
     test_bandwidth(server_hostname, server_ip)
 
@@ -149,7 +152,7 @@ def main():
 
     finally:
         # clean up
-        clear_netem(server_hostname, server_pw_path, interface, server_ingress_interface)
+        clear_netem(server_hostname, server_pw_path, server_ip, interface, server_ingress_interface, virtual_interface)
 
 
 if __name__ == "__main__":

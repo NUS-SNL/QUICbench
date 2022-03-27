@@ -12,13 +12,28 @@ def add_ingress_interface(server_hostname, server_pw_path, interface, ingress_in
     ).format(interface=interface, ingress_interface=ingress_interface)
     subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, cmd), shell=True)
 
-def set_netem(server_hostname, server_pw_path, interface, ingress_interface, netem_conf):
+# for capturing packets before qdisc egress to measure queuing delay/packets dropped by buffer
+def add_virtual_interface(server_hostname, server_pw_path, server_ip, interface, virtual_interface):
+    cmd = (
+        "sudo brctl addbr {virtual_interface};"
+        "sudo brctl addif {virtual_interface} {interface};"
+        "sudo ip link set dev {virtual_interface} up;"
+        "sudo ip addr add dev {virtual_interface} {server_ip}/8;"
+        "sudo ip addr flush dev {interface};"
+    ).format(interface=interface, virtual_interface=virtual_interface, server_ip=server_ip)
+    subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, cmd), shell=True)
+
+def set_netem(server_hostname, server_pw_path, server_ip, interface, ingress_interface, netem_conf, virtual_interface=None):
     print("Setting network emulation:")
     subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, "sudo tc qdisc del dev {} root".format(interface)), shell=True)
     
     add_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface)
 
     RTT_ms, bandwidth_Mbps, buffer_bdp = itemgetter("RTT_ms", "bandwidth_Mbps", "buffer_bdp")(netem_conf)
+
+    if virtual_interface:
+        add_virtual_interface(server_hostname, server_pw_path, server_ip, interface, virtual_interface)
+
     delay_ms = RTT_ms / 2
     buffer_bytes = int(RTT_ms * bandwidth_Mbps * 1000 / 8)
     bandwidth_Kbps = bandwidth_Mbps * 1000
