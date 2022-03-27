@@ -122,6 +122,10 @@ def main():
                 tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
                 tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file)
                 tcpdump_interface.start()
+                if has_veth:
+                    tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
+                    tcpdump_veth = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_veth_output_file)
+                    tcpdump_veth.start()                    
 
                 # start clients
                 for stack in combi_stacks:
@@ -135,6 +139,8 @@ def main():
 
                 # stop tcpdump
                 tcpdump_interface.stop()
+                if has_veth:
+                    tcpdump_veth.stop()
 
                 try:
                     subprocess.run(get_remote_cmd(server_hostname,
