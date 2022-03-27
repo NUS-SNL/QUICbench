@@ -34,8 +34,8 @@ def set_netem(server_hostname, server_pw_path, server_ip, interface, ingress_int
     if virtual_interface:
         add_virtual_interface(server_hostname, server_pw_path, server_ip, interface, virtual_interface)
 
-    delay_ms = RTT_ms / 2
-    buffer_bytes = int(RTT_ms * bandwidth_Mbps * 1000 / 8)
+    delay_ms = RTT_ms // 2
+    buffer_bytes = int(RTT_ms * bandwidth_Mbps * 1000 / 8 * buffer_bdp)
     bandwidth_Kbps = bandwidth_Mbps * 1000
     burst_bytes = int(bandwidth_Mbps * 1000000 / 250 / 8) # https://unix.stackexchange.com/questions/100785/bucket-size-in-tbf
     cmd = (
