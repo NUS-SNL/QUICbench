@@ -7,5 +7,21 @@
         "bandwidth_Mbps": 20,
         "buffer_bdp": 1
     },
-    "flow_duration_s": 120
+    "flow_duration_s": 120,
+    "stacks_combinations": [
+        {
+            "name": "mvfst-cubic_tcp-cubic",
+            "stacks": [
+                { "name": "mvfst", "cc_algo": "cubic", "port_no": "4000" },
+                { "name": "tcp", "cc_algo": "cubic", "port_no": "7000" }
+            ]
+        },
+        {
+            "name": "chromium-cubic_quiche-cubic",
+            "stacks": [
+                { "name": "chromium", "cc_algo": "cubic", "port_no": "5000" },
+                { "name": "quiche", "cc_algo": "cubic", "port_no": "6000" }
+            ]
+        }
+    ]
 }

@@ -3,6 +3,8 @@ import sys
 import argparse
 import json
 import subprocess
+import time
+from datetime import datetime
 from operator import itemgetter
 
 from stacks.chromium import Chromium
@@ -10,7 +12,7 @@ from stacks.msquic import Msquic
 from stacks.mvfst import Mvfst
 from stacks.quiche import Quiche
 from stacks.tcp import Tcp
-from utils.remote_cmd import get_remote_cmd, get_remote_cmd_sudo
+from utils.remote_cmd import get_remote_cmd, get_remote_cmd_sudo, get_scp_file_to_remote_cmd
 from network.set_netem import set_netem
 from network.clear_netem import clear_netem
 from network.test_network import *
@@ -71,16 +73,59 @@ def main():
     server_pw_path = general_conf["server_pw_path"]    
     check_sudo_privileges(server_hostname, server_pw_path)
     
-    stacks = init_stacks(stacks_conf, server_ip, server_hostname)
+    stacks_kls = init_stacks(stacks_conf, server_ip, server_hostname)
     set_kernel_params(general_conf["kernel_params"], server_hostname, server_pw_path)
 
-    experiment_results_dir, num_trials, netem_conf, flow_duration_s = \
-        itemgetter("experiment_results_dir", "num_trials", "netem_conf", "flow_duration_s")(exp_conf)
-
-    set_netem(server_hostname, server_pw_path, interface, server_ingress_interface, netem_conf)
+    set_netem(server_hostname, server_pw_path, interface, server_ingress_interface, exp_conf["netem_conf"])
     test_rtt(server_ip)
     test_bandwidth(server_hostname, server_ip)
-    clear_netem(server_hostname, server_pw_path, interface, server_ingress_interface)
+
+    # Starting experiment
+    experiment_results_dir, num_trials, flow_duration_s, stacks_combinations = \
+        itemgetter("experiment_results_dir", "num_trials", "flow_duration_s", "stacks_combinations")(exp_conf)
+    
+    try:
+        # set up results dir on server-side
+        subprocess.run(get_remote_cmd(server_hostname, ["mkdir", experiment_results_dir]), check=True)
+        for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
+            subprocess.run(get_scp_file_to_remote_cmd(server_hostname, conf, experiment_results_dir), check=True)
+
+        for combi in stacks_combinations:
+            combi_name, combi_stacks  = itemgetter("name", "stacks")(combi)
+            combi_results_dir = os.path.join(experiment_results_dir, combi_name)
+            subprocess.run(get_remote_cmd(server_hostname, ["mkdir", combi_results_dir]), check=True)
+
+            successful_trials = 0
+            while successful_trials < num_trials:
+                # run a trial for stack combination
+                trial_datetime = datetime.now().strftime("%Y-%m-%d:%H:%M:%S")
+                trial_results_dir = os.path.join(combi_results_dir, trial_datetime)
+                subprocess.run(get_remote_cmd(server_hostname, ["mkdir", trial_results_dir]), check=True)
+                
+                # start servers
+                stack_processes = []
+                for stack in combi_stacks:
+                    stack_name, stack_cc_algo, stack_port_no = itemgetter("name", "cc_algo", "port_no")(stack)
+                    proc = stacks_kls[stack_name].run_remote_server(stack_port_no, stack_cc_algo, flow_duration_s + 5)
+                    stack_processes.append(proc)
+                
+                time.sleep(2) # wait for servers to start
+
+                # start clients
+                for stack in combi_stacks:
+                    stack_name, stack_cc_algo, stack_port_no = itemgetter("name", "cc_algo", "port_no")(stack)
+                    proc = stacks_kls[stack_name].run_client(stack_port_no, stack_cc_algo, flow_duration_s)
+                    stack_processes.append(proc)
+
+                # wait for all server/client processes to finish
+                for proc in stack_processes:
+                    proc.wait()
+
+                successful_trials += 1
+
+    finally:
+        # clean up
+        clear_netem(server_hostname, server_pw_path, interface, server_ingress_interface)
 
 
 if __name__ == "__main__":
