@@ -158,10 +158,12 @@ def get_delay_trace(packets_df, veth_packets_df, flow_duration_s, window_size_s)
     return delay_moving_window_trace
 
 
-def output_delay_traces(port_no_packets_map, veth_port_no_packets_map, trial_dir, flow_duration_s, window_size_s):
+def output_delay_traces(port_no_packets_map, veth_port_no_packets_map, trial_dir, flow_duration_s, window_size_s, delay_to_sub):
     for port_no, packets_df in port_no_packets_map.items():
         veth_packets_df = veth_port_no_packets_map[port_no]
         delay_trace = get_delay_trace(packets_df, veth_packets_df, flow_duration_s, window_size_s)
+
+        delay_trace = [[x[0], x[1] - delay_to_sub] for x in delay_trace] # subtract delay (account for netem delay)
 
         delay_trace_path = os.path.join(trial_dir, port_no + DELAY_TRACE_SUFFIX)
         write_to_csv(delay_trace_path, ["time (s)", "delay (ms)"], delay_trace)
@@ -186,7 +188,8 @@ def main():
     if not os.path.exists(veth_pcap_path):
         return
     veth_port_no_packets_map = obtain_packets_from_pcap(veth_pcap_path, valid_port_nos)
-    output_delay_traces(port_no_packets_map, veth_port_no_packets_map, args.trial_dir, exp_conf["flow_duration_s"], window_size_s)
+    output_delay_traces(port_no_packets_map, veth_port_no_packets_map, args.trial_dir, 
+        exp_conf["flow_duration_s"], window_size_s, exp_conf["netem_conf"]["RTT_ms"]/2)
 
 
 if __name__ == "__main__":
