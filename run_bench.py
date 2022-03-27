@@ -99,7 +99,8 @@ def main():
             subprocess.run(get_remote_cmd(server_hostname, ["mkdir", combi_results_dir]), check=True)
 
             successful_trials = 0
-            while successful_trials < num_trials:
+            failed_trials = 0
+            while successful_trials < num_trials and failed_trials < num_trials:
                 # run a trial for stack combination
                 trial_datetime = datetime.now().strftime("%Y-%m-%d:%H:%M:%S")
                 trial_results_dir = os.path.join(combi_results_dir, trial_datetime)
@@ -132,14 +133,19 @@ def main():
                 # stop tcpdump
                 tcpdump_interface.stop()
 
-                subprocess.run(get_remote_cmd(server_hostname,
-                    ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
-                    "--exp_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.exp_conf))),
-                    "--name={}".format(combi_name), "--trial_dir={}".format(trial_results_dir)
-                    ]
-                ), check=True)
-
-                successful_trials += 1
+                try:
+                    subprocess.run(get_remote_cmd(server_hostname,
+                        ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
+                        "--exp_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.exp_conf))),
+                        "--name={}".format(combi_name), "--trial_dir={}".format(trial_results_dir)
+                        ]
+                    ), check=True)
+                    successful_trials += 1
+                except:
+                    subprocess.run(get_remote_cmd(
+                        server_hostname, ["rm", "-rf", trial_results_dir]
+                    ))
+                    failed_trials += 1
 
     finally:
         # clean up
