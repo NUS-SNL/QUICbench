@@ -31,8 +31,8 @@ def main():
             stacks_combinations.append({
                 "name": "{}-{}_{}-{}".format(stack1["name"], stack1["cc_algo"], stack2["name"], stack2["cc_algo"]),
                 "stacks": [
-                    { **stack1, **{ "port_no": "4000 "}},
-                    { **stack2, **{ "port_no": "4001 "}}
+                    { **stack1, **{ "port_no": "4000" }},
+                    { **stack2, **{ "port_no": "4001" }}
                 ]
             })
 
