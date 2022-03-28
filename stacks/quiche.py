@@ -47,3 +47,7 @@ class Quiche(Stack):
             "--no-verify", "https://{}:{}".format(self.server_ip, port_no),
             "> /dev/null 2>&1"
         ])
+
+    @staticmethod
+    def get_cc_algos():
+        return [Quiche.CUBIC, Quiche.RENO]

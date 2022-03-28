@@ -47,3 +47,7 @@ class Chromium(Stack):
             "--disable_certificate_verification", "--quic_ietf_draft=true", "--num_requests=1",
             "--drop_response_body=true", "https://{}/{}".format(self.server_ip, Chromium.NUM_BYTES_TO_TRANSFER)
         ])
+
+    @staticmethod
+    def get_cc_algos():
+        return [Chromium.CUBIC, Chromium.BBR, Chromium.BBRV2]

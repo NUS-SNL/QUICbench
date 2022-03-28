@@ -41,3 +41,7 @@ class Msquic(Stack):
             "-port:{}".format(port_no), "-urls:https://{}:{}/{}".format(self.server_ip, port_no, self.server_static_filename),
             "> /dev/null 2>&1"
         ])
+
+    @staticmethod
+    def get_cc_algos():
+        return [Msquic.CUBIC]

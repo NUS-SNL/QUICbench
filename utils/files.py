@@ -14,3 +14,7 @@ def write_to_csv(path, headers, rows):
 def read_json_as_dict(json_filepath):
     with open(json_filepath) as f:
         return json.load(f)    
+
+def dump_dict_as_json(dictionary, json_filepath):
+    with open(json_filepath, "w") as f:
+        json.dump(dictionary, f, indent=4)

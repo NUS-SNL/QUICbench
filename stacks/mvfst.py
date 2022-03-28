@@ -35,3 +35,7 @@ class Mvfst(Stack):
             self.client_path, "-mode=client", "-duration={}".format(duration_s),
             "-host={}".format(self.server_ip), "-port={}".format(port_no)
         ])
+
+    @staticmethod
+    def get_cc_algos():
+        return [Mvfst.CUBIC, Mvfst.BBR, Mvfst.RENO]

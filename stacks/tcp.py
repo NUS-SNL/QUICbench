@@ -32,3 +32,7 @@ class Tcp(Stack):
             "iperf3", "-c", self.server_ip, "-p", port_no, "-C", cc_algo,
             "-t", duration_s, "-R", "-i", "60"
         ])
+
+    @staticmethod
+    def get_cc_algos():
+        return [Tcp.CUBIC, Tcp.BBR, Tcp.RENO]

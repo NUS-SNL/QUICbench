@@ -14,3 +14,8 @@ class Stack(ABC):
     @abstractmethod
     def run_client(self, port_no, cc_algo, duration_s):
         pass
+
+    @staticmethod
+    @abstractmethod
+    def get_cc_algos():
+        pass
