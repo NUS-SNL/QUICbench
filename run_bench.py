@@ -4,6 +4,7 @@ import argparse
 import json
 import subprocess
 import time
+import random
 from datetime import datetime
 from operator import itemgetter
 
@@ -101,6 +102,8 @@ def main():
             combi_results_dir = os.path.join(experiment_results_dir, combi_name)
             subprocess.run(get_remote_cmd(server_hostname, ["mkdir", combi_results_dir]), check=True)
 
+            random.shuffle(combi_stacks)
+
             successful_trials = 0
             failed_trials = 0
             while successful_trials < num_trials and failed_trials < num_trials:
@@ -146,6 +149,7 @@ def main():
                     subprocess.run(get_remote_cmd(server_hostname,
                         ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
                         "--exp_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.exp_conf))),
+                        "--general_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.general_conf))),
                         "--name={}".format(combi_name), "--trial_dir={}".format(trial_results_dir)
                         ]
                     ), check=True)
