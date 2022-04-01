@@ -16,11 +16,11 @@ QUIC bench has to be deployed on both machines. The workflow for QUIC bench is a
 2. Configure the server-side network interface to emulate certain network conditions (RTT, bandwidth, buffer size)
 3. Run test flows to ensure that the network has been configured correctly.
 4. Run benchmarking experiments
-    4.1. Start QUIC/TCP servers
-    4.2. Run _tcpdump_ on server-side interface to capture packet traces
-    4.3. Start QUIC/TCP clients to start flows
-    4.4. After flows terminate, stop _tcpdump_ and extract metrics from packet traces
-    4.5. Experiment results will be stored on the server-side
+    1. Start QUIC/TCP servers
+    2. Run _tcpdump_ on server-side interface to capture packet traces
+    3. Start QUIC/TCP clients to start flows
+    4. After flows terminate, stop _tcpdump_ and extract metrics from packet traces
+    5. Experiment results will be stored on the server-side
 5. Teardown server-side network emulation
 
 ### Client-side
