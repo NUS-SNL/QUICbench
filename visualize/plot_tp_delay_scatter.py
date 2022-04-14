@@ -17,6 +17,20 @@ from stacks.tcp import Tcp
 
 
 CC_ALGOS = ["cubic", "reno", "bbr"]
+stack_color_map = {
+    (Chromium.NAME, Chromium.CUBIC): 'tab:blue',
+    (Chromium.NAME, Chromium.BBR): 'tab:blue',
+    (Chromium.NAME, Chromium.BBRV2): 'midnightblue',
+    (Msquic.NAME, Msquic.CUBIC): 'tab:orange',
+    (Mvfst.NAME, Mvfst.CUBIC): 'tab:red',
+    (Mvfst.NAME, Mvfst.BBR): 'tab:red',
+    (Mvfst.NAME, Mvfst.RENO): 'tab:red',
+    (Quiche.NAME, Quiche.CUBIC): 'tab:purple',
+    (Quiche.NAME, Quiche.RENO): 'tab:purple',
+    (Tcp.NAME, Tcp.CUBIC): 'tab:green',
+    (Tcp.NAME, Tcp.BBR): 'tab:green',
+    (Tcp.NAME, Tcp.RENO): 'tab:green'
+}
 
 
 def get_tp_delay_scatter_args():
@@ -131,7 +145,7 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
 
                 x_delays, y_tps = get_scatter_data(tp_trace, delay_trace, sample_interval, flow_duration_s / 10, flow_duration_s - flow_duration_s / 10)
                 stack_name, stack_cc = quic_stack["name"], quic_stack["cc_algo"]
-                plt.scatter(x_delays, y_tps, label="{}-{}".format(stack_name, stack_cc), alpha=0.2)
+                plt.scatter(x_delays, y_tps, label="{}-{}".format(stack_name, stack_cc), alpha=0.2, color=stack_color_map[(stack_name, stack_cc)])
             
             plt.legend()
             plt.ylabel("throughput (Mbps)")
