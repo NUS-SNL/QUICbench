@@ -134,6 +134,8 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
             # plot for each algo
             plt.clf()
             
+            plotted_avg_throughputs = []
+            i = 0
             for stack_combi in exp_conf["stacks_combinations"]:
                 stacks = stack_combi["stacks"]
                 num_tcp = sum([1 if s["name"] == Tcp.NAME else 0 for s in stacks])
@@ -155,8 +157,15 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
 
                 avg_throughput, avg_delay = get_avg_values(tp_trace, delay_trace)
                 plt.scatter([avg_delay], [avg_throughput], color=stack_color_map[(stack_name, stack_cc)], marker="X")
+
+                plotted_avg_throughputs.append((avg_throughput, i))
+                i += 1
             
-            plt.legend()
+            # reorder legend labels by avg throughputs
+            handles, labels = plt.gca().get_legend_handles_labels()
+            order = list(map(lambda x : x[1], reversed(sorted(plotted_avg_throughputs))))
+            plt.legend([handles[idx] for idx in order], [labels[idx] for idx in order])
+
             plt.ylabel("throughput (Mbps)")
             plt.ylim(0, bandwidth + 2)
             plt.xlim(0, exp_conf["netem_conf"]["RTT_ms"] * exp_conf["netem_conf"]["buffer_bdp"] + 2)
