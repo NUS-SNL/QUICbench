@@ -33,7 +33,7 @@ def get_tp_delay_trace_df(trial_dir, port_no):
     return pd.read_csv(tp_trace_path), pd.read_csv(delay_trace_path)
 
 
-def get_scatter_data(tp_df, delay_df, sample_interval):
+def get_scatter_data(tp_df, delay_df, sample_interval, start_from = None, end_by = None):
     delay_times = delay_df.iloc[:,0]
     delay_values = delay_df.iloc[:,1]
     delay_len = len(delay_df.index)
@@ -43,6 +43,8 @@ def get_scatter_data(tp_df, delay_df, sample_interval):
     prev_time = 0
     for index, row in tp_df.iterrows():
         time, throughput = row.iloc[0], row.iloc[1]
+        if (start_from and time < start_from) or (end_by and time > end_by): # truncate trace
+            continue
         if (time - prev_time) < sample_interval:
             continue
         prev_time = time
@@ -104,6 +106,7 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
     exp_conf = read_json_as_dict(exp_conf_path)
     sample_interval = exp_conf["netem_conf"]["RTT_ms"] * 10 / 1000 # 10 RTT sample interval
     bandwidth = exp_conf["netem_conf"]["bandwidth_Mbps"]
+    flow_duration_s = exp_conf["flow_duration_s"]
     num_trials = exp_conf["num_trials"]
 
     for trial_no in range(num_trials):
@@ -126,8 +129,9 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
                 port_no = quic_stack["port_no"]
                 tp_trace, delay_trace = get_tp_delay_trace_df(trial_dir, port_no)
 
-                x_delays, y_tps = get_scatter_data(tp_trace, delay_trace, sample_interval)
-                plt.scatter(x_delays, y_tps, label="{}-{}".format(quic_stack["name"], quic_stack["cc_algo"]), alpha=0.2)
+                x_delays, y_tps = get_scatter_data(tp_trace, delay_trace, sample_interval, flow_duration_s / 10, flow_duration_s - flow_duration_s / 10)
+                stack_name, stack_cc = quic_stack["name"], quic_stack["cc_algo"]
+                plt.scatter(x_delays, y_tps, label="{}-{}".format(stack_name, stack_cc), alpha=0.2)
             
             plt.legend()
             plt.ylabel("throughput (Mbps)")
