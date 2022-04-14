@@ -76,6 +76,12 @@ def get_scatter_data(tp_df, delay_df, sample_interval, start_from = None, end_by
     return x_delays, y_tps
 
 
+def get_avg_values(tp_df, delay_df):
+    avg_throughput = tp_df.iloc[:,1].mean()
+    avg_delay = delay_df.iloc[:,1].mean()
+    return avg_throughput, avg_delay
+
+
 def plot_single_flow_by_cc(single_flow_results_dir, exp_conf_name):
     """
     Plot single flow throughput delay scatter plot, grouped by congestion control algo
@@ -146,10 +152,14 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
                 x_delays, y_tps = get_scatter_data(tp_trace, delay_trace, sample_interval, flow_duration_s / 10, flow_duration_s - flow_duration_s / 10)
                 stack_name, stack_cc = quic_stack["name"], quic_stack["cc_algo"]
                 plt.scatter(x_delays, y_tps, label="{}-{}".format(stack_name, stack_cc), alpha=0.2, color=stack_color_map[(stack_name, stack_cc)])
+
+                avg_throughput, avg_delay = get_avg_values(tp_trace, delay_trace)
+                plt.scatter([avg_delay], [avg_throughput], color=stack_color_map[(stack_name, stack_cc)], marker="X")
             
             plt.legend()
             plt.ylabel("throughput (Mbps)")
             plt.ylim(0, bandwidth + 2)
+            plt.xlim(0, exp_conf["netem_conf"]["RTT_ms"] * exp_conf["netem_conf"]["buffer_bdp"] + 2)
             plt.xlabel("delay (ms)")
 
             plot_path = os.path.join(two_flows_results_dir, "trial{}-2f-tp-delay-scatter-{}".format(trial_no, cc_algo))
