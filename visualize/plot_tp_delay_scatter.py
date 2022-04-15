@@ -168,7 +168,7 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
 
             plt.ylabel("throughput (Mbps)")
             plt.ylim(0, bandwidth + 2)
-            plt.xlim(0, exp_conf["netem_conf"]["RTT_ms"] * exp_conf["netem_conf"]["buffer_bdp"] + 2)
+            # plt.xlim(0, exp_conf["netem_conf"]["RTT_ms"] * exp_conf["netem_conf"]["buffer_bdp"] + 2)
             plt.xlabel("delay (ms)")
 
             plot_path = os.path.join(two_flows_results_dir, "trial{}-2f-tp-delay-scatter-{}".format(trial_no, cc_algo))
