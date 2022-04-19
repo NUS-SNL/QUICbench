@@ -17,6 +17,20 @@ from stacks.tcp import Tcp
 
 
 CC_ALGOS = ["cubic", "reno", "bbr"]
+stack_color_map = {
+    (Chromium.NAME, Chromium.CUBIC): 'tab:blue',
+    (Chromium.NAME, Chromium.BBR): 'tab:blue',
+    (Chromium.NAME, Chromium.BBRV2): 'midnightblue',
+    (Msquic.NAME, Msquic.CUBIC): 'tab:orange',
+    (Mvfst.NAME, Mvfst.CUBIC): 'tab:red',
+    (Mvfst.NAME, Mvfst.BBR): 'tab:red',
+    (Mvfst.NAME, Mvfst.RENO): 'tab:red',
+    (Quiche.NAME, Quiche.CUBIC): 'tab:purple',
+    (Quiche.NAME, Quiche.RENO): 'tab:purple',
+    (Tcp.NAME, Tcp.CUBIC): 'tab:green',
+    (Tcp.NAME, Tcp.BBR): 'tab:green',
+    (Tcp.NAME, Tcp.RENO): 'tab:green'
+}
 
 
 def get_tp_delay_scatter_args():
@@ -33,7 +47,7 @@ def get_tp_delay_trace_df(trial_dir, port_no):
     return pd.read_csv(tp_trace_path), pd.read_csv(delay_trace_path)
 
 
-def get_scatter_data(tp_df, delay_df, sample_interval):
+def get_scatter_data(tp_df, delay_df, sample_interval, start_from = None, end_by = None):
     delay_times = delay_df.iloc[:,0]
     delay_values = delay_df.iloc[:,1]
     delay_len = len(delay_df.index)
@@ -43,6 +57,8 @@ def get_scatter_data(tp_df, delay_df, sample_interval):
     prev_time = 0
     for index, row in tp_df.iterrows():
         time, throughput = row.iloc[0], row.iloc[1]
+        if (start_from and time < start_from) or (end_by and time > end_by): # truncate trace
+            continue
         if (time - prev_time) < sample_interval:
             continue
         prev_time = time
@@ -58,6 +74,12 @@ def get_scatter_data(tp_df, delay_df, sample_interval):
         y_tps.append(throughput)
 
     return x_delays, y_tps
+
+
+def get_avg_values(tp_df, delay_df):
+    avg_throughput = tp_df.iloc[:,1].mean()
+    avg_delay = delay_df.iloc[:,1].mean()
+    return avg_throughput, avg_delay
 
 
 def plot_single_flow_by_cc(single_flow_results_dir, exp_conf_name):
@@ -104,6 +126,7 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
     exp_conf = read_json_as_dict(exp_conf_path)
     sample_interval = exp_conf["netem_conf"]["RTT_ms"] * 10 / 1000 # 10 RTT sample interval
     bandwidth = exp_conf["netem_conf"]["bandwidth_Mbps"]
+    flow_duration_s = exp_conf["flow_duration_s"]
     num_trials = exp_conf["num_trials"]
 
     for trial_no in range(num_trials):
@@ -111,6 +134,8 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
             # plot for each algo
             plt.clf()
             
+            plotted_avg_throughputs = []
+            i = 0
             for stack_combi in exp_conf["stacks_combinations"]:
                 stacks = stack_combi["stacks"]
                 num_tcp = sum([1 if s["name"] == Tcp.NAME else 0 for s in stacks])
@@ -126,12 +151,24 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
                 port_no = quic_stack["port_no"]
                 tp_trace, delay_trace = get_tp_delay_trace_df(trial_dir, port_no)
 
-                x_delays, y_tps = get_scatter_data(tp_trace, delay_trace, sample_interval)
-                plt.scatter(x_delays, y_tps, label="{}-{}".format(quic_stack["name"], quic_stack["cc_algo"]), alpha=0.2)
+                x_delays, y_tps = get_scatter_data(tp_trace, delay_trace, sample_interval, flow_duration_s / 10, flow_duration_s - flow_duration_s / 10)
+                stack_name, stack_cc = quic_stack["name"], quic_stack["cc_algo"]
+                plt.scatter(x_delays, y_tps, label="{}-{}".format(stack_name, stack_cc), alpha=0.2, color=stack_color_map[(stack_name, stack_cc)])
+
+                avg_throughput, avg_delay = get_avg_values(tp_trace, delay_trace)
+                plt.scatter([avg_delay], [avg_throughput], color=stack_color_map[(stack_name, stack_cc)], marker="X")
+
+                plotted_avg_throughputs.append((avg_throughput, i))
+                i += 1
             
-            plt.legend()
+            # reorder legend labels by avg throughputs
+            handles, labels = plt.gca().get_legend_handles_labels()
+            order = list(map(lambda x : x[1], reversed(sorted(plotted_avg_throughputs))))
+            plt.legend([handles[idx] for idx in order], [labels[idx] for idx in order])
+
             plt.ylabel("throughput (Mbps)")
             plt.ylim(0, bandwidth + 2)
+            # plt.xlim(0, exp_conf["netem_conf"]["RTT_ms"] * exp_conf["netem_conf"]["buffer_bdp"] + 2)
             plt.xlabel("delay (ms)")
 
             plot_path = os.path.join(two_flows_results_dir, "trial{}-2f-tp-delay-scatter-{}".format(trial_no, cc_algo))
