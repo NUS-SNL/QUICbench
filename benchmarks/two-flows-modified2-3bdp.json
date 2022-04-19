@@ -1,6 +1,10 @@
 {
     "experiment_name": "two-flows-modified2-3bdp",
     "experiment_results_dir": "/home/quic/quic_bench_results/two-flows-modified2-3bdp",
+    "remarks": [
+        "mvfst: change ack freq from 10 to 2",
+        "chromium: change ack freq from 10 to 2"
+    ],    
     "num_trials": 5,
     "netem_conf": {
         "RTT_ms": 50,
