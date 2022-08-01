@@ -106,46 +106,46 @@ def main():
 
             successful_trials = 0
             failed_trials = 0
-            while successful_trials < num_trials and failed_trials < num_trials:
+            while successful_trials < num_trials and failed_trials < int(num_trials * 1.5): # retries
                 # run a trial for stack combination
                 trial_datetime = datetime.now().strftime("%Y-%m-%d:%H:%M:%S")
                 trial_results_dir = os.path.join(combi_results_dir, trial_datetime)
                 subprocess.run(get_remote_cmd(server_hostname, ["mkdir", trial_results_dir]), check=True)
-                
-                # start servers
-                stack_processes = []
-                for stack in combi_stacks:
-                    stack_name, stack_cc_algo, stack_port_no = itemgetter("name", "cc_algo", "port_no")(stack)
-                    proc = stacks_kls[stack_name].run_remote_server(stack_port_no, stack_cc_algo, flow_duration_s + 5)
-                    stack_processes.append(proc)
-                
-                time.sleep(2) # wait for servers to start
 
-                # start tcpdump
-                if has_veth:
-                    tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
-                    tcpdump_veth = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_veth_output_file)
-                    tcpdump_veth.start()
-                tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
-                tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file)
-                tcpdump_interface.start()
+                try:                
+                    # start servers
+                    stack_processes = []
+                    for stack in combi_stacks:
+                        stack_name, stack_cc_algo, stack_port_no = itemgetter("name", "cc_algo", "port_no")(stack)
+                        proc = stacks_kls[stack_name].run_remote_server(stack_port_no, stack_cc_algo, flow_duration_s + 5)
+                        stack_processes.append(proc)
 
-                # start clients
-                for stack in combi_stacks:
-                    stack_name, stack_cc_algo, stack_port_no = itemgetter("name", "cc_algo", "port_no")(stack)
-                    proc = stacks_kls[stack_name].run_client(stack_port_no, stack_cc_algo, flow_duration_s)
-                    stack_processes.append(proc)
+                    time.sleep(2) # wait for servers to start
 
-                # wait for all server/client processes to finish
-                for proc in stack_processes:
-                    proc.wait()
+                    # start tcpdump
+                    if has_veth:
+                        tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
+                        tcpdump_veth = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_veth_output_file)
+                        tcpdump_veth.start()
+                    tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
+                    tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file)
+                    tcpdump_interface.start()
 
-                # stop tcpdump
-                tcpdump_interface.stop()
-                if has_veth:
-                    tcpdump_veth.stop()
+                    # start clients
+                    for stack in combi_stacks:
+                        stack_name, stack_cc_algo, stack_port_no = itemgetter("name", "cc_algo", "port_no")(stack)
+                        proc = stacks_kls[stack_name].run_client(stack_port_no, stack_cc_algo, flow_duration_s)
+                        stack_processes.append(proc)
 
-                try:
+                    # wait for all server/client processes to finish
+                    for proc in stack_processes:
+                        proc.wait()
+
+                    # stop tcpdump
+                    tcpdump_interface.stop()
+                    if has_veth:
+                        tcpdump_veth.stop()
+
                     subprocess.run(get_remote_cmd(server_hostname,
                         ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
                         "--exp_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.exp_conf))),
@@ -154,7 +154,21 @@ def main():
                         ]
                     ), check=True)
                     successful_trials += 1
+                
                 except:
+                    time.sleep(flow_duration_s) # wait for servers to timeout
+
+                    # reset interface
+                    subprocess.run(["sudo", "ip", "link", "set", "dev", interface, "down"], check=True)
+                    subprocess.run(["sudo", "ip", "link", "set", "dev", interface, "up"], check=True)
+                    clear_netem(server_hostname, server_pw_path, server_ip, interface, server_ingress_interface, virtual_interface)
+                    set_netem(server_hostname, server_pw_path, server_ip, interface, 
+                        server_ingress_interface, exp_conf["netem_conf"], virtual_interface)
+
+                    # kill processes
+                    subprocess.run(get_remote_cmd(server_hostname, ["pkill", "tcpdump"]))
+
+                    # delete trial
                     subprocess.run(get_remote_cmd(
                         server_hostname, ["rm", "-rf", trial_results_dir]
                     ))
