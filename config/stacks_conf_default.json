@@ -51,5 +51,12 @@
         "server_static_file_dir": "/www",
         "server_static_filename": "index.html",
         "client_path": "/home/quic/quic_experiments/quicly/cli"
+    },
+    "quicgo": {
+        "go_path": "/usr/local/go/bin/go",
+        "server_path": "/home/quic/quic_experiments/quic-go/example",
+        "server_static_file_dir": "/www",
+        "server_static_filename": "index.html",
+        "client_path": "/home/quic/quic_experiments/quic-go/example/client"
     }
 }

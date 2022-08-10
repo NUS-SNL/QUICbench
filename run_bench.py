@@ -17,6 +17,7 @@ from stacks.tcp import Tcp
 from stacks.lsquic import Lsquic
 from stacks.neqo import Neqo
 from stacks.quicly import Quicly
+from stacks.quicgo import QuicGo
 from utils.remote_cmd import get_remote_cmd, get_remote_cmd_sudo, get_scp_file_to_remote_cmd
 from network.set_netem import set_netem
 from network.clear_netem import clear_netem
@@ -52,6 +53,7 @@ def init_stacks(stacks_conf, server_ip, server_hostname):
     lsquic_stack = Lsquic(server_ip, server_hostname, **stacks_conf[Lsquic.NAME])
     neqo_stack = Neqo(server_ip, server_hostname, **stacks_conf[Neqo.NAME])
     quicly_stack = Quicly(server_ip, server_hostname, **stacks_conf[Quicly.NAME])
+    quicgo_stack = QuicGo(server_ip, server_hostname, **stacks_conf[QuicGo.NAME])
     return {
         Chromium.NAME: chromium_stack,
         Msquic.NAME: msquic_stack,
@@ -60,7 +62,8 @@ def init_stacks(stacks_conf, server_ip, server_hostname):
         Tcp.NAME: tcp_stack,
         Lsquic.NAME: lsquic_stack,
         Neqo.NAME: neqo_stack,
-        Quicly.NAME: quicly_stack
+        Quicly.NAME: quicly_stack,
+        QuicGo.NAME: quicgo_stack
     }
 
 
