@@ -36,5 +36,12 @@
         "server_static_file_dir": "/www",
         "server_static_filename": "index.html",
         "client_path": "/home/quic/quic_experiments/lsquic/bin/http_client"
+    },
+    "neqo": {
+        "ld_library_path": "/home/quic/dist/Debug/lib",
+        "server_path": "/home/quic/quic_experiments/neqo/target/debug/neqo-server",
+        "server_db_path": "/home/quic/quic_experiments/neqo/test-fixture/db",
+        "server_static_filename": "300MB.html",
+        "client_path": "/home/quic/quic_experiments/neqo/target/debug/neqo-client"
     }
 }
