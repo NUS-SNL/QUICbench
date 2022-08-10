@@ -58,5 +58,17 @@
         "server_static_file_dir": "/www",
         "server_static_filename": "index.html",
         "client_path": "/home/quic/quic_experiments/quic-go/example/client"
+    },
+    "quinn": {
+        "server_cargo_path": "/home/quic/.cargo/bin/cargo",
+        "server_path": "/home/quic/quic_experiments/quinn/Cargo.toml",
+        "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
+        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
+        "server_static_file_dir": "/www",
+        "server_static_filename": "index.html",
+        "client_cargo_path": "/home/quic/.cargo/bin/cargo",
+        "client_path": "/home/quic/quic_experiments/quinn/Cargo.toml",
+        "ca_path": "/home/quic/quic_experiments/certs/myCA.der",
+        "ca_hostname": "quic-server"
     }
 }
