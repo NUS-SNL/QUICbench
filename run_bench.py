@@ -14,6 +14,7 @@ from stacks.msquic import Msquic
 from stacks.mvfst import Mvfst
 from stacks.quiche import Quiche
 from stacks.tcp import Tcp
+from stacks.lsquic import Lsquic
 from utils.remote_cmd import get_remote_cmd, get_remote_cmd_sudo, get_scp_file_to_remote_cmd
 from network.set_netem import set_netem
 from network.clear_netem import clear_netem
@@ -46,12 +47,14 @@ def init_stacks(stacks_conf, server_ip, server_hostname):
     mvfst_stack = Mvfst(server_ip, server_hostname, **stacks_conf[Mvfst.NAME])
     quiche_stack = Quiche(server_ip, server_hostname, **stacks_conf[Quiche.NAME])
     tcp_stack = Tcp(server_ip, server_hostname)
+    lsquic_stack = Lsquic(server_ip, server_hostname, **stacks_conf[Lsquic.NAME])
     return {
         Chromium.NAME: chromium_stack,
         Msquic.NAME: msquic_stack,
         Mvfst.NAME: mvfst_stack,
         Quiche.NAME: quiche_stack,
-        Tcp.NAME: tcp_stack
+        Tcp.NAME: tcp_stack,
+        Lsquic.NAME: lsquic_stack
     }
 
 
