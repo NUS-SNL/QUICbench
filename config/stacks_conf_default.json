@@ -43,5 +43,13 @@
         "server_db_path": "/home/quic/quic_experiments/neqo/test-fixture/db",
         "server_static_filename": "300MB.html",
         "client_path": "/home/quic/quic_experiments/neqo/target/debug/neqo-client"
+    },
+    "quicly": {
+        "server_path": "/home/quic/quic_experiments/quicly/cli",
+        "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
+        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",        
+        "server_static_file_dir": "/www",
+        "server_static_filename": "index.html",
+        "client_path": "/home/quic/quic_experiments/quicly/cli"
     }
 }
