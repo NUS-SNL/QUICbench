@@ -70,5 +70,11 @@
         "client_path": "/home/quic/quic_experiments/quinn/Cargo.toml",
         "ca_path": "/home/quic/quic_experiments/certs/myCA.der",
         "ca_hostname": "quic-server"
+    },
+    "s2nquic": {
+        "server_path": "/home/quic/quic_experiments/s2n-quic/target/release/s2n-quic-qns",
+        "server_static_file_dir": "/www",
+        "server_static_filename": "index.html",
+        "client_path": "/home/quic/quic_experiments/s2n-quic/target/release/s2n-quic-qns"
     }
 }
