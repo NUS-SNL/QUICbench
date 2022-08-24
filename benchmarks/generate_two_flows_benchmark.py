@@ -3,6 +3,7 @@ Script to help generate benchmark jsons for two flows experiments
 """
 import os
 import sys
+import argparse
 
 sys.path.insert(1, os.path.join(sys.path[0], '..')) # allow importing from parent dir (repo)
 
@@ -15,8 +16,19 @@ from utils.files import dump_dict_as_json
 
 stacks_kls = [Chromium, Msquic, Mvfst, Quiche, Tcp]
 
+def get_prog_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--rtt", help="RTT of experiment in ms", type=int, required=True)
+    parser.add_argument("--bw", help="bandwidth of experiment in Mbps", type=int, required=True)
+    parser.add_argument("--bdp", help="buffer size of experiment in BDP", type=float, required=True)
+    return parser.parse_args()
+
 def main():
-    BUFFER_BDP = 0.5
+    args = get_prog_args()
+
+    RTT = args.rtt
+    BANDWIDTH = args.bw
+    BUFFER_BDP = args.bdp
 
     all_stacks = []
     for stack_kls in stacks_kls:
@@ -28,6 +40,8 @@ def main():
         for j in range(i, len(all_stacks)):
             stack1 = all_stacks[i]
             stack2 = all_stacks[j]
+            if not (stack2["name"] == Tcp.NAME and stack2["cc_algo"] in stack1["cc_algo"]):
+                continue
             stacks_combinations.append({
                 "name": "{}-{}_{}-{}".format(stack1["name"], stack1["cc_algo"], stack2["name"], stack2["cc_algo"]),
                 "stacks": [
@@ -37,12 +51,12 @@ def main():
             })
 
     exp_conf = {
-        "experiment_name": "two-flows-normal-{}bdp".format(BUFFER_BDP),
-        "experiment_results_dir": "/home/quic/quic_bench_results/two-flows-normal-{}bdp".format(BUFFER_BDP),
+        "experiment_name": "two-flows-{}rtt-{}bw-{}bdp".format(RTT, BANDWIDTH, BUFFER_BDP),
+        "experiment_results_dir": "/home/quic/quic_bench_results/two-flows-{}rtt-{}bw-{}bdp".format(RTT, BANDWIDTH, BUFFER_BDP),
         "num_trials": 5,
         "netem_conf": {
-            "RTT_ms": 50,
-            "bandwidth_Mbps": 20,
+            "RTT_ms": RTT,
+            "bandwidth_Mbps": BANDWIDTH,
             "buffer_bdp": BUFFER_BDP
         },
         "flow_duration_s": 120,
