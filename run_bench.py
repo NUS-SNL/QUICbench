@@ -35,6 +35,7 @@ def get_prog_args():
     parser.add_argument("--general_conf", "-k", help="path to general configuration", type=str,
         default="./config/general_conf_default.json")
     parser.add_argument("--exp_conf", "-e", help="path to experiment configuration", type=str)
+    parser.add_argument("--stack_log", "-l", help="enable stacks logging", action='store_true')
     return parser.parse_args()
 
 
@@ -138,7 +139,13 @@ def main():
                     stack_processes = []
                     for stack in combi_stacks:
                         stack_name, stack_cc_algo, stack_port_no = itemgetter("name", "cc_algo", "port_no")(stack)
-                        proc = stacks_kls[stack_name].run_remote_server(stack_port_no, stack_cc_algo, flow_duration_s + 5)
+                        if args.stack_log:
+                            log_path = os.path.join(trial_results_dir, str(stack_port_no) + STACK_LOG_SUFFIX)
+                            proc = stacks_kls[stack_name].run_remote_server_wlogs(
+                                stack_port_no, stack_cc_algo, flow_duration_s + 5, log_path
+                            )
+                        else:
+                            proc = stacks_kls[stack_name].run_remote_server(stack_port_no, stack_cc_algo, flow_duration_s + 5)
                         stack_processes.append(proc)
 
                     time.sleep(2) # wait for servers to start

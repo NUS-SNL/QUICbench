@@ -11,6 +11,9 @@ class Stack(ABC):
     def run_remote_server(self, port_no, cc_algo, duration_s):
         pass
 
+    def run_remote_server_wlogs(self, port_no, cc_algo, duration_s, log_path):
+        pass
+
     @abstractmethod
     def run_client(self, port_no, cc_algo, duration_s):
         pass
