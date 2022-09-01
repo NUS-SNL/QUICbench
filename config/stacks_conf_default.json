@@ -13,7 +13,9 @@
         "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
         "server_static_file_dir": "/www",
         "server_static_filename": "index.html",
-        "client_path": "/home/quic/quic_experiments/msquic/artifacts/bin/linux/x64_Debug_openssl/quicinterop"
+        "client_path": "/home/quic/quic_experiments/msquic/artifacts/bin/linux/x64_Debug_openssl/quicinterop",
+        "clog_sidecar_path": "/home/quic/quic_experiments/msquic/src/manifest/clog.sidecar",
+        "clog2text_path": "/home/quic/.dotnet/tools/clog2text_lttng"
     },
     "mvfst": {
         "server_path": "/home/quic/quic_experiments/mvfst/_build/build/quic/tools/tperf/tperf",
