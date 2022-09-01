@@ -28,6 +28,11 @@ class Chromium(Stack):
         cmd = get_remote_cmd(self.server_hostname, cmd)
         return subprocess.Popen(cmd)
 
+    def run_remote_server_wlogs(self, port_no, cc_algo, duration_s, log_path):
+        cmd = self.run_server_cmd_wlogs(port_no, cc_algo, duration_s, log_path)
+        cmd = get_remote_cmd(self.server_hostname, cmd)
+        return subprocess.Popen(cmd)        
+
     def run_client(self, port_no, cc_algo, duration_s):
         cmd = self.run_client_cmd(port_no, duration_s)
         return subprocess.Popen(cmd)
@@ -38,6 +43,15 @@ class Chromium(Stack):
             self.server_paths[cc_algo], "--certificate_file={}".format(self.server_cert_path),
             "--key_file={}".format(self.server_key_path), "--port={}".format(port_no),
             "--quic_ietf_draft=true", "--generate_dynamic_responses=true"
+        ])
+
+    def run_server_cmd_wlogs(self, port_no, cc_algo, duration_s, log_path):
+        return map(str, [
+            "timeout", duration_s,
+            self.server_paths[cc_algo], "--certificate_file={}".format(self.server_cert_path),
+            "--key_file={}".format(self.server_key_path), "--port={}".format(port_no),
+            "--quic_ietf_draft=true", "--generate_dynamic_responses=true", "--v=1",
+            "2> {}".format(log_path)
         ])
 
     def run_client_cmd(self, port_no, duration_s):
