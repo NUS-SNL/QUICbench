@@ -127,7 +127,7 @@ def main():
 
             successful_trials = 0
             failed_trials = 0
-            while successful_trials < num_trials and failed_trials < int(num_trials * 1.5): # retries
+            while successful_trials < num_trials and failed_trials < int(num_trials * 2): # retries
                 # run a trial for stack combination
                 trial_datetime = datetime.now().strftime("%Y-%m-%d:%H:%M:%S")
                 trial_results_dir = os.path.join(combi_results_dir, trial_datetime)
