@@ -39,6 +39,18 @@ def get_prog_args():
     return parser.parse_args()
 
 
+def validate_exp_iflogging(exp_conf):
+    """ If stacks logging is enabled, we have to ensure that: """
+    def fail_validate():
+        sys.exit("exiting... stacks logging is enabled and exp_conf is not valid.")
+    if exp_conf["netem_conf"]["bandwidth_Mbps"] > 15:
+        fail_validate()
+    # only single flow
+    for combi in exp_conf["stacks_combinations"]:
+        if len(combi["stacks"]) > 1:
+            fail_validate()
+
+
 def check_sudo_privileges(server_hostname, server_pw_path):
     subprocess.run("sudo echo 'Got sudo privileges for local machine.'", shell=True, check=True)
     try:
@@ -93,6 +105,10 @@ def main():
         general_conf = json.load(f)
     with open(args.exp_conf) as f:
         exp_conf = json.load(f)
+    
+    if args.stack_log:
+        validate_exp_iflogging(exp_conf)
+
     server_ip, server_hostname, interface, server_ingress_interface, server_repo_path = \
         itemgetter("server_ip", "server_hostname", "interface", "server_ingress_interface", "server_repo_path")(general_conf)
 
