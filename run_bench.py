@@ -48,12 +48,12 @@ def check_sudo_privileges(server_hostname, server_pw_path):
         sys.exit("exiting... server password is incorrect.")
 
 
-def init_stacks(stacks_conf, server_ip, server_hostname):
+def init_stacks(stacks_conf, server_ip, server_hostname, server_pw_path):
     chromium_stack = Chromium(server_ip, server_hostname, **stacks_conf[Chromium.NAME])
     msquic_stack = Msquic(server_ip, server_hostname, **stacks_conf[Msquic.NAME])
     mvfst_stack = Mvfst(server_ip, server_hostname, **stacks_conf[Mvfst.NAME])
     quiche_stack = Quiche(server_ip, server_hostname, **stacks_conf[Quiche.NAME])
-    tcp_stack = Tcp(server_ip, server_hostname)
+    tcp_stack = Tcp(server_ip, server_hostname, server_pw_path)
     lsquic_stack = Lsquic(server_ip, server_hostname, **stacks_conf[Lsquic.NAME])
     neqo_stack = Neqo(server_ip, server_hostname, **stacks_conf[Neqo.NAME])
     quicly_stack = Quicly(server_ip, server_hostname, **stacks_conf[Quicly.NAME])
@@ -99,7 +99,7 @@ def main():
     server_pw_path = general_conf["server_pw_path"]    
     check_sudo_privileges(server_hostname, server_pw_path)
     
-    stacks_kls = init_stacks(stacks_conf, server_ip, server_hostname)
+    stacks_kls = init_stacks(stacks_conf, server_ip, server_hostname, server_pw_path)
     set_kernel_params(general_conf["kernel_params"], server_hostname, server_pw_path)
 
     has_veth, virtual_interface = "virtual_interface" in exp_conf, exp_conf.get("virtual_interface")
