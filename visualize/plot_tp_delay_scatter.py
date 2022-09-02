@@ -18,6 +18,13 @@ from stacks.msquic import Msquic
 from stacks.mvfst import Mvfst
 from stacks.quiche import Quiche
 from stacks.tcp import Tcp
+from stacks.lsquic import Lsquic
+from stacks.neqo import Neqo
+from stacks.quicly import Quicly
+from stacks.quicgo import QuicGo
+from stacks.quinn import Quinn
+from stacks.s2nquic import S2nQuic
+from stacks.xquic import Xquic
 
 
 CC_ALGOS = ["cubic", "reno", "bbr"]
@@ -33,7 +40,18 @@ stack_color_map = {
     (Quiche.NAME, Quiche.RENO): 'tab:purple',
     (Tcp.NAME, Tcp.CUBIC): 'tab:green',
     (Tcp.NAME, Tcp.BBR): 'tab:green',
-    (Tcp.NAME, Tcp.RENO): 'tab:green'
+    (Tcp.NAME, Tcp.RENO): 'tab:green',
+    (Lsquic.NAME, Lsquic.CUBIC): 'tab:brown',
+    (Lsquic.NAME, Lsquic.BBR): 'tab:brown',
+    (Neqo.NAME, Neqo.CUBIC): 'tab:pink',
+    (Neqo.NAME, Neqo.RENO): 'tab:pink',
+    (Quicly.NAME, Quicly.CUBIC): 'tab:gray',
+    (Quicly.NAME, Quicly.RENO): 'tab:gray',
+    (QuicGo.NAME, QuicGo.CUBIC): 'tab:olive',
+    (Quinn.NAME, Quinn.CUBIC): 'tab:cyan',
+    (S2nQuic.NAME, S2nQuic.CUBIC): 'lime',
+    (Xquic.NAME, Xquic.CUBIC): 'gold',
+    (Xquic.NAME, Xquic.RENO): 'gold',
 }
 
 
@@ -41,7 +59,7 @@ def get_tp_delay_scatter_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--results", "-r", help="path to results dir", type=str)
     parser.add_argument("--exp_conf", "-e", help="name of experiment configuration", type=str)
-    parser.add_argument("--type", "-t", help="'s' for single flows, 't' for two flows", type=str)
+    parser.add_argument("--type", "-t", help="'s' for single flows, 't' for two flows, 'f' for five flows", type=str)
     return parser.parse_args()
 
 
@@ -232,6 +250,7 @@ def plot_two_flows_by_cc(two_flows_results_dir, exp_conf_name):
             handles, labels = plt.gca().get_legend_handles_labels()
             order = list(map(lambda x : x[1], reversed(sorted(plotted_avg_throughputs))))
             plt.legend([handles[idx] for idx in order], [labels[idx] for idx in order], prop={'size': 13.5})
+            # plt.legend([handles[idx] for idx in order], [labels[idx] for idx in order])
 
             plt.ylabel("throughput (Mbps)", fontsize=13.5)
             plt.ylim(0, bandwidth + 2)
@@ -376,11 +395,84 @@ def plot_two_flows_mod_vs_o_hardcoded():
         )        
 
 
+def plot_five_flows_by_cc(results_dir, exp_conf_name):
+    """
+    Plot five flows throughput delay scatter plot, grouped by congestion control algo
+    and using tcp as the control stack.
+    There will be 4 TCP flows vs 1 QUIC flow.
+    """    
+    exp_conf_path = os.path.join(results_dir, exp_conf_name)
+    exp_conf = read_json_as_dict(exp_conf_path)
+    sample_interval = exp_conf["netem_conf"]["RTT_ms"] * 10 / 1000 # 10 RTT sample interval
+    bandwidth = exp_conf["netem_conf"]["bandwidth_Mbps"]
+    flow_duration_s = exp_conf["flow_duration_s"]
+    num_trials = exp_conf["num_trials"]
+
+    for trial_no in range(num_trials):
+        for cc_algo in CC_ALGOS:
+            # plot for each algo
+            plt.clf()
+            
+            plotted_avg_throughputs = []
+            i = 0
+            stats = {}
+            for stack_combi in exp_conf["stacks_combinations"]:
+                stacks = stack_combi["stacks"]
+                num_cc = sum([1 if cc_algo in s["cc_algo"] else 0 for s in stacks])
+                if num_cc != 5: # all must be running the same cc
+                    continue
+
+                quic_stack = stacks[0]
+                
+                stack_combi_dir = os.path.join(results_dir, stack_combi["name"])
+                trial_dir = os.path.join(stack_combi_dir, os.listdir(stack_combi_dir)[trial_no]) # take trial no.
+
+                port_no = quic_stack["port_no"]
+                tp_trace, delay_trace = get_tp_delay_trace_df(trial_dir, port_no)
+
+                x_delays, y_tps = get_scatter_data(tp_trace, delay_trace, sample_interval, flow_duration_s / 10, flow_duration_s - flow_duration_s / 10)
+                stack_name, stack_cc = quic_stack["name"], quic_stack["cc_algo"]
+                plt.scatter(x_delays, y_tps, label="{}".format("{}-{}".format(stack_name, stack_cc)), alpha=0.2, color=stack_color_map[(stack_name, stack_cc)])
+
+                avg_throughput, avg_delay = get_arr_avg(y_tps), get_arr_avg(x_delays)
+                plt.scatter([avg_delay], [avg_throughput], color=stack_color_map[(stack_name, stack_cc)], marker="X")
+
+                plotted_avg_throughputs.append((avg_throughput, i))
+                i += 1
+
+                # add stats
+                stats[(stack_name, stack_cc)] = {
+                    "tmean": avg_throughput,
+                    "dmean": avg_delay,
+                    "tstd": round(statistics.stdev(y_tps), 5),
+                    "dstd": round(statistics.stdev(x_delays), 5)
+                }
+            
+            # reorder legend labels by avg throughputs
+            handles, labels = plt.gca().get_legend_handles_labels()
+            order = list(map(lambda x : x[1], reversed(sorted(plotted_avg_throughputs))))
+            plt.legend([handles[idx] for idx in order], [labels[idx] for idx in order], prop={'size': 13.5})
+
+            plt.ylabel("throughput (Mbps)", fontsize=13.5)
+            plt.ylim(0, bandwidth + 2)
+            # plt.xlim(0, exp_conf["netem_conf"]["RTT_ms"] * exp_conf["netem_conf"]["buffer_bdp"] + 2)
+            plt.xlabel("delay (ms)", fontsize=13.5)
+
+            plot_path = os.path.join(results_dir, "trial{}-5f-tp-delay-scatter-{}".format(trial_no, cc_algo))
+
+            plt.savefig(plot_path)
+
+            stats_save_path = os.path.join(results_dir, "trial{}-5f-tp-delay-stats-{}.csv".format(trial_no, cc_algo))
+            calc_and_save_stats(stats, cc_algo, stats_save_path)
+
+
 def main():
     args = get_tp_delay_scatter_args()
     results_dir, exp_conf_name = args.results, args.exp_conf
     if args.type == "s":
         plot_single_flow_by_cc(results_dir, exp_conf_name)
+    elif args.type == "f":
+        plot_five_flows_by_cc(results_dir, exp_conf_name)
     else:
         plot_two_flows_by_cc(results_dir, exp_conf_name)
 
