@@ -82,5 +82,12 @@
     "xquic": {
         "server_path": "/home/quic/quic_experiments/xquic/build",
         "client_path": "/home/quic/quic_experiments/xquic/build"
+    },
+    "stack_parser_map": {
+        "chromium": "parse_chromium.py",
+        "msquic": "parse_msquic.py",
+        "mvfst": "parse_qlog.py",
+        "quiche": "parse_sqlog.py",
+        "tcp": "parse_tcp.py"
     }
 }

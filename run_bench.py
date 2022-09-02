@@ -197,6 +197,18 @@ def main():
                         "--name={}".format(combi_name), "--trial_dir={}".format(trial_results_dir)
                         ]
                     ), check=True)
+                    
+                    if args.stack_log:
+                        # only for single flow
+                        stack = combi_stacks[0]
+                        stack_name, stack_port_no = itemgetter("name", "port_no")(stack)
+                        subprocess.run(get_remote_cmd(server_hostname,
+                            ["python3", os.path.join(server_repo_path, "stacks", "parse_logs", stacks_conf["stack_parser_map"][stack_name]),
+                            "--infile={}".format(log_path),
+                            "--outfile={}".format(os.path.join(trial_results_dir, stack_port_no + CWND_TRACE_SUFFIX))
+                            ]
+                        ), check=True)
+                    
                     successful_trials += 1
                 
                 except:
