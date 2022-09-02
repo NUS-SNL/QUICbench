@@ -6,7 +6,7 @@ import argparse
 
 sys.path.insert(1, os.path.join(sys.path[0], '../..')) # allow importing from parent dir (repo)
 
-from utils.files import write_to_csv
+from utils.files import write_to_csv, read_json_as_dict
 
 SECONDS_IN_DAY = 24 * 60 * 60
 
