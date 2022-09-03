@@ -1,0 +1,62 @@
+{
+    "experiment_name": "cwnd-analysis-10rtt-10bw-3.0bdp",
+    "experiment_results_dir": "/home/quic/quic_bench_results/cwnd-analysis-10rtt-10bw-3.0bdp",
+    "num_trials": 3,
+    "netem_conf": {
+        "RTT_ms": 10,
+        "bandwidth_Mbps": 10,
+        "buffer_bdp": 3.0
+    },
+    "flow_duration_s": 120,
+    "virtual_interface": "enp1s0f1-br0",
+    "stacks_combinations": [
+        {
+            "name": "chromium-cubic",
+            "stacks": [ { "name": "chromium", "cc_algo": "cubic", "port_no": "4000" } ]
+        },
+        {
+            "name": "chromium-bbr",
+            "stacks": [ { "name": "chromium", "cc_algo": "bbr", "port_no": "4000" } ]
+        },
+        {
+            "name": "chromium-bbrv2",
+            "stacks": [ { "name": "chromium", "cc_algo": "bbrv2", "port_no": "4000" } ]
+        },
+        {
+            "name": "msquic-cubic",
+            "stacks": [ { "name": "msquic", "cc_algo": "cubic", "port_no": "4000" } ]
+        },
+        {
+            "name": "mvfst-cubic",
+            "stacks": [ { "name": "mvfst", "cc_algo": "cubic", "port_no": "4000" } ]
+        },
+        {
+            "name": "mvfst-bbr",
+            "stacks": [ { "name": "mvfst", "cc_algo": "bbr", "port_no": "4000" } ]
+        },
+        {
+            "name": "mvfst-newreno",
+            "stacks": [ { "name": "mvfst", "cc_algo": "newreno", "port_no": "4000" } ]
+        },
+        {
+            "name": "quiche-cubic",
+            "stacks": [ { "name": "quiche", "cc_algo": "cubic", "port_no": "4000" } ]
+        },
+        {
+            "name": "quiche-reno",
+            "stacks": [ { "name": "quiche", "cc_algo": "reno", "port_no": "4000" } ]
+        },
+        {
+            "name": "tcp-cubic",
+            "stacks": [ { "name": "tcp", "cc_algo": "cubic", "port_no": "4000" } ]
+        },
+        {
+            "name": "tcp-bbr",
+            "stacks": [ { "name": "tcp", "cc_algo": "bbr", "port_no": "4000" } ]
+        },
+        {
+            "name": "tcp-reno",
+            "stacks": [ { "name": "tcp", "cc_algo": "reno", "port_no": "4000" } ]
+        }
+    ]
+}
