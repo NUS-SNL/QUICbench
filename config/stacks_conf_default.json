@@ -1,0 +1,41 @@
+{
+    "chromium": {
+        "cubic_server_path": "/home/quic/quic_experiments/chromium-cubic/src/out/Debug/quic_server",
+        "bbr_server_path": "/home/quic/quic_experiments/chromium-bbr/src/out/Debug/quic_server",
+        "bbrv2_server_path": "/home/quic/quic_experiments/chromium-bbr_v2/src/out/Debug/quic_server",
+        "server_cert_path": "/home/quic/quic_experiments/chromium-cubic/src/net/tools/quic/certs/out/leaf_cert.pem",
+        "server_key_path": "/home/quic/quic_experiments/chromium-cubic/src/net/tools/quic/certs/out/leaf_cert.pkcs8",
+        "client_path": "/home/quic/quic_experiments/chromium-cubic/src/out/Debug/quic_client"
+    },
+    "msquic": {
+        "server_path": "/home/quic/quic_experiments/msquic/artifacts/bin/linux/x64_Debug_openssl/quicinteropserver",
+        "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
+        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
+        "server_static_file_dir": "/www",
+        "server_static_filename": "index.html",
+        "client_path": "/home/quic/quic_experiments/msquic/artifacts/bin/linux/x64_Debug_openssl/quicinterop",
+        "clog_sidecar_path": "/home/quic/quic_experiments/msquic/src/manifest/clog.sidecar",
+        "clog2text_path": "/home/quic/.dotnet/tools/clog2text_lttng"
+    },
+    "mvfst": {
+        "server_path": "/home/quic/quic_experiments/mvfst/_build/build/quic/tools/tperf/tperf",
+        "client_path": "/home/quic/quic_experiments/mvfst/_build/build/quic/tools/tperf/tperf"
+    },
+    "quiche": {
+        "server_cargo_path": "/home/quic/.cargo/bin/cargo",
+        "server_path": "/home/quic/quic_experiments/quiche/apps/Cargo.toml",
+        "server_cert_path": "/home/quic/quic_experiments/quiche/apps/src/bin/cert.crt",
+        "server_key_path": "/home/quic/quic_experiments/quiche/apps/src/bin/cert.key",
+        "server_static_file_dir": "/www",
+        "server_static_filename": "index.html",
+        "client_cargo_path": "/home/quic/.cargo/bin/cargo",
+        "client_path": "/home/quic/quic_experiments/quiche/apps/Cargo.toml"
+    },
+    "stack_parser_map": {
+        "chromium": "parse_chromium.py",
+        "msquic": "parse_msquic.py",
+        "mvfst": "parse_qlog.py",
+        "quiche": "parse_sqlog.py",
+        "tcp": "parse_tcp.py"
+    }
+}

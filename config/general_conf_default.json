@@ -1,0 +1,16 @@
+{
+    "server_ip": "10.0.0.1",
+    "server_hostname": "edith",
+    "server_pw_path": "/home/quic/quic_experiments/edith_pw",
+    "server_repo_path": "/home/quic/quic_experiments/QUIC-bench",
+    "interface": "enp1s0f1",
+    "server_ingress_interface": "ifb0",
+    "kernel_params": {
+        "net.core.rmem_max": "12582912",
+        "net.core.rmem_default": "1703936",
+        "net.core.wmem_max": "12582912",
+        "net.core.wmem_default": "1703936",
+        "net.ipv4.tcp_rmem": "10240 87380 12582912",
+        "net.ipv4.tcp_wmem": "10240 87380 12582912"
+    }
+}

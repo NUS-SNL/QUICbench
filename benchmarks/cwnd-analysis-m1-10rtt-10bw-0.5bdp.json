@@ -1,0 +1,26 @@
+{
+    "experiment_name": "cwnd-analysis-m1-10rtt-10bw-0.5bdp",
+    "experiment_results_dir": "/home/quic/quic_bench_results/cwnd-analysis-m1-10rtt-10bw-0.5bdp",
+    "remarks": [
+        "mvfst BBR: changed pacing rate scale to 100%",
+        "chromium CUBIC: set num emulated connections = 1 (originally 2)"
+    ],    
+    "num_trials": 3,
+    "netem_conf": {
+        "RTT_ms": 10,
+        "bandwidth_Mbps": 10,
+        "buffer_bdp": 0.5
+    },
+    "flow_duration_s": 120,
+    "virtual_interface": "enp1s0f1-br0",
+    "stacks_combinations": [
+        {
+            "name": "chromium-cubic",
+            "stacks": [ { "name": "chromium", "cc_algo": "cubic", "port_no": "4000" } ]
+        },
+        {
+            "name": "mvfst-bbr",
+            "stacks": [ { "name": "mvfst", "cc_algo": "bbr", "port_no": "4000" } ]
+        }
+    ]
+}

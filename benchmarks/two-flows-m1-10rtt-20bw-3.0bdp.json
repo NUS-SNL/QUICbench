@@ -1,0 +1,48 @@
+{
+    "experiment_name": "two-flows-m1-10rtt-20bw-3.0bdp",
+    "experiment_results_dir": "/home/quic/quic_bench_results/two-flows-m1-10rtt-20bw-3.0bdp",
+    "remarks": [
+        "mvfst BBR: changed pacing rate scale to 100%",
+        "chromium CUBIC: set num emulated connections = 1 (originally 2)"
+    ],
+    "num_trials": 5,
+    "netem_conf": {
+        "RTT_ms": 10,
+        "bandwidth_Mbps": 20,
+        "buffer_bdp": 3.0
+    },
+    "flow_duration_s": 120,
+    "virtual_interface": "enp1s0f1-br0",
+    "stacks_combinations": [
+        {
+            "name": "chromium-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "mvfst-bbr_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        }        
+    ]
+}
