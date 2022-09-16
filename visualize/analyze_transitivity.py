@@ -76,7 +76,7 @@ def analyze_transitivity_for_stacks(stacks_to_tpratio, stacks):
         order_idx = len(lower)
         stack = stacks[i]
         if order[order_idx] != ' ':
-            raise ValueError("OH NO" + " ".join(stack))
+            raise ValueError("Not transitive: i={},j={},stack={}".format(i, j, stacks[i]))
         order[order_idx] = stack
         order_map[stack] = order_idx
 
@@ -117,24 +117,9 @@ def analyze_transitivity_for_stacks(stacks_to_tpratio, stacks):
 def analyze_transitivity(two_flows_results_dir, exp_conf_name):
     stack_combinations_with_avgtp = get_stack_combis_avg_tps(two_flows_results_dir, exp_conf_name)
     stacks_to_tpratio = get_stacks_to_tpratio(stack_combinations_with_avgtp)
-
+    # Can only get transitivity for all stacks without msquic,
+    # as the performance of msquic is not consistent across trials
     analyze_transitivity_for_stacks(stacks_to_tpratio, ALL_STACKS_WO_MSQUIC)
-    # for name, stacks in [
-    #     ("CUBIC", CUBIC_STACKS), 
-    #     ("BBR", BBR_STACKS), 
-    #     ("RENO", RENO_STACKS)
-    # ]:
-    #     print(name, end=": ")
-    #     analyze_transitivity_for_stacks(stacks_to_tpratio, stacks)
-
-    # for name, stacks in [
-    #     ("mvfst", MVFST_STACKS), 
-    #     ("chromium", CHROMIUM_STACKS), 
-    #     ("quiche", QUICHE_STACKS), 
-    #     ("tcp", TCP_STACKS)
-    # ]:
-    #     print(name, end=": ")
-    #     analyze_transitivity_for_stacks(stacks_to_tpratio, stacks)
 
 
 def main():
