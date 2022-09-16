@@ -127,6 +127,8 @@ def get_delay_trace(packets_df, veth_packets_df, flow_duration_s, window_size_s)
 
     veth_packets_hashmap = {}
     for index, veth_packet in veth_packets_df.iterrows():
+        # in the tcpdump, some of the UDP packets doesn't have its data for some unknown reason,
+        # and so we skip these packets as they cannot be uniquely identified
         if veth_packet[UDP_SRCPORT] and not veth_packet[UDP_DATA]:
             continue
         pkt_hash = get_hash(veth_packet)
