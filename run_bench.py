@@ -51,11 +51,17 @@ def check_sudo_privileges(server_hostname, server_pw_path):
 
 
 def init_stacks(stacks_conf, server_ip, server_hostname, server_pw_path):
-    stacks = {}
-    for kls in stack.Stack.__subclasses__():
-        stacks[kls.NAME] = kls(server_ip=server_ip, server_hostname=server_hostname,
-                               server_pw_path=server_pw_path, **stacks_conf.get(kls.NAME, {}))
-    return stacks
+    stacks_dict = {}    
+    def get_subclasses(kls):
+        for subclass in kls.__subclasses__():
+            yield from get_subclasses(subclass)
+            yield subclass
+    all_stacks_kls = set(get_subclasses(stack.Stack))
+    for kls in all_stacks_kls:
+        stacks_dict[kls.NAME] = kls(server_ip=server_ip, server_hostname=server_hostname,
+                                    server_pw_path=server_pw_path,
+                                    **stacks_conf.get(kls.NAME, {}))
+    return stacks_dict
 
 
 def set_kernel_params(kernel_params, server_hostname, server_pw_path):
