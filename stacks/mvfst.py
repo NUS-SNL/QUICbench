@@ -9,7 +9,8 @@ class Mvfst(Stack):
     BBR = "bbr"
     RENO = "newreno"
 
-    def __init__(self, server_ip, server_hostname, server_path, client_path):
+    def __init__(self, server_ip, server_hostname, server_pw_path,
+                 server_path, client_path):
         self.server_ip = server_ip
         self.server_hostname = server_hostname
         self.server_path = server_path

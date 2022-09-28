@@ -189,6 +189,126 @@
                     "port_no": "4001"
                 }
             ]
+        },
+        {
+            "name": "chromium-n1-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "chromium-n1",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "mvfst-pr100-bbr_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "mvfst-pr100",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },        
+        {
+            "name": "chromium-af2-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "chromium-af2",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "chromium-af2-bbr_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "chromium-af2",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "chromium-af2-bbrv2_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "chromium-af2",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "mvfst-af2-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "mvfst-af2",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "mvfst-af2-bbr_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "mvfst-af2",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "mvfst-af2-newreno_tcp-reno",
+            "stacks": [
+                {
+                    "name": "mvfst-af2",
+                    "cc_algo": "newreno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
         }
     ]
 }

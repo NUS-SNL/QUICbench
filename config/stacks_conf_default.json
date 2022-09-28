@@ -31,11 +31,28 @@
         "client_cargo_path": "/home/quic/.cargo/bin/cargo",
         "client_path": "/home/quic/quic_experiments/quiche/apps/Cargo.toml"
     },
-    "stack_parser_map": {
-        "chromium": "parse_chromium.py",
-        "msquic": "parse_msquic.py",
-        "mvfst": "parse_qlog.py",
-        "quiche": "parse_sqlog.py",
-        "tcp": "parse_tcp.py"
+    "chromium-n1": {
+        "cubic_server_path": "/home/quic/quic_experiments/chromium-n1-cubic/src/out/Debug/quic_server",
+        "bbr_server_path": "/home/quic/quic_experiments/chromium-n1-bbr/src/out/Debug/quic_server",
+        "bbrv2_server_path": "/home/quic/quic_experiments/chromium-n1-bbr_v2/src/out/Debug/quic_server",
+        "server_cert_path": "/home/quic/quic_experiments/chromium-n1-cubic/src/net/tools/quic/certs/out/leaf_cert.pem",
+        "server_key_path": "/home/quic/quic_experiments/chromium-n1-cubic/src/net/tools/quic/certs/out/leaf_cert.pkcs8",
+        "client_path": "/home/quic/quic_experiments/chromium-n1-cubic/src/out/Debug/quic_client"
+    },
+    "chromium-af2": {
+        "cubic_server_path": "/home/quic/quic_experiments/chromium-af2-cubic/src/out/Debug/quic_server",
+        "bbr_server_path": "/home/quic/quic_experiments/chromium-af2-bbr/src/out/Debug/quic_server",
+        "bbrv2_server_path": "/home/quic/quic_experiments/chromium-af2-bbr_v2/src/out/Debug/quic_server",
+        "server_cert_path": "/home/quic/quic_experiments/chromium-af2-cubic/src/net/tools/quic/certs/out/leaf_cert.pem",
+        "server_key_path": "/home/quic/quic_experiments/chromium-af2-cubic/src/net/tools/quic/certs/out/leaf_cert.pkcs8",
+        "client_path": "/home/quic/quic_experiments/chromium-af2-cubic/src/out/Debug/quic_client"
+    },
+    "mvfst-pr100": {
+        "server_path": "/home/quic/quic_experiments/mvfst-pr100/_build/build/quic/tools/tperf/tperf",
+        "client_path": "/home/quic/quic_experiments/mvfst-pr100/_build/build/quic/tools/tperf/tperf"
+    },
+    "mvfst-af2": {
+        "server_path": "/home/quic/quic_experiments/mvfst-af2/_build/build/quic/tools/tperf/tperf",
+        "client_path": "/home/quic/quic_experiments/mvfst-af2/_build/build/quic/tools/tperf/tperf"
     }
 }

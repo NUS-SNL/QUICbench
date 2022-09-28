@@ -126,7 +126,6 @@ python3 run_bench.py -s={path to stack config} -k={path to general config} -e={p
 QUIC bench has been designed for easy extension, and to run QUIC bench with a new IETF QUIC stack that's not currently supported, only minor changes to this repo have to be made:
 1. Create a new class that inherits from Stack and implement the Stack interface methods that specifies how to run the server/client of this new QUIC stack
 2. Add an entry to the stack configuration file for this QUIC stack - parameters specified here will be used to instantiate the class created previously
-3. Modify the `init_stacks` method in `run_bench.py` to instantiate the class for the new QUIC stack
 
 ## License
 
