@@ -13,7 +13,7 @@ from visualize.plot_tp_ratios import *
 
 # DEFINING CONSTANTS:
 # define margin for error in tp_ratios
-EPS = 0.1
+EPS = 0.05
 # stacks to consider for analyzing transitivity
 ALL_STACKS = [
     (Mvfst.NAME, Mvfst.CUBIC),
@@ -51,23 +51,29 @@ def detect_cycle(adj_list):
     n = len(adj_list)
     visited = [False for _ in range(n)]
     rec_stack = [False for _ in range(n)]
-    def detect_cycle_helper(v):
+    cycle = None
+    def detect_cycle_helper(v, curr_nodes):
+        nonlocal cycle
         visited[v] = True
         rec_stack[v] = True
+        curr_nodes.append(v)
         for neigh in adj_list[v]:
             if not visited[neigh]:
-                if detect_cycle_helper(neigh):
+                if detect_cycle_helper(neigh, curr_nodes):
                     return True
             elif rec_stack[neigh]:
+                cycle = curr_nodes + [neigh]
                 return True
         rec_stack[v] = False
+        curr_nodes.pop()
         return False
 
+    curr_nodes = []
     for i in range(len(adj_list)):
         if not visited[i]:
-            if detect_cycle_helper(i):
-                return True
-    return False
+            if detect_cycle_helper(i, curr_nodes):
+                return True, cycle
+    return False, None
 
 
 def topo_sort(adj_list):
@@ -121,8 +127,14 @@ def main():
             if tp_ratios_table[i][j] <= (0.5 - EPS):
                 adj_list[i].add(j)
 
-    if detect_cycle(adj_list):
-        raise ValueError("there is no total ordering")
+    has_cycle, cycle = detect_cycle(adj_list)
+    if has_cycle:
+        cycle_w_labels = [
+            f"{stacks[idx][0]}-{stacks[idx][1]}" for idx in cycle
+        ]        
+        raise ValueError(
+            "there is no total ordering. Cycle found: " + ",".join(cycle_w_labels)
+        )
 
     topo_order_idxs = topo_sort(adj_list)
     topo_order = [
