@@ -19,6 +19,10 @@ benchmarking end-to-end process. The script performs the following steps in orde
     3. Extract metrics from packet traces and store results on the server machine
 5. Teardown server-side network emulation
 
+`benchmarks` contains the experiment configurations we used in our paper, and a script `generate_exp_conf.py` that helps to generate these configurations to be passed into `run_bench.py`.
+
+`visualize` contains scripts that can be applied to the results directory produced from running `run_bench.py` to produce visualizations of the results (performance envelopes, throughput ratios heatmap etc).
+
 ## Experimental Setup
 
 The following setup is required for QUIC bench to work correctly.
