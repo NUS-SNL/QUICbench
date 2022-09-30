@@ -3,6 +3,7 @@ script to plot heatmap of throughput ratios when
 2 flows compete at a common bottleneck
 '''
 
+import csv
 import os
 import sys
 import argparse
@@ -159,10 +160,18 @@ def main():
     stack_combinations_with_avgtp = get_stack_combis_avg_tps(args.dir, args.exp)
     stacks_to_tpratio = get_stacks_to_tpratio(stack_combinations_with_avgtp)
     tp_ratios_table = get_tpratios_table(stacks_to_tpratio, ALL_STACKS)
-    tp_ratios_table = np.transpose(np.array(tp_ratios_table))
+    
+    labels = [f"{s} {c}" for s, c in ALL_STACKS]
+    # save tp_ratios_table
+    output_file = os.path.join(args.dir, "tpratios_xy_matrix.csv")
+    with open(output_file, 'w', newline='') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow([' '] + labels)
+        for i in range(len(ALL_STACKS)):
+            csv_writer.writerow([labels[i]] + tp_ratios_table[i])    
 
     # plot heatmap
-    labels = [f"{s} {c}" for s, c in ALL_STACKS]
+    tp_ratios_table = np.transpose(np.array(tp_ratios_table))    
     fig, ax = plt.subplots()
     im, cbar = plot_heatmap(np.array(tp_ratios_table), labels, labels, ax=ax,
                             cmap="viridis", cbarlabel="Throughput Ratio")
