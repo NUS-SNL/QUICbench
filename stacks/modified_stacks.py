@@ -8,6 +8,10 @@ class ChromiumN1(Chromium):
     """
     NAME = "chromium-n1"
 
+    @staticmethod
+    def get_cc_algos():
+        return [Chromium.CUBIC]
+
 class ChromiumAF2(Chromium):
     """
     Modified chromium stack where the ACK frequency is changed from
@@ -21,6 +25,10 @@ class MvfstPR100(Mvfst):
     changed back to 100% (i.e. removed)
     """
     NAME = "mvfst-pr100"
+
+    @staticmethod
+    def get_cc_algos():
+        return [Mvfst.BBR]
 
 class MvfstAF2(Mvfst):
     """
