@@ -36,17 +36,17 @@ class Xquic(Stack):
         return map(str, [
             "cd {} &&".format(self.server_path),
             "timeout", duration_s,
-            "./test_server -s 1048576000 -c {}".format(Xquic.CC_NAME_MAP[cc_algo]),
+            "./test_server -s 2000000000 -c {}".format(Xquic.CC_NAME_MAP[cc_algo]),
             "-p {}".format(port_no),
-            "> /dev/null 2>&1"
+            "-o /dev/null > /dev/null 2>&1"
         ])
 
     def run_client_cmd(self, port_no, duration_s):
         return map(str, [
             "cd {} &&".format(self.client_path),
             "timeout", duration_s,
-            "./test_client -d 0 -a {} -p {}".format(self.server_ip, port_no),
-            "> /dev/null 2>&1"
+            "./test_client -d 0 -a {} -p {} -T -C".format(self.server_ip, port_no),
+            "-o /dev/null > /dev/null 2>&1"
         ])
 
     @staticmethod
