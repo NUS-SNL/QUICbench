@@ -5,16 +5,21 @@ from stacks.stack import Stack
 class Quinn(Stack):
     NAME = "quinn"
     CUBIC = "cubic"
+    RENO = "reno"
 
     def __init__(self, server_ip, server_hostname, server_pw_path,
-                 server_cargo_path, server_path, server_cert_path, server_key_path,
+                 server_cargo_path, cubic_server_path, reno_server_path,
+                 server_cert_path, server_key_path,
                  server_static_file_dir, server_static_filename,
                  client_cargo_path, client_path,
                  ca_path, ca_hostname):
         self.server_ip = server_ip
         self.server_hostname = server_hostname
         self.server_cargo_path = server_cargo_path
-        self.server_path = server_path
+        self.server_paths = {
+            Quinn.CUBIC: cubic_server_path,
+            Quinn.RENO: reno_server_path,
+        }
         self.server_cert_path = server_cert_path
         self.server_key_path = server_key_path
         self.server_static_file_dir = server_static_file_dir
@@ -36,7 +41,7 @@ class Quinn(Stack):
     def run_server_cmd(self, port_no, cc_algo, duration_s):
         return map(str, [
             "timeout", duration_s,
-            "{} run --manifest-path={} --example server --".format(self.server_cargo_path, self.server_path),
+            "{} run --manifest-path={} --example server --".format(self.server_cargo_path, self.server_paths[cc_algo]),
             "--cert {} --key {}".format(self.server_cert_path, self.server_key_path),
             "--listen 0.0.0.0:{} {}".format(port_no, self.server_static_file_dir)
         ])
@@ -52,4 +57,4 @@ class Quinn(Stack):
 
     @staticmethod
     def get_cc_algos():
-        return [Quinn.CUBIC]
+        return [Quinn.CUBIC, Quinn.RENO]

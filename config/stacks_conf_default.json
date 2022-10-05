@@ -87,7 +87,8 @@
     },
     "quinn": {
         "server_cargo_path": "/home/quic/.cargo/bin/cargo",
-        "server_path": "/home/quic/quic_experiments/quinn/Cargo.toml",
+        "cubic_server_path": "/home/quic/quic_experiments/quinn-cubic/Cargo.toml",
+        "reno_server_path": "/home/quic/quic_experiments/quinn-reno/Cargo.toml",
         "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
         "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
         "server_static_file_dir": "/www",
