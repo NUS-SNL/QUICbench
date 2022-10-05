@@ -19,6 +19,10 @@ benchmarking end-to-end process. The script performs the following steps in orde
     3. Extract metrics from packet traces and store results on the server machine
 5. Teardown server-side network emulation
 
+`benchmarks` contains the experiment configurations we used in our paper, and a script `generate_exp_conf.py` that helps to generate these configurations to be passed into `run_bench.py`.
+
+`visualize` contains scripts that can be applied to the results directory produced from running `run_bench.py` to produce visualizations of the results (performance envelopes, throughput ratios heatmap etc).
+
 ## Experimental Setup
 
 The following setup is required for QUIC bench to work correctly.
@@ -126,7 +130,6 @@ python3 run_bench.py -s={path to stack config} -k={path to general config} -e={p
 QUIC bench has been designed for easy extension, and to run QUIC bench with a new IETF QUIC stack that's not currently supported, only minor changes to this repo have to be made:
 1. Create a new class that inherits from Stack and implement the Stack interface methods that specifies how to run the server/client of this new QUIC stack
 2. Add an entry to the stack configuration file for this QUIC stack - parameters specified here will be used to instantiate the class created previously
-3. Modify the `init_stacks` method in `run_bench.py` to instantiate the class for the new QUIC stack
 
 ## License
 

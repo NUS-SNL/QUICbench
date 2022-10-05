@@ -9,7 +9,7 @@ class Chromium(Stack):
     BBRV2 = "bbrv2"
     NUM_BYTES_TO_TRANSFER = 2000000000 # 2GB
 
-    def __init__(self, server_ip, server_hostname, cubic_server_path, 
+    def __init__(self, server_ip, server_hostname, server_pw_path, cubic_server_path, 
                  bbr_server_path, bbrv2_server_path, server_cert_path, 
                  server_key_path, client_path):
         self.server_ip = server_ip

@@ -9,7 +9,7 @@ class Msquic(Stack):
     MSQUIC_LOGS_TMPDIR = "/tmp/msquic_logs/"
     MSQUIC_LOGS_TMPFILE = "/tmp/msquic.babel.txt"
 
-    def __init__(self, server_ip, server_hostname,
+    def __init__(self, server_ip, server_hostname, server_pw_path,
                  server_path, server_cert_path, server_key_path,
                  server_static_file_dir, server_static_filename,
                  client_path, clog_sidecar_path, clog2text_path):

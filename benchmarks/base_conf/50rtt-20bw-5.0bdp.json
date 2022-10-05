@@ -1,0 +1,10 @@
+{
+    "num_trials": 5,
+    "netem_conf": {
+        "RTT_ms": 50,
+        "bandwidth_Mbps": 20,
+        "buffer_bdp": 5.0
+    },
+    "flow_duration_s": 120,
+    "virtual_interface": "enp1s0f1-br0"
+}

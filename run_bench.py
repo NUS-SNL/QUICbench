@@ -9,18 +9,7 @@ from datetime import datetime
 from operator import itemgetter
 
 from constants import *
-from stacks.chromium import Chromium
-from stacks.msquic import Msquic
-from stacks.mvfst import Mvfst
-from stacks.quiche import Quiche
-from stacks.tcp import Tcp
-from stacks.lsquic import Lsquic
-from stacks.neqo import Neqo
-from stacks.quicly import Quicly
-from stacks.quicgo import QuicGo
-from stacks.quinn import Quinn
-from stacks.s2nquic import S2nQuic
-from stacks.xquic import Xquic
+from stacks import *
 from utils.remote_cmd import get_remote_cmd, get_remote_cmd_sudo, get_scp_file_to_remote_cmd
 from network.set_netem import set_netem
 from network.clear_netem import clear_netem
@@ -43,9 +32,10 @@ def validate_exp_iflogging(exp_conf):
     """ If stacks logging is enabled, we have to ensure that: """
     def fail_validate():
         sys.exit("exiting... stacks logging is enabled and exp_conf is not valid.")
+    # logging has been found to affect performance in some stacks when bandwidth > 15 Mbps
     if exp_conf["netem_conf"]["bandwidth_Mbps"] > 15:
         fail_validate()
-    # only single flow
+    # only use with single flow has been well-tested
     for combi in exp_conf["stacks_combinations"]:
         if len(combi["stacks"]) > 1:
             fail_validate()
@@ -61,32 +51,17 @@ def check_sudo_privileges(server_hostname, server_pw_path):
 
 
 def init_stacks(stacks_conf, server_ip, server_hostname, server_pw_path):
-    chromium_stack = Chromium(server_ip, server_hostname, **stacks_conf[Chromium.NAME])
-    msquic_stack = Msquic(server_ip, server_hostname, **stacks_conf[Msquic.NAME])
-    mvfst_stack = Mvfst(server_ip, server_hostname, **stacks_conf[Mvfst.NAME])
-    quiche_stack = Quiche(server_ip, server_hostname, **stacks_conf[Quiche.NAME])
-    tcp_stack = Tcp(server_ip, server_hostname, server_pw_path)
-    lsquic_stack = Lsquic(server_ip, server_hostname, **stacks_conf[Lsquic.NAME])
-    neqo_stack = Neqo(server_ip, server_hostname, **stacks_conf[Neqo.NAME])
-    quicly_stack = Quicly(server_ip, server_hostname, **stacks_conf[Quicly.NAME])
-    quicgo_stack = QuicGo(server_ip, server_hostname, **stacks_conf[QuicGo.NAME])
-    quinn_stack = Quinn(server_ip, server_hostname, **stacks_conf[Quinn.NAME])
-    s2nquic_stack = S2nQuic(server_ip, server_hostname, **stacks_conf[S2nQuic.NAME])
-    xquic_stack = Xquic(server_ip, server_hostname, **stacks_conf[Xquic.NAME])
-    return {
-        Chromium.NAME: chromium_stack,
-        Msquic.NAME: msquic_stack,
-        Mvfst.NAME: mvfst_stack,
-        Quiche.NAME: quiche_stack,
-        Tcp.NAME: tcp_stack,
-        Lsquic.NAME: lsquic_stack,
-        Neqo.NAME: neqo_stack,
-        Quicly.NAME: quicly_stack,
-        QuicGo.NAME: quicgo_stack,
-        Quinn.NAME: quinn_stack,
-        S2nQuic.NAME: s2nquic_stack,
-        Xquic.NAME: xquic_stack
-    }
+    stacks_dict = {}    
+    def get_subclasses(kls):
+        for subclass in kls.__subclasses__():
+            yield from get_subclasses(subclass)
+            yield subclass
+    all_stacks_kls = set(get_subclasses(stack.Stack))
+    for kls in all_stacks_kls:
+        stacks_dict[kls.NAME] = kls(server_ip=server_ip, server_hostname=server_hostname,
+                                    server_pw_path=server_pw_path,
+                                    **stacks_conf.get(kls.NAME, {}))
+    return stacks_dict
 
 
 def set_kernel_params(kernel_params, server_hostname, server_pw_path):
@@ -197,7 +172,7 @@ def main():
                         "--name={}".format(combi_name), "--trial_dir={}".format(trial_results_dir)
                         ]
                     ), check=True)
-                    
+
                     if args.stack_log:
                         # only for single flow
                         stack = combi_stacks[0]
@@ -208,7 +183,7 @@ def main():
                             "--outfile={}".format(os.path.join(trial_results_dir, stack_port_no + CWND_TRACE_SUFFIX))
                             ]
                         ), check=True)
-                    
+
                     successful_trials += 1
                 
                 except:
