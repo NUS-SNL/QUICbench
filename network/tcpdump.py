@@ -22,4 +22,4 @@ class TCPDump:
         self.proc.wait()
 
     def get_start_cmd(self):
-        return ["tcpdump", "-i", self.interface, "-s", "100", "-w", self.output_file]
+        return ["tcpdump", "-B", "8192", "-i", self.interface, "-s", "100", "-w", self.output_file]
