@@ -5,6 +5,7 @@ from stacks.stack import Stack
 class S2nQuic(Stack):
     NAME = "s2nquic"
     CUBIC = "cubic"
+    NUM_BYTES_TO_TRANSFER = 2000000000 # 2GB
 
     def __init__(self, server_ip, server_hostname, server_pw_path,
                  server_path, server_static_file_dir, server_static_filename,
@@ -36,16 +37,16 @@ class S2nQuic(Stack):
     def run_server_cmd(self, port_no, cc_algo, duration_s):
         return map(str, [
             "timeout", duration_s,
-            "{} interop server --www-dir {}".format(self.server_path, self.server_static_file_dir),
+            "{} perf server".format(self.server_path),
             "--ip 0.0.0.0 --port {}".format(port_no),
-            "--disable-gso" # gso not working with current setup???
         ])
 
     def run_client_cmd(self, port_no, duration_s):
         return map(str, [
             "timeout", duration_s,
-            "{} interop client https://{}:{}/{}".format(self.client_path, self.server_ip, port_no, self.server_static_filename),
-            "--disable-gso", # gso not working with current setup???
+            "{} perf client".format(self.client_path),
+            "--ip {} --port {}".format(self.server_ip, port_no),
+            "--receive {}".format(NUM_BYTES_TO_TRANSFER),
             "> /dev/null 2>&1"
         ])
 
