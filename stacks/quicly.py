@@ -7,8 +7,8 @@ class Quicly(Stack):
     CUBIC = "cubic"
     RENO = "reno"
 
-    def __init__(self, server_ip, server_hostname, server_path,
-                 server_cert_path, server_key_path,
+    def __init__(self, server_ip, server_hostname, server_pw_path,
+                 server_path, server_cert_path, server_key_path,
                  server_static_file_dir, server_static_filename,
                  client_path):
         self.server_ip = server_ip

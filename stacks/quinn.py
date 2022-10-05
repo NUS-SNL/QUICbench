@@ -6,8 +6,8 @@ class Quinn(Stack):
     NAME = "quinn"
     CUBIC = "cubic"
 
-    def __init__(self, server_ip, server_hostname, server_cargo_path,
-                 server_path, server_cert_path, server_key_path,
+    def __init__(self, server_ip, server_hostname, server_pw_path,
+                 server_cargo_path, server_path, server_cert_path, server_key_path,
                  server_static_file_dir, server_static_filename,
                  client_cargo_path, client_path,
                  ca_path, ca_hostname):

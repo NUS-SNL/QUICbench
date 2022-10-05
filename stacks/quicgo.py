@@ -6,9 +6,9 @@ class QuicGo(Stack):
     NAME = "quicgo"
     CUBIC = "cubic"
 
-    def __init__(self, server_ip, server_hostname, go_path, server_path,
-                 server_static_file_dir, server_static_filename,
-                 client_path):
+    def __init__(self, server_ip, server_hostname, server_pw_path,
+                 go_path, server_path, server_static_file_dir,
+                 server_static_filename, client_path):
         self.server_ip = server_ip
         self.server_hostname = server_hostname
         self.go_path = go_path

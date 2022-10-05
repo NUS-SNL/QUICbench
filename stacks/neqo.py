@@ -7,9 +7,9 @@ class Neqo(Stack):
     CUBIC = "cubic"
     RENO = "newreno"
 
-    def __init__(self, server_ip, server_hostname, ld_library_path,
-                 server_path, server_db_path, server_static_filename,
-                 client_path):
+    def __init__(self, server_ip, server_hostname, server_pw_path,
+                 ld_library_path, server_path, server_db_path,
+                 server_static_filename, client_path):
         self.server_ip = server_ip
         self.server_hostname = server_hostname
         self.ld_library_path = ld_library_path
