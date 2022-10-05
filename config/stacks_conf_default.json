@@ -80,7 +80,8 @@
     },
     "quicgo": {
         "go_path": "/usr/local/go/bin/go",
-        "server_path": "/home/quic/quic_experiments/quic-go/example",
+        "cubic_server_path": "/home/quic/quic_experiments/quic-go-cubic/example",
+        "reno_server_path": "/home/quic/quic_experiments/quic-go-reno/example",
         "server_static_file_dir": "/www",
         "server_static_filename": "index.html",
         "client_path": "/home/quic/quic_experiments/quic-go/example/client"
