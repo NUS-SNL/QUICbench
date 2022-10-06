@@ -39,6 +39,8 @@ class S2nQuic(Stack):
             "timeout", duration_s,
             "{} perf server".format(self.server_path),
             "--ip 0.0.0.0 --port {}".format(port_no),
+            # gso does not work on the setup ?
+            "--disable-gso"
         ])
 
     def run_client_cmd(self, port_no, duration_s):
@@ -46,7 +48,9 @@ class S2nQuic(Stack):
             "timeout", duration_s,
             "{} perf client".format(self.client_path),
             "--ip {} --port {}".format(self.server_ip, port_no),
-            "--receive {}".format(NUM_BYTES_TO_TRANSFER),
+            "--receive {}".format(S2nQuic.NUM_BYTES_TO_TRANSFER),
+            # gso does not work on the setup ?
+            "--disable-gso",
             "> /dev/null 2>&1"
         ])
 
