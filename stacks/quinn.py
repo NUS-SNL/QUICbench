@@ -5,10 +5,12 @@ from stacks.stack import Stack
 class Quinn(Stack):
     NAME = "quinn"
     CUBIC = "cubic"
+    BBR = "bbr"
     RENO = "reno"
+    NUM_BYTES_TO_TRANSFER = 2000000000 # 2GB
 
     def __init__(self, server_ip, server_hostname, server_pw_path,
-                 server_cargo_path, cubic_server_path, reno_server_path,
+                 server_cargo_path, cubic_server_path, bbr_server_path, reno_server_path,
                  server_cert_path, server_key_path,
                  server_static_file_dir, server_static_filename,
                  client_cargo_path, client_path,
@@ -18,6 +20,7 @@ class Quinn(Stack):
         self.server_cargo_path = server_cargo_path
         self.server_paths = {
             Quinn.CUBIC: cubic_server_path,
+            Quinn.BBR: bbr_server_path,
             Quinn.RENO: reno_server_path,
         }
         self.server_cert_path = server_cert_path
@@ -41,20 +44,17 @@ class Quinn(Stack):
     def run_server_cmd(self, port_no, cc_algo, duration_s):
         return map(str, [
             "timeout", duration_s,
-            "{} run --manifest-path={} --example server --".format(self.server_cargo_path, self.server_paths[cc_algo]),
-            "--cert {} --key {}".format(self.server_cert_path, self.server_key_path),
-            "--listen 0.0.0.0:{} {}".format(port_no, self.server_static_file_dir)
+            "{} run --manifest-path={} --release --bin perf_server --".format(self.server_cargo_path, self.server_paths[cc_algo]),
+            "--listen 0.0.0.0:{}".format(port_no)
         ])
 
     def run_client_cmd(self, port_no, duration_s):
         return map(str, [
-            "timeout", duration_s,
-            "{} run --manifest-path={} --example client --".format(self.client_cargo_path, self.client_path),
-            "--ca {} --host {}".format(self.ca_path, self.ca_hostname),
-            "https://{}:{}/{}".format(self.server_ip, port_no, self.server_static_filename),
-            "> /dev/null 2>&1"
+            "{} run --manifest-path={} --release --bin perf_client --".format(self.client_cargo_path, self.client_path),
+            "--download-size {} --duration {} --interval {}".format(Quinn.NUM_BYTES_TO_TRANSFER, duration_s, duration_s),
+            "{}:{}".format(self.server_ip, port_no)
         ])
 
     @staticmethod
     def get_cc_algos():
-        return [Quinn.CUBIC, Quinn.RENO]
+        return [Quinn.CUBIC, Quinn.BBR, Quinn.RENO]
