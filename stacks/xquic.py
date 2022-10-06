@@ -37,7 +37,7 @@ class Xquic(Stack):
             "cd {} &&".format(self.server_path),
             "timeout", duration_s,
             "./test_server -s 2000000000 -c {}".format(Xquic.CC_NAME_MAP[cc_algo]),
-            "-p {}".format(port_no),
+            "-C -p {}".format(port_no),
             "-o /dev/null > /dev/null 2>&1"
         ])
 
