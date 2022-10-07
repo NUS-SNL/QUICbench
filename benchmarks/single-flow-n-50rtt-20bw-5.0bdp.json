@@ -1,177 +1,162 @@
 {
-    "experiment_name": "two-flows-new-5bdp",
-    "experiment_results_dir": "/home/quic/quic_bench_results/two-flows-new-5bdp",
-    "num_trials": 5,
+    "experiment_name": "single-flow-n-50rtt-20bw-5.0bdp",
+    "experiment_results_dir": "/home/quic/quic_bench_results/single-flow-n-50rtt-20bw-5.0bdp",
+    "num_trials": 3,
     "netem_conf": {
         "RTT_ms": 50,
         "bandwidth_Mbps": 20,
-        "buffer_bdp": 5
+        "buffer_bdp": 5.0
     },
     "flow_duration_s": 120,
     "virtual_interface": "enp1s0f1-br0",
     "stacks_combinations": [
         {
-            "name": "lsquic-cubic_tcp-cubic",
+            "name": "lsquic-cubic",
             "stacks": [
                 {
                     "name": "lsquic",
                     "cc_algo": "cubic",
                     "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "cubic",
-                    "port_no": "4001"
                 }
             ]
         },
         {
-            "name": "lsquic-bbr_tcp-bbr",
+            "name": "lsquic-bbr",
             "stacks": [
                 {
                     "name": "lsquic",
                     "cc_algo": "bbr",
                     "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "bbr",
-                    "port_no": "4001"
                 }
             ]
         },
         {
-            "name": "neqo-cubic_tcp-cubic",
+            "name": "neqo-cubic",
             "stacks": [
                 {
                     "name": "neqo",
                     "cc_algo": "cubic",
                     "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "cubic",
-                    "port_no": "4001"
                 }
             ]
         },
         {
-            "name": "neqo-newreno_tcp-reno",
+            "name": "neqo-newreno",
             "stacks": [
                 {
                     "name": "neqo",
                     "cc_algo": "newreno",
                     "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "reno",
-                    "port_no": "4001"
                 }
             ]
         },
         {
-            "name": "quicly-cubic_tcp-cubic",
+            "name": "quicly-cubic",
             "stacks": [
                 {
                     "name": "quicly",
                     "cc_algo": "cubic",
                     "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "cubic",
-                    "port_no": "4001"
                 }
             ]
         },
         {
-            "name": "quicly-reno_tcp-reno",
+            "name": "quicly-reno",
             "stacks": [
                 {
                     "name": "quicly",
                     "cc_algo": "reno",
                     "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "reno",
-                    "port_no": "4001"
                 }
             ]
         },
         {
-            "name": "quicgo-cubic_tcp-cubic",
-            "stacks": [
-                {
-                    "name": "quicgo",
-                    "cc_algo": "cubic",
-                    "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "cubic",
-                    "port_no": "4001"
-                }
-            ]
-        },
-        {
-            "name": "quinn-cubic_tcp-cubic",
+            "name": "quinn-cubic",
             "stacks": [
                 {
                     "name": "quinn",
                     "cc_algo": "cubic",
                     "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "cubic",
-                    "port_no": "4001"
                 }
             ]
         },
         {
-            "name": "tcp-cubic_tcp-cubic",
+            "name": "quinn-reno",
             "stacks": [
                 {
-                    "name": "tcp",
-                    "cc_algo": "cubic",
-                    "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "cubic",
-                    "port_no": "4001"
-                }
-            ]
-        },
-        {
-            "name": "tcp-bbr_tcp-bbr",
-            "stacks": [
-                {
-                    "name": "tcp",
-                    "cc_algo": "bbr",
-                    "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "bbr",
-                    "port_no": "4001"
-                }
-            ]
-        },
-        {
-            "name": "tcp-reno_tcp-reno",
-            "stacks": [
-                {
-                    "name": "tcp",
+                    "name": "quinn",
                     "cc_algo": "reno",
                     "port_no": "4000"
-                },
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic",
+            "stacks": [
                 {
-                    "name": "tcp",
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
                     "cc_algo": "reno",
-                    "port_no": "4001"
+                    "port_no": "4000"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
                 }
             ]
         }
