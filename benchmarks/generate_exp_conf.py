@@ -11,6 +11,7 @@ import sys
 sys.path.insert(1, os.path.join(sys.path[0], '..')) # allow importing from parent dir (repo)
 
 from utils.files import read_json_as_dict, dump_dict_as_json
+from stacks import *
 from stacks.stack import Stack
 from stacks.chromium import Chromium
 from stacks.msquic import Msquic
