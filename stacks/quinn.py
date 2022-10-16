@@ -5,12 +5,11 @@ from stacks.stack import Stack
 class Quinn(Stack):
     NAME = "quinn"
     CUBIC = "cubic"
-    BBR = "bbr"
     RENO = "reno"
     NUM_BYTES_TO_TRANSFER = 2000000000 # 2GB
 
     def __init__(self, server_ip, server_hostname, server_pw_path,
-                 server_cargo_path, cubic_server_path, bbr_server_path, reno_server_path,
+                 server_cargo_path, cubic_server_path, reno_server_path,
                  server_cert_path, server_key_path,
                  server_static_file_dir, server_static_filename,
                  client_cargo_path, client_path,
@@ -20,7 +19,6 @@ class Quinn(Stack):
         self.server_cargo_path = server_cargo_path
         self.server_paths = {
             Quinn.CUBIC: cubic_server_path,
-            Quinn.BBR: bbr_server_path,
             Quinn.RENO: reno_server_path,
         }
         self.server_cert_path = server_cert_path
@@ -57,4 +55,4 @@ class Quinn(Stack):
 
     @staticmethod
     def get_cc_algos():
-        return [Quinn.CUBIC, Quinn.BBR, Quinn.RENO]
+        return [Quinn.CUBIC, Quinn.RENO]
