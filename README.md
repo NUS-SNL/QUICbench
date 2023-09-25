@@ -2,8 +2,14 @@
 #### _Benchmarking tool for IETF QUIC stacks_
 
 QUIC bench is a tool for automatic benchmarking of IETF QUIC stacks to help us understand their transport-layer performance.
-After being deployed on a testbed, and with the configurations specified, it can run benchmarking experiments, capture transport-layer metrics, 
-and generate visualizations of these metrics.
+After being deployed on a testbed, and with the configurations specified, it can run benchmarking experiments, capture transport-layer metrics, and generate visualizations of these metrics.
+
+## Publications
+
+- Ayush Mishra, and Ben Leong. ["Containing the Cambrian Explosion in QUIC Congestion Control"](https://www.comp.nus.edu.sg/~bleong/publications/imc2023-quic.pdf) Proceedings of the 2023 Internet Measurement Conference (IMC '23). Oct 2023. 
+
+- Ayush Mishra, Sherman Lim, and Ben Leong. ["Understanding Speciation in QUIC Congestion Control"](https://www.comp.nus.edu.sg/~bleong/publications/imc2022-quicbench.pdf) Proceedings of the 2022 Internet Measurement Conference (IMC '22). Oct 2022. 
+
 
 ## Overview
 
