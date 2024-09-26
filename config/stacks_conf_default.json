@@ -109,6 +109,15 @@
         "server_path": "/home/quic/quic_experiments/xquic/build",
         "client_path": "/home/quic/quic_experiments/xquic/build"
     },
+    "aioquic": {
+        "server_path": "/home/quic/quic_experiments/aioquic/examples/http3_server.py ",
+        "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
+        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
+        "server_static_file_dir": "/www",
+        "server_static_filename": "index.html",
+        "client_path": "/home/quic/quic_experiments/aioquic/examples/http3_client.py",
+        "ca_path": "/home/quic/quic_experiments/certs/myCA.der"
+    },
     "stack_parser_map": {
         "chromium": "parse_chromium.py",
         "msquic": "parse_msquic.py",

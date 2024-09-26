@@ -1,0 +1,22 @@
+{
+    "experiment_name": "newflows",
+    "experiment_results_dir": "/home/quic/quic_bench_results/newflows",
+    "num_trials": 1,
+    "netem_conf": {
+        "RTT_ms": 50,
+        "bandwidth_Mbps": 20,
+        "buffer_bdp": 0.5
+    },
+    "flow_duration_s": 5,
+    "virtual_interface": "enp1s0f1-br0",
+    "stacks_combinations": [
+        {
+            "name": "aioquic-cubic",
+            "stacks": [ { "name": "aioquic", "cc_algo": "cubic", "port_no": "4000" } ]
+        },
+        {
+            "name": "aioquic-reno",
+            "stacks": [ { "name": "aioquic", "cc_algo": "reno", "port_no": "4000" } ]
+        }
+    ]
+}
