@@ -1,0 +1,104 @@
+{
+    "experiment_name": "cubic-v-bbr-model-100bw-2.5bdp",
+    "experiment_results_dir": "/home/quic/quic_bench_results/cubic-v-bbr-model/100bw-2.5bdp",
+    "num_trials": 1,
+    "netem_conf": {
+        "RTT_ms": 50,
+        "bandwidth_Mbps": 100,
+        "buffer_bdp": 2.5
+    },
+    "flow_duration_s": 120,
+    "virtual_interface": "enp1s0f1-br0",
+    "stacks_combinations": [
+        {
+            "name": "tcp-bbr_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "mvfst-bbr_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "tcp-bbr_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "mvfst-bbr_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        }
+    ]
+}

@@ -106,14 +106,14 @@ def main():
     
     try:
         # set up results dir on server-side
-        subprocess.run(get_remote_cmd(server_hostname, ["mkdir", experiment_results_dir]), check=True)
-        for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
-            subprocess.run(get_scp_file_to_remote_cmd(server_hostname, conf, experiment_results_dir), check=True)
+        # subprocess.run(get_remote_cmd(server_hostname, ["mkdir", experiment_results_dir]), check=True)
+        # for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
+            # subprocess.run(get_scp_file_to_remote_cmd(server_hostname, conf, experiment_results_dir), check=True)
 
         for combi in stacks_combinations:
             combi_name, combi_stacks  = itemgetter("name", "stacks")(combi)
             combi_results_dir = os.path.join(experiment_results_dir, combi_name)
-            subprocess.run(get_remote_cmd(server_hostname, ["mkdir", combi_results_dir]), check=True)
+            # subprocess.run(get_remote_cmd(server_hostname, ["mkdir", combi_results_dir]), check=True)
 
             random.shuffle(combi_stacks)
 
@@ -123,7 +123,7 @@ def main():
                 # run a trial for stack combination
                 trial_datetime = datetime.now().strftime("%Y-%m-%d:%H:%M:%S")
                 trial_results_dir = os.path.join(combi_results_dir, trial_datetime)
-                subprocess.run(get_remote_cmd(server_hostname, ["mkdir", trial_results_dir]), check=True)
+                subprocess.run(get_remote_cmd(server_hostname, ["mkdir -p", trial_results_dir]), check=True)
 
                 try:                
                     # start servers
@@ -185,6 +185,16 @@ def main():
                         ), check=True)
 
                     successful_trials += 1
+
+                    if has_veth:
+                        tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
+                        subprocess.run(get_remote_cmd(
+                            server_hostname, ["rm", tcpdump_veth_output_file]
+                        ))
+                    tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
+                    subprocess.run(get_remote_cmd(
+                        server_hostname, ["rm", tcpdump_interface_output_file]
+                    ))
                 
                 except:
                     time.sleep(flow_duration_s) # wait for servers to timeout

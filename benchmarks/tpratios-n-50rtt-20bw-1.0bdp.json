@@ -1,0 +1,3719 @@
+{
+    "experiment_name": "tpratios-n-50rtt-20bw-1.0bdp",
+    "experiment_results_dir": "/home/quic/quic_bench_results/tpratios-n-50rtt-20bw-1.0bdp",
+    "num_trials": 5,
+    "netem_conf": {
+        "RTT_ms": 50,
+        "bandwidth_Mbps": 20,
+        "buffer_bdp": 1.0
+    },
+    "flow_duration_s": 120,
+    "virtual_interface": "enp1s0f1-br0",
+    "stacks_combinations": [
+        {
+            "name": "lsquic-cubic_lsquic-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_lsquic-bbr",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_quicgo-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_quicgo-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_quicly-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_quicly-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_quinn-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_quinn-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_s2nquic-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_xquic-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_quiche-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-cubic_tcp-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_lsquic-bbr",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_quicgo-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_quicgo-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_quicly-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_quicly-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_quinn-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_quinn-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_s2nquic-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_xquic-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_quiche-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "lsquic-bbr_tcp-reno",
+            "stacks": [
+                {
+                    "name": "lsquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_quicgo-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_quicgo-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_quicly-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_quicly-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_quinn-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_quinn-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_s2nquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_xquic-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_quiche-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-cubic_tcp-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_quicgo-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_quicly-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_quicly-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_quinn-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_quinn-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_s2nquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_xquic-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_quiche-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicgo-reno_tcp-reno",
+            "stacks": [
+                {
+                    "name": "quicgo",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_quicly-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_quicly-reno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_quinn-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_quinn-reno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_s2nquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_xquic-reno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_quiche-reno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_tcp-reno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_quicly-reno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_quinn-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_quinn-reno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_s2nquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_xquic-reno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_quiche-reno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-reno_tcp-reno",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_quinn-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_quinn-reno",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_s2nquic-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_xquic-reno",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_quiche-reno",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-cubic_tcp-reno",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_quinn-reno",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_s2nquic-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_xquic-reno",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_quiche-reno",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quinn-reno_tcp-reno",
+            "stacks": [
+                {
+                    "name": "quinn",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_s2nquic-cubic",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_xquic-reno",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_quiche-reno",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "s2nquic-cubic_tcp-reno",
+            "stacks": [
+                {
+                    "name": "s2nquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_xquic-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_xquic-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_quiche-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-cubic_tcp-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_xquic-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_xquic-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_quiche-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbr_tcp-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_xquic-bbrv2",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_xquic-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_quiche-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-bbrv2_tcp-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_xquic-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_chromium-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_chromium-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_chromium-bbrv2",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbrv2",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_msquic-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "msquic",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_mvfst-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_mvfst-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_mvfst-newreno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "mvfst",
+                    "cc_algo": "newreno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_quiche-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_quiche-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "xquic-reno_tcp-reno",
+            "stacks": [
+                {
+                    "name": "xquic",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        }
+    ]
+}

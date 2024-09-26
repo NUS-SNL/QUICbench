@@ -18,6 +18,12 @@ from stacks.msquic import Msquic
 from stacks.mvfst import Mvfst
 from stacks.quiche import Quiche
 from stacks.tcp import Tcp
+from stacks.lsquic import Lsquic
+from stacks.quicgo import QuicGo
+from stacks.quicly import Quicly
+from stacks.quinn import Quinn
+from stacks.s2nquic import S2nQuic
+from stacks.xquic import Xquic
 from stacks.modified_stacks import *
 
 # Define constants:
@@ -27,7 +33,9 @@ DEFAULT_PE_STACKS = [
 DEFAULT_TPRATIOS_STACKS = [
     Chromium.NAME, Msquic.NAME, Mvfst.NAME, Quiche.NAME, Tcp.NAME
 ]
-
+NEW_TPRATIOS_STACKS = [
+    Lsquic.NAME, QuicGo.NAME, Quicly.NAME, Quinn.NAME, S2nQuic.NAME, Xquic.NAME
+]
 
 def get_subclasses(kls):
     for subclass in kls.__subclasses__():
@@ -59,21 +67,30 @@ def get_generate_exp_conf_args():
 
 def main():
     args = get_generate_exp_conf_args()
-    stacks = args.stacks
-    if not stacks:
-        stacks = DEFAULT_PE_STACKS if args.type == "pe" else DEFAULT_TPRATIOS_STACKS
+    new_stacks = NEW_TPRATIOS_STACKS
+    all_stacks = NEW_TPRATIOS_STACKS + DEFAULT_TPRATIOS_STACKS
+
     
-    stacks_w_cc = []
-    for stack in stacks:
-        stack_kls = get_stack_from_name(stack)
-        for cc_algo in stack_kls.get_cc_algos():
-            stacks_w_cc.append({ "name": stack_kls.NAME, "cc_algo": cc_algo })
+    def get_stack_w_cc(stacks):
+        stacks_w_cc = []
+        for stack in stacks:
+            stack_kls = get_stack_from_name(stack)
+            for cc_algo in stack_kls.get_cc_algos():
+                stacks_w_cc.append({ "name": stack_kls.NAME, "cc_algo": cc_algo })
+        return stacks_w_cc
+
+    new_stacks_w_cc = get_stack_w_cc(new_stacks)
+    all_stacks_w_cc = get_stack_w_cc(all_stacks)
+
+    print(len(new_stacks_w_cc))
+    print(new_stacks_w_cc)
+    print(len(all_stacks_w_cc))    
     
     stacks_combinations = []
-    for i in range(len(stacks_w_cc)):
-        for j in range(i, len(stacks_w_cc)):
-            stack1 = stacks_w_cc[i]
-            stack2 = stacks_w_cc[j]
+    for i in range(len(new_stacks_w_cc)):
+        for j in range(i, len(all_stacks_w_cc)):
+            stack1 = new_stacks_w_cc[i]
+            stack2 = all_stacks_w_cc[j]
             if args.type == "pe" and not (stack2["name"] == Tcp.NAME and stack2["cc_algo"] in stack1["cc_algo"]):
                 continue
             stacks_combinations.append({
