@@ -98,7 +98,8 @@ def main():
         server_ingress_interface, exp_conf["netem_conf"], virtual_interface)
     
     test_rtt(server_ip)
-    test_bandwidth(server_hostname, server_ip)
+    ## 24 Oct 2024 - seems to be causing problems, commented out for now
+    # test_bandwidth(server_hostname, server_ip)
 
     # Starting experiment
     experiment_results_dir, num_trials, flow_duration_s, stacks_combinations = \
@@ -111,7 +112,9 @@ def main():
             # subprocess.run(get_scp_file_to_remote_cmd(server_hostname, conf, experiment_results_dir), check=True)
 
         for combi in stacks_combinations:
+            
             combi_name, combi_stacks  = itemgetter("name", "stacks")(combi)
+            print(f"---- COMBI {combi_name} -------")
             combi_results_dir = os.path.join(experiment_results_dir, combi_name)
             # subprocess.run(get_remote_cmd(server_hostname, ["mkdir", combi_results_dir]), check=True)
 
