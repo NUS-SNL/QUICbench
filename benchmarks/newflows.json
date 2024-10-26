@@ -33,6 +33,18 @@
         {
             "name": "picoquic-fast",
             "stacks": [ { "name": "picoquic", "cc_algo": "fast", "port_no": "4000" } ]
+        },
+        {
+            "name": "ngtcp2-cubic",
+            "stacks": [ { "name": "ngtcp2", "cc_algo": "cubic", "port_no": "4000" } ]
+        },
+        {
+            "name": "ngtcp2-reno",
+            "stacks": [ { "name": "ngtcp2", "cc_algo": "reno", "port_no": "4000" } ]
+        },
+        {
+            "name": "ngtcp2-bbr",
+            "stacks": [ { "name": "ngtcp2", "cc_algo": "bbr", "port_no": "4000" } ]
         }
     ]
 }
