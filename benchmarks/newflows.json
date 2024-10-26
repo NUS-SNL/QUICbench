@@ -17,6 +17,22 @@
         {
             "name": "aioquic-reno",
             "stacks": [ { "name": "aioquic", "cc_algo": "reno", "port_no": "4000" } ]
+        },
+        {
+            "name": "picoquic-cubic",
+            "stacks": [ { "name": "picoquic", "cc_algo": "cubic", "port_no": "4000" } ]
+        },
+        {
+            "name": "picoquic-reno",
+            "stacks": [ { "name": "picoquic", "cc_algo": "reno", "port_no": "4000" } ]
+        },
+        {
+            "name": "picoquic-bbr",
+            "stacks": [ { "name": "picoquic", "cc_algo": "bbr", "port_no": "4000" } ]
+        },
+        {
+            "name": "picoquic-fast",
+            "stacks": [ { "name": "picoquic", "cc_algo": "fast", "port_no": "4000" } ]
         }
     ]
 }
