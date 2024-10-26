@@ -124,5 +124,23 @@
         "mvfst": "parse_qlog.py",
         "quiche": "parse_sqlog.py",
         "tcp": "parse_tcp.py"
+    },
+    "picoquic":{
+        "server_path": "/home/quic/quic_experiments/picoquic/picoquicdemo ",
+        "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
+        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
+        "server_static_file_dir": "/www",
+        "server_static_filename": "index.html",
+        "client_path": "/home/quic/quic_experiments/picoquic/picoquicdemo",
+        "ca_path": "/home/quic/quic_experiments/certs/myCA.der"
+    },
+    "haskell": {
+        "server_path": "/home/quic/quic_experiments/quic/dist-newstyle/build/x86_64-linux/ghc-9.4.8/quic-0.2.2/x/quic-server/build/quic-server/quic-server",
+        "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
+        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
+        "server_static_file_dir": "/www",
+        "server_static_filename": "index.html",
+        "client_path": "/home/quic/quic_experiments/quic/dist-newstyle/build/x86_64-linux/ghc-9.4.8/quic-0.2.2/x/quic-client/build/quic-client/quic-client",
+        "ca_path": "/home/quic/quic_experiments/certs/myCA.der"
     }
 }

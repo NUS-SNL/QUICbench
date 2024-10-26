@@ -2,12 +2,9 @@ import subprocess
 from utils.remote_cmd import get_remote_cmd
 from stacks.stack import Stack
 
-class Picoquic(Stack):
-    NAME = "picoquic"
-    CUBIC = "cubic"
+class Haskell(Stack):
+    NAME = "haskell"
     RENO = "reno"
-    BBR = "bbr"
-    FAST = "fast"
 
     def __init__(self, server_ip, server_hostname, server_pw_path,
                  server_path, server_cert_path, server_key_path,
@@ -33,14 +30,12 @@ class Picoquic(Stack):
         return subprocess.Popen(" ".join(cmd), shell=True)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
-        # configs taken from https://github.com/aiortc/aioquic/blob/1.2.0/examples/http3_server.py
         return map(str, [
             "timeout", duration_s,
-            "{} -c {}".format(self.server_path, self.server_cert_path),
+            "{} --cert {}".format(self.server_path, self.server_cert_path),
             "-k {}".format(self.server_key_path),
             "-G {} ".format(cc_algo),
-            "-p {}".format(port_no),
-            "-w {}".format(self.server_static_file_dir)
+            "-p {}".format(port_no)
         ])
 
     def run_client_cmd(self, port_no, duration_s):
