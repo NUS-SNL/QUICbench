@@ -33,6 +33,8 @@ class Aioquic(Stack):
     def run_server_cmd(self, port_no, cc_algo, duration_s):
         # configs taken from https://github.com/aiortc/aioquic/blob/1.2.0/examples/http3_server.py
         return map(str, [
+            # necessary to export STATIC_ROOT as an env var for aioquic
+            "export STATIC_ROOT={} &&".format(self.server_static_file_dir), 
             "timeout", duration_s,
             "python3 {} --certificate {}".format(self.server_path, self.server_cert_path),
             "--private-key {}".format(self.server_key_path),
@@ -45,7 +47,7 @@ class Aioquic(Stack):
             "timeout", duration_s,
             "python3 {}  --insecure".format(self.client_path),
             "--ca-certs {}".format(self.ca_path),
-             " https://{}:{}".format(self.server_ip, port_no),
+             "https://{}:{}/".format(self.server_ip, port_no, self.server_static_filename),
             "> /dev/null 2>&1"
         ])
 
