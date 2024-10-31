@@ -24,30 +24,36 @@ class Aioquic(Stack):
     def run_remote_server(self, port_no, cc_algo, duration_s):
         cmd = self.run_server_cmd(port_no, cc_algo, duration_s)
         cmd = get_remote_cmd(self.server_hostname, cmd)
-        return subprocess.Popen(cmd)
+        return subprocess.Popen(" ".join(cmd), shell=True)
 
     def run_client(self, port_no, cc_algo, duration_s):
         cmd = self.run_client_cmd(port_no, duration_s)
-        return subprocess.Popen(" ".join(cmd), shell=True)
+        # for some reason passing in " ".join(cmd) directly into subprocess.Popen does not work...
+        # so we save it to a variable first
+        newcmd = " ".join(cmd)
+        return subprocess.Popen(newcmd, shell=True)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
         # configs taken from https://github.com/aiortc/aioquic/blob/1.2.0/examples/http3_server.py
         return map(str, [
             # necessary to export STATIC_ROOT as an env var for aioquic
-            "export STATIC_ROOT={} &&".format(self.server_static_file_dir), 
+            "\"export STATIC_ROOT={} &&".format(self.server_static_file_dir), 
             "timeout", duration_s,
             "python3 {} --certificate {}".format(self.server_path, self.server_cert_path),
             "--private-key {}".format(self.server_key_path),
-            "--congestion-control-algorithm {} ".format(cc_algo),
-            "--host 0.0.0.0 --port {}".format(port_no)
+            "--congestion-control-algorithm {} -v".format(cc_algo),
+            "--host 0.0.0.0 --port {}\"".format(port_no)
         ])
 
     def run_client_cmd(self, port_no, duration_s):
         return map(str, [
             "timeout", duration_s,
-            "python3 {}  --insecure".format(self.client_path),
-            "--ca-certs {}".format(self.ca_path),
-             "https://{}:{}/".format(self.server_ip, port_no, self.server_static_filename),
+            "python3",
+            self.client_path,
+            "--insecure",
+            "-v",
+            "--ca-certs", self.ca_path,
+            "https://{}:{}/{}".format(self.server_ip, port_no, self.server_static_filename),
             "> /dev/null 2>&1"
         ])
 
