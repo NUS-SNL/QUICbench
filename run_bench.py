@@ -168,6 +168,8 @@ def main():
                     if has_veth:
                         tcpdump_veth.stop()
 
+                    print("Done with capture, starting pcap")
+
                     subprocess.run(get_remote_cmd(server_hostname,
                         ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
                         "--exp_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.exp_conf))),
@@ -189,15 +191,15 @@ def main():
 
                     successful_trials += 1
 
-                    if has_veth:
-                        tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
-                        subprocess.run(get_remote_cmd(
-                            server_hostname, ["rm", tcpdump_veth_output_file]
-                        ))
-                    tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
-                    subprocess.run(get_remote_cmd(
-                        server_hostname, ["rm", tcpdump_interface_output_file]
-                    ))
+                    # if has_veth:
+                    #     tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
+                    #     subprocess.run(get_remote_cmd(
+                    #         server_hostname, ["rm", tcpdump_veth_output_file]
+                    #     ))
+                    # tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
+                    # subprocess.run(get_remote_cmd(
+                    #     server_hostname, ["rm", tcpdump_interface_output_file]
+                    # ))
                 
                 except:
                     time.sleep(flow_duration_s) # wait for servers to timeout
@@ -211,7 +213,7 @@ def main():
 
                     # kill processes
                     subprocess.run(get_remote_cmd(server_hostname, ["pkill", "tcpdump"]))
-
+        
                     # delete trial
                     subprocess.run(get_remote_cmd(
                         server_hostname, ["rm", "-rf", trial_results_dir]

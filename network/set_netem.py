@@ -37,7 +37,10 @@ def set_netem(server_hostname, server_pw_path, server_ip, interface, ingress_int
     delay_ms = RTT_ms // 2
     buffer_bytes = int(RTT_ms * bandwidth_Mbps * 1000 / 8 * buffer_bdp)
     bandwidth_Kbps = bandwidth_Mbps * 1000
-    burst_bytes = int(bandwidth_Mbps * 1000000 / 250 / 8) # https://unix.stackexchange.com/questions/100785/bucket-size-in-tbf
+    # https://unix.stackexchange.com/questions/100785/bucket-size-in-tbf
+    burst_bytes = int(bandwidth_Mbps * 1000000 / 250 / 8) 
+    # 9 Nov 2024: multiplied by 1.5 because a lower burst has issues when there are too many packets for tcp
+    burst_bytes = int(1.5 * burst_bytes)
     cmd = (
         "sudo tc qdisc add dev {interface} root handle 1:0 netem delay {delay_ms}ms limit 12500;"
         "sudo tc qdisc add dev {interface} parent 1:1 handle 10: tbf rate {bandwidth_Kbps}kbit limit {buffer_bytes} burst {burst_bytes};"
