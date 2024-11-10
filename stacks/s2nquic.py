@@ -32,7 +32,8 @@ class S2nQuic(Stack):
             raise ValueError("{} is not a valid cc_algo for quicgo".format(cc_algo))
 
         cmd = self.run_client_cmd(port_no, duration_s)
-        return subprocess.Popen(" ".join(cmd), shell=True)
+        newcmd = " ".join(cmd)
+        return subprocess.Popen(newcmd, shell=True)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
         return map(str, [

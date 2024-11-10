@@ -26,6 +26,7 @@ class Quiche(Stack):
     def run_remote_server(self, port_no, cc_algo, duration_s):
         cmd = self.run_server_cmd(port_no, cc_algo, duration_s)
         cmd = get_remote_cmd(self.server_hostname, cmd)
+        print(" ".join(cmd))
         return subprocess.Popen(cmd)
 
     def run_remote_server_wlogs(self, port_no, cc_algo, duration_s, log_path):
@@ -35,7 +36,8 @@ class Quiche(Stack):
 
     def run_client(self, port_no, cc_algo, duration_s):
         cmd = self.run_client_cmd(port_no, duration_s)
-        return subprocess.Popen(" ".join(cmd), shell=True)
+        cmd = " ".join(cmd)
+        return subprocess.Popen(cmd, shell=True)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
         return map(str, [

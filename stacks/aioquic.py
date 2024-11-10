@@ -24,7 +24,8 @@ class Aioquic(Stack):
     def run_remote_server(self, port_no, cc_algo, duration_s):
         cmd = self.run_server_cmd(port_no, cc_algo, duration_s)
         cmd = get_remote_cmd(self.server_hostname, cmd)
-        return subprocess.Popen(" ".join(cmd), shell=True)
+        newcmd = " ".join(cmd)
+        return subprocess.Popen(newcmd, shell=True)
 
     def run_client(self, port_no, cc_algo, duration_s):
         cmd = self.run_client_cmd(port_no, duration_s)

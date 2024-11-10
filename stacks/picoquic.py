@@ -30,7 +30,8 @@ class Picoquic(Stack):
 
     def run_client(self, port_no, cc_algo, duration_s):
         cmd = self.run_client_cmd(port_no, duration_s)
-        return subprocess.Popen(" ".join(cmd), shell=True)
+        newcmd = " ".join(cmd)
+        return subprocess.Popen(newcmd, shell=True)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
         # configs taken from https://github.com/aiortc/aioquic/blob/1.2.0/examples/http3_server.py
