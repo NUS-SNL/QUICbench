@@ -47,6 +47,7 @@ class Picoquic(Stack):
     def run_client_cmd(self, port_no, duration_s):
         return map(str, [
             "timeout", duration_s,
+            "-n test",
             "{}".format(self.client_path),
             "-c {}".format(self.ca_path),
             "-D", # disables saving of the response

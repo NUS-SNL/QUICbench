@@ -151,6 +151,16 @@
         "server_static_filename": "index.html",
         "client_path": "/home/quic/quic_experiments/ngtcp2/ngtcp2/examples/wsslclient",
         "ca_path": "/home/quic/quic_experiments/certs/myCA.der"
+    },
+    "nginx": {
+        "server_path": "/home/quic/quic_experiments/nginx/objs/nginx",
+        "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
+        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
+        "server_static_file_dir": "/www",
+        "server_static_filename": "index.html",
+        "client_path": "/home/quic/quic_experiments/ngtcp2/ngtcp2/examples/wsslclient",
+        "ca_path": "/home/quic/quic_experiments/certs/myCA.der",
+        "nginx_conf_path":"/home/quic/quic_experiments/QUIC-bench/stacks/nginx_conf/nginx.conf"
     }
     
 }

@@ -49,4 +49,4 @@ class Haskell(Stack):
 
     @staticmethod
     def get_cc_algos():
-        return [Picoquic.CUBIC, Picoquic.RENO, Picoquic.BBR, Picoquic.FAST]
+        return [Haskell.RENO]
