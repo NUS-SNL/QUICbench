@@ -27,24 +27,23 @@ class Haskell(Stack):
 
     def run_client(self, port_no, cc_algo, duration_s):
         cmd = self.run_client_cmd(port_no, duration_s)
-        return subprocess.Popen(" ".join(cmd), shell=True)
+        newcmd = " ".join(cmd)
+        return subprocess.Popen(newcmd, shell=True)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
         return map(str, [
             "timeout", duration_s,
             "{} --cert {}".format(self.server_path, self.server_cert_path),
-            "-k {}".format(self.server_key_path),
-            "-G {} ".format(cc_algo),
-            "-p {}".format(port_no)
+            "--key {}".format(self.server_key_path),
+            "-D {}/{}".format(self.server_static_file_dir, self.server_static_filename),
+            "{} {}".format(self.server_ip, port_no)
         ])
 
     def run_client_cmd(self, port_no, duration_s):
         return map(str, [
             "timeout", duration_s,
             "{}".format(self.client_path),
-            "-c {}".format(self.ca_path),
-            "-D", # disables saving of the response
-             "{} {} index.html".format(self.server_ip, port_no),
+             "{} {}".format(self.server_ip, port_no),
             "> /dev/null 2>&1"
         ])
 
