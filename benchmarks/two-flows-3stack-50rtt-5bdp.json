@@ -86,6 +86,21 @@
             ]
         },
         {
+            "name": "quiche-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
             "name": "quiche-reno_tcp-reno",
             "stacks": [
                 {
@@ -102,3 +117,4 @@
         }
     ]
 }
+
