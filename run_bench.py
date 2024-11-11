@@ -107,9 +107,9 @@ def main():
     
     try:
         # set up results dir on server-side
-        # subprocess.run(get_remote_cmd(server_hostname, ["mkdir", experiment_results_dir]), check=True)
-        # for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
-            # subprocess.run(get_scp_file_to_remote_cmd(server_hostname, conf, experiment_results_dir), check=True)
+        subprocess.run(get_remote_cmd(server_hostname, ["mkdir", "-p", experiment_results_dir]), check=True)
+        for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
+            subprocess.run(get_scp_file_to_remote_cmd(server_hostname, conf, experiment_results_dir), check=True)
 
         for combi in stacks_combinations:
             
