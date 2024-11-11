@@ -45,7 +45,7 @@ def check_sudo_privileges(server_hostname, server_pw_path):
     subprocess.run("sudo echo 'Got sudo privileges for local machine.'", shell=True, check=True)
     try:
         subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, "sudo echo 'Got sudo privileges for server machine.'"),
-            shell=True, check=True, timeout=1)
+            shell=True, check=True, timeout=10)
     except subprocess.TimeoutExpired:
         sys.exit("exiting... server password is incorrect.")
 
