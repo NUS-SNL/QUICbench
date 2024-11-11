@@ -163,6 +163,9 @@ def get_delay_trace(packets_df, veth_packets_df, flow_duration_s, window_size_s)
         if time - window_start_time > window_size_s:
             avg_delay = round(window_size_sum / (len(delay_trace) - window_start_pointer), 5)
             delay_moving_window_trace.append([time, avg_delay])
+            if len(delay_trace) == 1:
+                print(f"skipping delay_trace of length 1 {delay_trace}")
+                continue
             window_size_sum -= delay_trace[window_start_pointer][1]
             window_start_pointer += 1
             window_start_time = delay_trace[window_start_pointer][0]
