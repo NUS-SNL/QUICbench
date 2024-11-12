@@ -15,7 +15,7 @@ from network.set_netem import set_netem
 from network.clear_netem import clear_netem
 from network.test_network import *
 from network.tcpdump import TCPDump
-from network.flags import USE_CLIENT_NETEM
+from flags import USE_CLIENT_NETEM
 
 
 def get_prog_args():
