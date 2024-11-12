@@ -149,7 +149,7 @@ def main():
                     # start tcpdump
                     if USE_CLIENT_NETEM:
                         tcpdump_client_output_file = CLIENT_PCAP_FILENAME
-                        tcpdump_client = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_client_output_file)
+                        tcpdump_client = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_client_output_file, is_remote=False)
                         tcpdump_client.start()
                         tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
                         tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file, is_remote=True)
@@ -157,10 +157,10 @@ def main():
                     else:
                         if has_veth:
                             tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
-                            tcpdump_veth = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_veth_output_file)
+                            tcpdump_veth = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_veth_output_file, is_remote=True)
                             tcpdump_veth.start()
                         tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
-                        tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file)
+                        tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file, is_remote=True)
                         tcpdump_interface.start()
 
                     # start clients

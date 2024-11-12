@@ -49,6 +49,7 @@ def set_netem(server_hostname, server_pw_path, server_ip, interface, ingress_int
             "sudo tc qdisc show dev {client_interface}"
         ).format(interface=interface, ingress_interface=ingress_interface,
             delay_ms=delay_ms, bandwidth_Kbps=bandwidth_Kbps, buffer_bytes=buffer_bytes, burst_bytes=burst_bytes, client_interface=client_interface)
+        print(cmd)
         subprocess.run(cmd, shell=True)
 
 
