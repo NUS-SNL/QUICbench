@@ -15,6 +15,7 @@ from network.set_netem import set_netem
 from network.clear_netem import clear_netem
 from network.test_network import *
 from network.tcpdump import TCPDump
+from network.flags import USE_CLIENT_NETEM
 
 
 def get_prog_args():
@@ -94,8 +95,9 @@ def main():
     set_kernel_params(general_conf["kernel_params"], server_hostname, server_pw_path)
 
     has_veth, virtual_interface = "virtual_interface" in exp_conf, exp_conf.get("virtual_interface")
+    client_interface = exp_conf.get("client_interface")
     set_netem(server_hostname, server_pw_path, server_ip, interface, 
-        server_ingress_interface, exp_conf["netem_conf"], virtual_interface)
+        server_ingress_interface, exp_conf["netem_conf"], virtual_interface, client_interface)
     
     test_rtt(server_ip)
     ## 24 Oct 2024 - seems to be causing problems, commented out for now
@@ -145,13 +147,21 @@ def main():
                     time.sleep(2) # wait for servers to start
 
                     # start tcpdump
-                    if has_veth:
-                        tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
-                        tcpdump_veth = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_veth_output_file)
-                        tcpdump_veth.start()
-                    tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
-                    tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file)
-                    tcpdump_interface.start()
+                    if USE_CLIENT_NETEM:
+                        tcpdump_client_output_file = CLIENT_PCAP_FILENAME
+                        tcpdump_client = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_client_output_file)
+                        tcpdump_client.start()
+                        tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
+                        tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file, is_remote=True)
+                        tcpdump_interface.start()
+                    else:
+                        if has_veth:
+                            tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
+                            tcpdump_veth = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_veth_output_file)
+                            tcpdump_veth.start()
+                        tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
+                        tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file)
+                        tcpdump_interface.start()
 
                     # start clients
                     for stack in combi_stacks:
@@ -167,6 +177,9 @@ def main():
                     tcpdump_interface.stop()
                     if has_veth:
                         tcpdump_veth.stop()
+                    if USE_CLIENT_NETEM:
+                        tcpdump_client.stop()
+                        subprocess.run(get_scp_file_to_remote_cmd(server_hostname, CLIENT_PCAP_FILENAME, trial_results_dir), check=True)
 
                     print("Done with capture, starting pcap")
 
@@ -207,9 +220,9 @@ def main():
                     # reset interface
                     subprocess.run(["sudo", "ip", "link", "set", "dev", interface, "down"], check=True)
                     subprocess.run(["sudo", "ip", "link", "set", "dev", interface, "up"], check=True)
-                    clear_netem(server_hostname, server_pw_path, server_ip, interface, server_ingress_interface, virtual_interface)
+                    clear_netem(server_hostname, server_pw_path, server_ip, interface, server_ingress_interface, virtual_interface, client_interface)
                     set_netem(server_hostname, server_pw_path, server_ip, interface, 
-                        server_ingress_interface, exp_conf["netem_conf"], virtual_interface)
+                        server_ingress_interface, exp_conf["netem_conf"], virtual_interface, client_interface)
 
                     # kill processes
                     subprocess.run(get_remote_cmd(server_hostname, ["pkill", "tcpdump"]))
@@ -222,7 +235,7 @@ def main():
 
     finally:
         # clean up
-        clear_netem(server_hostname, server_pw_path, server_ip, interface, server_ingress_interface, virtual_interface)
+        clear_netem(server_hostname, server_pw_path, server_ip, interface, server_ingress_interface, virtual_interface, client_interface)
 
 
 if __name__ == "__main__":

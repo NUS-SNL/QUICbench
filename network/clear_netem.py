@@ -1,5 +1,6 @@
 import subprocess
 from utils.remote_cmd import get_remote_cmd_sudo
+from flags import USE_CLIENT_NETEM
 
 def delete_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface):
     cmd = (
@@ -17,13 +18,25 @@ def delete_virtual_interface(server_hostname, server_pw_path, server_ip, interfa
     ).format(interface=interface, virtual_interface=virtual_interface, server_ip=server_ip)
     subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, cmd), shell=True)    
 
-def clear_netem(server_hostname, server_pw_path, server_ip, interface, ingress_interface, virtual_interface=None):
+def clear_netem(server_hostname, server_pw_path, server_ip, interface, ingress_interface, virtual_interface=None, client_interface=None):
     print("Clearing network emulation:")
-    delete_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface)
-    if virtual_interface:
-        delete_virtual_interface(server_hostname, server_pw_path, server_ip, interface, virtual_interface)
-    cmd = (
-        "sudo tc qdisc del dev {} root;"
-        "sudo tc qdisc show dev enp1s0f1"
-    ).format(interface)
-    subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, cmd), shell=True)
+    if USE_CLIENT_NETEM:
+        print("USE_CLIENT_NETEM = True")
+        if not client_interface:
+            raise Exception("USE_CLIENT_NETEM set to True but client interface is None!")
+        delete_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface)
+        cmd = (
+            "sudo tc qdisc del dev {} root;"
+            "sudo tc qdisc show dev {}"
+        ).format(client_interface, client_interface)
+        subprocess.run(cmd, shell=True)
+
+    else:
+        delete_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface)
+        if virtual_interface:
+            delete_virtual_interface(server_hostname, server_pw_path, server_ip, interface, virtual_interface)
+        cmd = (
+            "sudo tc qdisc del dev {} root;"
+            "sudo tc qdisc show dev enp1s0f1"
+        ).format(interface)
+        subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, cmd), shell=True)

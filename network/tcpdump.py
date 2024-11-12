@@ -1,24 +1,31 @@
 import subprocess
-from utils.remote_cmd import get_remote_cmd, get_pkill_remote_cmd
+from utils.remote_cmd import get_remote_cmd, get_pkill_remote_cmd, get_pkill_cmd
 
 class TCPDump:
     """
     Represents a tcpdump instance to capture outgoing packets from server
     """
 
-    def __init__(self, server_hostname, server_ip, interface, output_file):
+    def __init__(self, server_hostname, server_ip, interface, output_file, is_remote):
         self.server_hostname = server_hostname
         self.server_ip = server_ip
         self.interface = interface
         self.output_file = output_file
+        self.is_remote = is_remote
 
     def start(self):
-        cmd = get_remote_cmd(self.server_hostname, self.get_start_cmd())
+        if self.is_remote:
+            cmd = get_remote_cmd(self.server_hostname, self.get_start_cmd())
+        else:
+            cmd = self.get_start_cmd()
         self.proc = subprocess.Popen(cmd)
 
     def stop(self):
         pattern_to_kill = " ".join(self.get_start_cmd())
-        subprocess.run(get_pkill_remote_cmd(self.server_hostname, pattern_to_kill), check=True)
+        if self.is_remote:
+            subprocess.run(get_pkill_remote_cmd(self.server_hostname, pattern_to_kill), check=True)
+        else:
+            subprocess.run(get_pkill_cmd(pattern_to_kill), check=True)
         self.proc.wait()
 
     def get_start_cmd(self):

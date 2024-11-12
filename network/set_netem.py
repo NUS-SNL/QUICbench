@@ -1,9 +1,7 @@
 import subprocess
 from operator import itemgetter
 from utils.remote_cmd import get_remote_cmd_sudo
-
-
-USE_CLIENT_NETEM = True
+from flags import USE_CLIENT_NETEM
 
 # for introducing delay for ingress packets
 def add_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface):

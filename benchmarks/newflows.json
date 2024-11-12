@@ -9,12 +9,13 @@
     },
     "flow_duration_s": 120,
     "virtual_interface": "enp1s0f1-br0",
+    "client_interface": "enp1s0f1",
     "stacks_combinations": [
         {
-            "name": "nginx-reno_tcp_reno",
+            "name": "quiche-reno_tcp_reno",
             "stacks": [
                 {
-                    "name": "nginx",
+                    "name": "quiche",
                     "cc_algo": "reno",
                     "port_no": "4000"
                 },
