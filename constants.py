@@ -1,6 +1,7 @@
 # FILE NAMING CONVENTIONS
 INTERFACE_PCAP_FILENAME = "packets.pcap"
-VETH_PCAP_FILENAME = "packets-br0.pcap"
+VETH_PCAP_FILENAME = "packets.pcap"
+# VETH_PCAP_FILENAME = "packets-br0.pcap"
 THROUGHPUT_TRACE_SUFFIX = ".tp-trace"
 DELAY_TRACE_SUFFIX = ".delays"
 STACK_LOG_SUFFIX = ".log"
