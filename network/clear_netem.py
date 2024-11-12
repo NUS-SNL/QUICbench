@@ -1,6 +1,6 @@
 import subprocess
 from utils.remote_cmd import get_remote_cmd_sudo
-import flags
+from flags import USE_CLIENT_NETEM
 
 def delete_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface):
     cmd = (
@@ -20,7 +20,7 @@ def delete_virtual_interface(server_hostname, server_pw_path, server_ip, interfa
 
 def clear_netem(server_hostname, server_pw_path, server_ip, interface, ingress_interface, virtual_interface=None, client_interface=None):
     print("Clearing network emulation:")
-    if flags.USE_CLIENT_NETEM:
+    if USE_CLIENT_NETEM:
         print("USE_CLIENT_NETEM = True")
         if not client_interface:
             raise Exception("USE_CLIENT_NETEM set to True but client interface is None!")
