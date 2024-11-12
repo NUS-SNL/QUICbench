@@ -1,7 +1,7 @@
 import subprocess
 from operator import itemgetter
 from utils.remote_cmd import get_remote_cmd_sudo
-from flags import USE_CLIENT_NETEM
+import flags
 
 # for introducing delay for ingress packets
 def add_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface):
@@ -26,7 +26,7 @@ def add_virtual_interface(server_hostname, server_pw_path, server_ip, interface,
 
 def set_netem(server_hostname, server_pw_path, server_ip, interface, ingress_interface, netem_conf, virtual_interface=None, client_interface=None):
     print("Setting network emulation:")
-    if USE_CLIENT_NETEM:
+    if flags.USE_CLIENT_NETEM:
         print("USE_CLIENT_NETEM = True")
         if not client_interface:
             raise Exception("USE_CLIENT_NETEM set to True but client interface is None!")
