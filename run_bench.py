@@ -199,9 +199,9 @@ def main():
                         ]
 
                     if USE_CLIENT_NETEM:
-                        subprocess.run(cmd, check=True)
+                        subprocess.run(pcap_cmd, check=True)
                     else:
-                        subprocess.run(get_remote_cmd(server_hostname, cmd), check=True)
+                        subprocess.run(get_remote_cmd(server_hostname, pcap_cmd), check=True)
 
                     if args.stack_log:
                         # only for single flow
