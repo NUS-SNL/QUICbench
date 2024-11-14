@@ -60,7 +60,7 @@ def set_netem(server_hostname, server_pw_path, server_ip, interface, ingress_int
             "sudo tc qdisc add dev {ingress_interface} parent 1:1 handle 10: tbf rate {bandwidth_Kbps}kbit limit {buffer_bytes} burst {burst_bytes};"
             "sudo tc qdisc show dev {ingress_interface}"
         ).format(interface=interface, ingress_interface=ingress_interface,
-            delay_ms=delay_ms, bandwidth_Kbps=bandwidth_Kbps, buffer_bytes=buffer_bytes, burst_bytes=burst_bytes, client_interface=client_interface)
+            added_delay_ms=delay_ms, bandwidth_Kbps=bandwidth_Kbps, buffer_bytes=buffer_bytes, burst_bytes=burst_bytes, client_interface=client_interface)
         # print(cmd)
         subprocess.run(cmd, shell=True)
 
