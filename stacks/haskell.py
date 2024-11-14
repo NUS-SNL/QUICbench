@@ -23,11 +23,13 @@ class Haskell(Stack):
     def run_remote_server(self, port_no, cc_algo, duration_s):
         cmd = self.run_server_cmd(port_no, cc_algo, duration_s)
         cmd = get_remote_cmd(self.server_hostname, cmd)
+        print(" ".join(cmd))
         return subprocess.Popen(cmd)
 
     def run_client(self, port_no, cc_algo, duration_s):
         cmd = self.run_client_cmd(port_no, duration_s)
         newcmd = " ".join(cmd)
+        print(newcmd)
         return subprocess.Popen(newcmd, shell=True)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
@@ -36,7 +38,7 @@ class Haskell(Stack):
             "{} --cert {}".format(self.server_path, self.server_cert_path),
             "--key {}".format(self.server_key_path),
             "-D {}/{}".format(self.server_static_file_dir, self.server_static_filename),
-            "{} {}".format(self.server_ip, port_no)
+            "0.0.0.0 {}".format(port_no)
         ])
 
     def run_client_cmd(self, port_no, duration_s):
