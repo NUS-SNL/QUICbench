@@ -124,7 +124,6 @@ def main():
             combi_name, combi_stacks  = itemgetter("name", "stacks")(combi)
             print(f"---- COMBI {combi_name} -------")
             combi_results_dir = os.path.join(experiment_results_dir, combi_name)
-            # subprocess.run(get_remote_cmd(server_hostname, ["mkdir", combi_results_dir]), check=True)
 
             random.shuffle(combi_stacks)
 
@@ -132,9 +131,12 @@ def main():
             failed_trials = 0
             while successful_trials < num_trials and failed_trials < int(num_trials * 2): # retries
                 # run a trial for stack combination
-                trial_datetime = datetime.now().strftime("%Y-%m-%d:%H:%M:%S")
+                trial_datetime = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
                 trial_results_dir = os.path.join(combi_results_dir, trial_datetime)
-                subprocess.run(get_remote_cmd(server_hostname, ["mkdir -p", trial_results_dir]), check=True)
+                if USE_CLIENT_NETEM:
+                    subprocess.run(["mkdir","-p", trial_results_dir], check=True)
+                else:
+                    subprocess.run(get_remote_cmd(server_hostname, ["mkdir", "-p", trial_results_dir]), check=True)
 
                 try:                
                     # start servers
@@ -235,14 +237,18 @@ def main():
                     set_netem(server_hostname, server_pw_path, server_ip, interface, 
                         server_ingress_interface, exp_conf["netem_conf"], virtual_interface, client_interface)
 
-                    # kill processes
-                    subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, "pkill tcpdump"), shell=True)
-                    # subprocess.run(get_remote_cmd(server_hostname, ["pkill", "tcpdump"]))
-        
-                    # delete trial
-                    subprocess.run(get_remote_cmd(
-                        server_hostname, ["rm", "-rf", trial_results_dir]
-                    ))
+                    if USE_CLIENT_NETEM:
+                        subprocess.run(["sudo", "pkill","tcpdump"])
+                        subprocess.run(["rm","-rf", trial_results_dir])
+                    else:
+                        # kill processes
+                        subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, "pkill tcpdump"), shell=True)
+                        # subprocess.run(get_remote_cmd(server_hostname, ["pkill", "tcpdump"]))
+            
+                        # delete trial
+                        subprocess.run(get_remote_cmd(
+                            server_hostname, ["rm", "-rf", trial_results_dir]
+                        ))
                     failed_trials += 1
 
     finally:
