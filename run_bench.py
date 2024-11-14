@@ -148,21 +148,22 @@ def main():
 
                     # start tcpdump
                     if USE_CLIENT_NETEM:
-                        tcpdump_client_output_file = CLIENT_PCAP_FILENAME
-                        tcpdump_client = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_client_output_file, is_remote=False)
+                        tcpdump_client_output_file = "/home/quic/quic_experiments/QUIC-bench/"+VETH_PCAP_FILENAME
+                        tcpdump_client = TCPDump(server_hostname, server_ip,client_interface, tcpdump_client_output_file, is_remote=False)
                         tcpdump_client.start()
-                        tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
-                        tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file, is_remote=True)
+                        tcpdump_interface_output_file = "/home/quic/quic_experiments/QUIC-bench/"+INTERFACE_PCAP_FILENAME
+                        tcpdump_interface = TCPDump(server_hostname, server_ip, "ifb0", tcpdump_interface_output_file, is_remote=False)
                         tcpdump_interface.start()
                     else:
                         if has_veth:
                             tcpdump_veth_output_file = os.path.join(trial_results_dir, VETH_PCAP_FILENAME)
-                            tcpdump_veth = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_veth_output_file, is_remote=True)
+                            tcpdump_veth = TCPDump(server_hostname, server_ip, virtual_interface, tcpdump_veth_output_file, is_remote=True, server_pw_path=server_pw_path)
                             tcpdump_veth.start()
                         tcpdump_interface_output_file = os.path.join(trial_results_dir, INTERFACE_PCAP_FILENAME)
-                        tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file, is_remote=True)
+                        tcpdump_interface = TCPDump(server_hostname, server_ip, interface, tcpdump_interface_output_file, is_remote=True, server_pw_path=server_pw_path)
                         tcpdump_interface.start()
 
+                    print("Done with tcpdump, starting clients")
                     # start clients
                     for stack in combi_stacks:
                         stack_name, stack_cc_algo, stack_port_no = itemgetter("name", "cc_algo", "port_no")(stack)
@@ -179,7 +180,8 @@ def main():
                         tcpdump_veth.stop()
                     if USE_CLIENT_NETEM:
                         tcpdump_client.stop()
-                        subprocess.run(get_scp_file_to_remote_cmd(server_hostname, CLIENT_PCAP_FILENAME, trial_results_dir), check=True)
+                        subprocess.run(get_scp_file_to_remote_cmd(server_hostname, tcpdump_client_output_file, trial_results_dir), check=True)
+                        subprocess.run(get_scp_file_to_remote_cmd(server_hostname, tcpdump_interface_output_file, trial_results_dir), check=True)
 
                     print("Done with capture, starting pcap")
 
@@ -214,7 +216,8 @@ def main():
                     #     server_hostname, ["rm", tcpdump_interface_output_file]
                     # ))
                 
-                except:
+                except Exception as e:
+                    print(f"EXCEPTION: {e}")
                     time.sleep(flow_duration_s) # wait for servers to timeout
 
                     # reset interface
@@ -225,7 +228,8 @@ def main():
                         server_ingress_interface, exp_conf["netem_conf"], virtual_interface, client_interface)
 
                     # kill processes
-                    subprocess.run(get_remote_cmd(server_hostname, ["pkill", "tcpdump"]))
+                    subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, "pkill tcpdump"), shell=True)
+                    # subprocess.run(get_remote_cmd(server_hostname, ["pkill", "tcpdump"]))
         
                     # delete trial
                     subprocess.run(get_remote_cmd(

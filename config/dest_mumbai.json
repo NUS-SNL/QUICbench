@@ -1,5 +1,5 @@
 {
-    "server_ip": "10.160.0.3",
+    "server_ip": "34.47.161.219",
     "server_hostname": "quic-mb",
     "server_pw_path": "/home/quic/quic_experiments/pw",
     "server_repo_path": "/home/quic/quic_experiments/QUIC-bench",

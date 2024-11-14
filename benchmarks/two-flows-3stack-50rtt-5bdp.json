@@ -1,6 +1,6 @@
 {
     "experiment_name": "two-flows-3stack-50rtt-5bdp",
-    "experiment_results_dir": "/home/quic/quic_bench_results/two-flows-3stack-50rtt-5bdp",
+    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-3stack-50rtt-5bdp",
     "num_trials": 1,
     "netem_conf": {
         "RTT_ms": 50,

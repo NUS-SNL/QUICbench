@@ -31,6 +31,7 @@ def set_netem(server_hostname, server_pw_path, server_ip, interface, ingress_int
         if not client_interface:
             raise Exception("USE_CLIENT_NETEM set to True but client interface is None!")
         subprocess.run("sudo tc qdisc del dev {} root".format(client_interface), shell=True)
+        subprocess.run("sudo tc qdisc del dev {} ingress".format(client_interface), shell=True)
 
         RTT_ms, bandwidth_Mbps, buffer_bdp = itemgetter("RTT_ms", "bandwidth_Mbps", "buffer_bdp")(netem_conf)
 
@@ -43,13 +44,24 @@ def set_netem(server_hostname, server_pw_path, server_ip, interface, ingress_int
         burst_bytes = int(bandwidth_Mbps * 1000000 / 250 / 8) 
         # 9 Nov 2024: multiplied by 1.5 because a lower burst has issues when there are too many packets for tcp
         burst_bytes = int(1.5 * burst_bytes)
+        # cmd = (
+        #     "sudo tc qdisc add dev {client_interface} root handle 1:0 netem delay {delay_ms}ms limit 12500;"
+        #     "sudo tc qdisc add dev {client_interface} parent 1:1 handle 10: tbf rate {bandwidth_Kbps}kbit limit {buffer_bytes} burst {burst_bytes};"
+        #     "sudo tc qdisc show dev {client_interface}"
+        # ).format(interface=interface, ingress_interface=ingress_interface,
+        #     delay_ms=delay_ms, bandwidth_Kbps=bandwidth_Kbps, buffer_bytes=buffer_bytes, burst_bytes=burst_bytes, client_interface=client_interface)
+
         cmd = (
-            "sudo tc qdisc add dev {client_interface} root handle 1:0 netem delay {delay_ms}ms limit 12500;"
-            "sudo tc qdisc add dev {client_interface} parent 1:1 handle 10: tbf rate {bandwidth_Kbps}kbit limit {buffer_bytes} burst {burst_bytes};"
-            "sudo tc qdisc show dev {client_interface}"
+            "sudo modprobe ifb;"
+            "sudo ip link set ifb0 up;"
+            "sudo tc qdisc add dev {client_interface} ingress;"
+            "sudo tc filter add dev {client_interface} parent ffff: protocol ip u32 match u32 0 0 action mirred egress redirect dev ifb0;"
+            "sudo tc qdisc add dev ifb0 root handle 1:0 netem delay {delay_ms}ms limit 12500;"
+            "sudo tc qdisc add dev ifb0 parent 1:1 handle 10: tbf rate {bandwidth_Kbps}kbit limit {buffer_bytes} burst {burst_bytes};"
+            "sudo tc qdisc show dev ifb0"
         ).format(interface=interface, ingress_interface=ingress_interface,
             delay_ms=delay_ms, bandwidth_Kbps=bandwidth_Kbps, buffer_bytes=buffer_bytes, burst_bytes=burst_bytes, client_interface=client_interface)
-        print(cmd)
+        # print(cmd)
         subprocess.run(cmd, shell=True)
 
 

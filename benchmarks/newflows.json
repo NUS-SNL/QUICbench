@@ -8,20 +8,19 @@
         "buffer_bdp": 1.0
     },
     "flow_duration_s": 120,
-    "virtual_interface": "enp1s0f1-br0",
-    "client_interface": "enp1s0f1",
+    "client_interface": "ens4",
     "stacks_combinations": [
         {
-            "name": "quiche-reno_tcp_reno",
+            "name": "quiche-cubic_tcp_cubic",
             "stacks": [
                 {
                     "name": "quiche",
-                    "cc_algo": "reno",
+                    "cc_algo": "cubic",
                     "port_no": "4000"
                 },
                 {
                     "name": "tcp",
-                    "cc_algo": "reno",
+                    "cc_algo": "cubic",
                     "port_no": "4001"
                 }
             ]

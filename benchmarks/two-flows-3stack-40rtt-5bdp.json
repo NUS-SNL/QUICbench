@@ -1,9 +1,9 @@
 {
-    "experiment_name": "two-flows-3stack-100rtt-5bdp",
-    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-3stack-100rtt-5bdp",
+    "experiment_name": "two-flows-3stack-40rtt-5bdp",
+    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-3stack-40rtt-5bdp",
     "num_trials": 1,
     "netem_conf": {
-        "RTT_ms": 100,
+        "RTT_ms": 40,
         "bandwidth_Mbps": 20,
         "buffer_bdp": 5
     },
