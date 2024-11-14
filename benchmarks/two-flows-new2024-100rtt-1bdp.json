@@ -1,6 +1,6 @@
 {
     "experiment_name": "two-flows-new2024-100rtt-1bdp",
-    "experiment_results_dir": "/home/quic/quic_bench_results/two-flows-new2024-100rtt-1bdp",
+    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-new2024-100rtt-1bdp",
     "num_trials": 5,
     "netem_conf": {
         "RTT_ms": 100,
@@ -31,7 +31,7 @@
         "name": "aioquic-reno_tcp-reno",
         "stacks": [
           {
-            "name": "aiocuiq",
+            "name": "aioquic",
             "cc_algo": "reno",
             "port_no": "4000"
           },
@@ -146,6 +146,21 @@
                 "port_no": "4001"
             }
         ]
-    }
+    },
+    {
+      "name": "haskell-reno_tcp_reno",
+      "stacks": [
+          {
+              "name": "haskell",
+              "cc_algo": "reno",
+              "port_no": "4000"
+          },
+          {
+              "name": "tcp",
+              "cc_algo": "reno",
+              "port_no": "4001"
+          }
+      ]
+  }
     ]
   }
