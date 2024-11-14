@@ -109,9 +109,15 @@ def main():
     
     try:
         # set up results dir on server-side
-        subprocess.run(get_remote_cmd(server_hostname, ["mkdir", "-p", experiment_results_dir]), check=True)
-        for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
-            subprocess.run(get_scp_file_to_remote_cmd(server_hostname, conf, experiment_results_dir), check=True)
+        mkdir_cmd = ["mkdir", "-p", experiment_results_dir]
+        if USE_CLIENT_NETEM:
+            subprocess.run(mkdir_cmd, check=True)
+            for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
+                subprocess.run(["cp", conf, experiment_results_dir], check=True)
+        else:
+            subprocess.run(get_remote_cmd(server_hostname, mkdir_cmd), check=True)
+            for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
+                subprocess.run(get_scp_file_to_remote_cmd(server_hostname, conf, experiment_results_dir), check=True)
 
         for combi in stacks_combinations:
             
@@ -178,20 +184,22 @@ def main():
                     tcpdump_interface.stop()
                     if has_veth:
                         tcpdump_veth.stop()
+
                     if USE_CLIENT_NETEM:
                         tcpdump_client.stop()
-                        subprocess.run(get_scp_file_to_remote_cmd(server_hostname, tcpdump_client_output_file, trial_results_dir), check=True)
-                        subprocess.run(get_scp_file_to_remote_cmd(server_hostname, tcpdump_interface_output_file, trial_results_dir), check=True)
-
+                        # subprocess.run(get_scp_file_to_remote_cmd(server_hostname, tcpdump_client_output_file, trial_results_dir), check=True)
+                        # subprocess.run(get_scp_file_to_remote_cmd(server_hostname, tcpdump_interface_output_file, trial_results_dir), check=True)
                     print("Done with capture, starting pcap")
-
-                    subprocess.run(get_remote_cmd(server_hostname,
-                        ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
+                    pcap_cmd = ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
                         "--exp_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.exp_conf))),
                         "--general_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.general_conf))),
                         "--name={}".format(combi_name), "--trial_dir={}".format(trial_results_dir)
                         ]
-                    ), check=True)
+
+                    if USE_CLIENT_NETEM:
+                        subprocess.run(cmd, check=True)
+                    else:
+                        subprocess.run(get_remote_cmd(server_hostname, cmd), check=True)
 
                     if args.stack_log:
                         # only for single flow
