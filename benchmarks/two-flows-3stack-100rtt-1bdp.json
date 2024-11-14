@@ -8,6 +8,7 @@
         "buffer_bdp": 1
     },
     "flow_duration_s": 120,
+    "client_interface": "ens4",
     "stacks_combinations": [
         {
             "name": "chromium-cubic_tcp-cubic",

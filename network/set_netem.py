@@ -33,32 +33,32 @@ def set_netem(server_hostname, server_pw_path, server_ip, interface, ingress_int
         subprocess.run("sudo tc qdisc del dev {} root".format(client_interface), shell=True)
         subprocess.run("sudo tc qdisc del dev {} ingress".format(client_interface), shell=True)
 
-        RTT_ms, bandwidth_Mbps, buffer_bdp = itemgetter("RTT_ms", "bandwidth_Mbps", "buffer_bdp")(netem_conf)
+        RTT_ms, bandwidth_Mbps, buffer_bdp, background_delay_ms, added_delay_ms =\
+            itemgetter("RTT_ms", "bandwidth_Mbps", "buffer_bdp", "background_delay_ms", "added_delay_ms")(netem_conf) 
+        
+        # Separate these so the buffer is made using the target delay of RTT_ms,
+        # but we set the netem using the added delay
+        if RTT_ms != background_delay_ms + added_delay_ms:
+            raise Exception(f"RTT_ms not equal to sum of background and added delay: {RTT_ms} != {background_delay_ms} + {added_delay_ms}")
 
         add_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface)
 
-        delay_ms = RTT_ms
+
         buffer_bytes = int(RTT_ms * bandwidth_Mbps * 1000 / 8 * buffer_bdp)
         bandwidth_Kbps = bandwidth_Mbps * 1000
         # https://unix.stackexchange.com/questions/100785/bucket-size-in-tbf
         burst_bytes = int(bandwidth_Mbps * 1000000 / 250 / 8) 
         # 9 Nov 2024: multiplied by 1.5 because a lower burst has issues when there are too many packets for tcp
         burst_bytes = int(1.5 * burst_bytes)
-        # cmd = (
-        #     "sudo tc qdisc add dev {client_interface} root handle 1:0 netem delay {delay_ms}ms limit 12500;"
-        #     "sudo tc qdisc add dev {client_interface} parent 1:1 handle 10: tbf rate {bandwidth_Kbps}kbit limit {buffer_bytes} burst {burst_bytes};"
-        #     "sudo tc qdisc show dev {client_interface}"
-        # ).format(interface=interface, ingress_interface=ingress_interface,
-        #     delay_ms=delay_ms, bandwidth_Kbps=bandwidth_Kbps, buffer_bytes=buffer_bytes, burst_bytes=burst_bytes, client_interface=client_interface)
 
         cmd = (
             "sudo modprobe ifb;"
-            "sudo ip link set ifb0 up;"
+            "sudo ip link set {ingress_interface} up;"
             "sudo tc qdisc add dev {client_interface} ingress;"
-            "sudo tc filter add dev {client_interface} parent ffff: protocol ip u32 match u32 0 0 action mirred egress redirect dev ifb0;"
-            "sudo tc qdisc add dev ifb0 root handle 1:0 netem delay {delay_ms}ms limit 12500;"
-            "sudo tc qdisc add dev ifb0 parent 1:1 handle 10: tbf rate {bandwidth_Kbps}kbit limit {buffer_bytes} burst {burst_bytes};"
-            "sudo tc qdisc show dev ifb0"
+            "sudo tc filter add dev {client_interface} parent ffff: protocol ip u32 match u32 0 0 action mirred egress redirect dev {ingress_interface};"
+            "sudo tc qdisc add dev {ingress_interface} root handle 1:0 netem delay {added_delay_ms}ms limit 12500;"
+            "sudo tc qdisc add dev {ingress_interface} parent 1:1 handle 10: tbf rate {bandwidth_Kbps}kbit limit {buffer_bytes} burst {burst_bytes};"
+            "sudo tc qdisc show dev {ingress_interface}"
         ).format(interface=interface, ingress_interface=ingress_interface,
             delay_ms=delay_ms, bandwidth_Kbps=bandwidth_Kbps, buffer_bytes=buffer_bytes, burst_bytes=burst_bytes, client_interface=client_interface)
         # print(cmd)

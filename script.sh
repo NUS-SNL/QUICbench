@@ -113,8 +113,8 @@
 # python3 run_bench.py -e=benchmarks/cubic-v-bbr-model/cubic-v-bbr-model-100bw-9.5bdp.json
 # python3 run_bench.py -e=benchmarks/cubic-v-bbr-model/cubic-v-bbr-model-100bw-10.0bdp.json
 
-python3 run_bench.py -e=benchmarks/two-flows-3stack-30rtt-1bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
-# python3 run_bench.py -e=benchmarks/two-flows-3stack-40rtt-5bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
+# python3 run_bench.py -e=benchmarks/two-flows-3stack-30rtt-1bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
+python3 run_bench.py -e=benchmarks/two-flows-3stack-40rtt-5bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
 # python3 run_bench.py -e=benchmarks/two-flows-3stack-100rtt-1bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
 # python3 run_bench.py -e=benchmarks/two-flows-3stack-100rtt-5bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
 # python3 run_bench.py -e=benchmarks/newflows.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json

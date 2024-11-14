@@ -1,13 +1,16 @@
 {
     "experiment_name": "two-flows-3stack-40rtt-1bdp",
     "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-3stack-40rtt-1bdp",
-    "num_trials": 1,
+    "num_trials": 5,
     "netem_conf": {
-        "RTT_ms": 40,
+        "RTT_ms": 100,
         "bandwidth_Mbps": 20,
-        "buffer_bdp": 1
+        "buffer_bdp": 1,
+        "background_delay_ms": 60,
+        "added_delay_ms": 40
     },
     "flow_duration_s": 120,
+    "client_interface":"ens4",
     "stacks_combinations": [
         {
             "name": "chromium-cubic_tcp-cubic",
@@ -80,36 +83,6 @@
                 {
                     "name": "tcp",
                     "cc_algo": "cubic",
-                    "port_no": "4001"
-                }
-            ]
-        },
-        {
-            "name": "quiche-cubic_tcp-cubic",
-            "stacks": [
-                {
-                    "name": "quiche",
-                    "cc_algo": "cubic",
-                    "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "cubic",
-                    "port_no": "4001"
-                }
-            ]
-        },
-        {
-            "name": "quiche-reno_tcp-reno",
-            "stacks": [
-                {
-                    "name": "quiche",
-                    "cc_algo": "reno",
-                    "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "reno",
                     "port_no": "4001"
                 }
             ]
