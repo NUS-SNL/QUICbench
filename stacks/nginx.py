@@ -46,7 +46,7 @@ class Nginx(Stack):
         with open(self.nginx_conf_path, 'w') as file:
             file.write(config)
         cmd = get_scp_file_to_remote_cmd(self.server_hostname,self.nginx_conf_path,self.nginx_conf_path )
-        subprocess.Popen(cmd)
+        subprocess.run(cmd)
         print(f"NGINX configuration updated with port {port_no} and new paths.")
 
 

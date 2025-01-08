@@ -1,7 +1,7 @@
 {
     "experiment_name": "two-flows-3stack-40rtt-5bdp",
     "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-3stack-40rtt-5bdp",
-    "num_trials": 1,
+    "num_trials": 5,
     "netem_conf": {
         "RTT_ms": 100,
         "bandwidth_Mbps": 20,
@@ -13,10 +13,10 @@
     "client_interface": "ens4",
     "stacks_combinations": [
         {
-            "name": "chromium-cubic_tcp-cubic",
+            "name": "quiche-cubic_tcp-cubic",
             "stacks": [
                 {
-                    "name": "chromium",
+                    "name": "quiche",
                     "cc_algo": "cubic",
                     "port_no": "4000"
                 },
@@ -28,61 +28,16 @@
             ]
         },
         {
-            "name": "chromium-bbr_tcp-bbr",
+            "name": "quiche-reno_tcp-reno",
             "stacks": [
                 {
-                    "name": "chromium",
-                    "cc_algo": "bbr",
-                    "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "bbr",
-                    "port_no": "4001"
-                }
-            ]
-        },
-        {
-            "name": "mvfst-newreno_tcp-reno",
-            "stacks": [
-                {
-                    "name": "mvfst",
-                    "cc_algo": "newreno",
+                    "name": "quiche",
+                    "cc_algo": "reno",
                     "port_no": "4000"
                 },
                 {
                     "name": "tcp",
                     "cc_algo": "reno",
-                    "port_no": "4001"
-                }
-            ]
-        },
-        {
-            "name": "mvfst-bbr_tcp-bbr",
-            "stacks": [
-                {
-                    "name": "mvfst",
-                    "cc_algo": "bbr",
-                    "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "bbr",
-                    "port_no": "4001"
-                }
-            ]
-        },
-        {
-            "name": "mvfst-cubic_tcp-cubic",
-            "stacks": [
-                {
-                    "name": "mvfst",
-                    "cc_algo": "cubic",
-                    "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "cubic",
                     "port_no": "4001"
                 }
             ]

@@ -6,10 +6,11 @@ class Quinn(Stack):
     NAME = "quinn"
     CUBIC = "cubic"
     RENO = "reno"
+    BBR = "bbr"
     NUM_BYTES_TO_TRANSFER = 2000000000 # 2GB
 
     def __init__(self, server_ip, server_hostname, server_pw_path,
-                 server_cargo_path, cubic_server_path, reno_server_path,
+                 server_cargo_path, cubic_server_path, reno_server_path, bbr_server_path,
                  server_cert_path, server_key_path,
                  server_static_file_dir, server_static_filename,
                  client_cargo_path, client_path,
@@ -20,6 +21,7 @@ class Quinn(Stack):
         self.server_paths = {
             Quinn.CUBIC: cubic_server_path,
             Quinn.RENO: reno_server_path,
+            Quinn.BBR: bbr_server_path
         }
         self.server_cert_path = server_cert_path
         self.server_key_path = server_key_path
@@ -33,6 +35,7 @@ class Quinn(Stack):
     def run_remote_server(self, port_no, cc_algo, duration_s):
         cmd = self.run_server_cmd(port_no, cc_algo, duration_s)
         cmd = get_remote_cmd(self.server_hostname, cmd)
+        print(" ".join(cmd))
         return subprocess.Popen(cmd)
 
     def run_client(self, port_no, cc_algo, duration_s):
@@ -56,4 +59,4 @@ class Quinn(Stack):
 
     @staticmethod
     def get_cc_algos():
-        return [Quinn.CUBIC, Quinn.RENO]
+        return [Quinn.CUBIC, Quinn.RENO, Quinn.BBR]

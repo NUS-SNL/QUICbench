@@ -1,0 +1,121 @@
+{
+    "experiment_name": "two-flows-new2024-100rtt-5bdp",
+    "experiment_results_dir": "/home/quic/quic_bench_results/two-flows-new2024-100rtt-5bdp",
+    "num_trials": 5,
+    "netem_conf": {
+        "RTT_ms": 100,
+        "bandwidth_Mbps": 20,
+        "buffer_bdp": 5,
+        "background_delay_ms": 60,
+        "added_delay_ms": 40
+    },
+    "flow_duration_s": 120,
+    "client_interface": "ens4",
+    "stacks_combinations": [
+      {
+        "name": "aioquic-cubic_tcp-cubic",
+        "stacks": [
+          {
+            "name": "aioquic",
+            "cc_algo": "cubic",
+            "port_no": "4000"
+          },
+          {
+            "name": "tcp",
+            "cc_algo": "cubic",
+            "port_no": "4001"
+          }
+        ]
+      },
+      {
+        "name": "aioquic-reno_tcp-reno",
+        "stacks": [
+          {
+            "name": "aioquic",
+            "cc_algo": "reno",
+            "port_no": "4000"
+          },
+          {
+            "name": "tcp",
+            "cc_algo": "reno",
+            "port_no": "4001"
+          }
+        ]
+      },
+      {
+        "name": "picoquic-cubic_tcp-cubic",
+        "stacks": [
+          {
+            "name": "picoquic",
+            "cc_algo": "cubic",
+            "port_no": "4000"
+          },
+          {
+            "name": "tcp",
+            "cc_algo": "cubic",
+            "port_no": "4001"
+          }
+        ]
+      },
+      {
+        "name": "picoquic-reno_tcp-reno",
+        "stacks": [
+          {
+            "name": "picoquic",
+            "cc_algo": "reno",
+            "port_no": "4000"
+          },
+          {
+            "name": "tcp",
+            "cc_algo": "reno",
+            "port_no": "4001"
+          }
+        ]
+      },
+      {
+        "name": "picoquic-bbr_tcp-bbr",
+        "stacks": [
+          {
+            "name": "picoquic",
+            "cc_algo": "bbr",
+            "port_no": "4000"
+          },
+          {
+            "name": "tcp",
+            "cc_algo": "bbr",
+            "port_no": "4001"
+          }
+        ]
+      },
+      {
+        "name": "haskell-reno_tcp_reno",
+        "stacks": [
+            {
+                "name": "haskell",
+                "cc_algo": "reno",
+                "port_no": "4000"
+            },
+            {
+                "name": "tcp",
+                "cc_algo": "reno",
+                "port_no": "4001"
+            }
+        ]
+      },
+      {
+        "name": "nginx-newreno_tcp_reno",
+        "stacks": [
+            {
+                "name": "nginx",
+                "cc_algo": "newreno",
+                "port_no": "4000"
+            },
+            {
+                "name": "tcp",
+                "cc_algo": "reno",
+                "port_no": "4001"
+            }
+        ]
+    }
+    ]
+  }

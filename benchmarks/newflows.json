@@ -3,27 +3,44 @@
     "experiment_results_dir": "/home/quic/quic_bench_results/newflows",
     "num_trials": 1,
     "netem_conf": {
-        "RTT_ms": 10,
+        "RTT_ms": 100,
         "bandwidth_Mbps": 20,
-        "buffer_bdp": 1.0
+        "buffer_bdp": 1,
+        "background_delay_ms": 60,
+        "added_delay_ms": 40
     },
-    "flow_duration_s": 120,
+    "flow_duration_s": 20,
     "client_interface": "ens4",
     "stacks_combinations": [
-        {
-            "name": "quiche-cubic_tcp_cubic",
-            "stacks": [
-                {
-                    "name": "quiche",
-                    "cc_algo": "cubic",
-                    "port_no": "4000"
-                },
-                {
-                    "name": "tcp",
-                    "cc_algo": "cubic",
-                    "port_no": "4001"
-                }
-            ]
-        }
+    {
+        "name": "lsquic-cubic_tcp-cubic",
+        "stacks": [
+            {
+                "name": "lsquic",
+                "cc_algo": "cubic",
+                "port_no": "4000"
+            },
+            {
+                "name": "tcp",
+                "cc_algo": "cubic",
+                "port_no": "4001"
+            }
+        ]
+    },
+    {
+        "name": "lsquic-bbr_tcp-bbr",
+        "stacks": [
+            {
+                "name": "lsquic",
+                "cc_algo": "bbr",
+                "port_no": "4000"
+            },
+            {
+                "name": "tcp",
+                "cc_algo": "bbr",
+                "port_no": "4001"
+            }
+        ]
+    }
     ]
 }
