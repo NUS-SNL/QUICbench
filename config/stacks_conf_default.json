@@ -29,7 +29,9 @@
         "server_static_file_dir": "/www",
         "server_static_filename": "index.html",
         "client_cargo_path": "/home/quic/.cargo/bin/cargo",
-        "client_path": "/home/quic/quic_experiments/quiche/apps/Cargo.toml"
+        "client_path": "/home/quic/quic_experiments/quiche/apps/Cargo.toml",
+        "server_bin_path": "/home/quic/quic_experiments/quiche/target/debug/quiche-server",
+        "client_bin_path": "/home/quic/quic_experiments/quiche/target/debug/quiche-client"
     },
     "chromium-n1": {
         "cubic_server_path": "/home/quic/quic_experiments/chromium-n1-cubic/src/out/Debug/quic_server",
@@ -58,7 +60,7 @@
     "lsquic": {
         "server_path": "/home/quic/quic_experiments/lsquic/bin/http_server",
         "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
-        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",        
+        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
         "server_static_file_dir": "/www",
         "server_static_filename": "index.html",
         "client_path": "/home/quic/quic_experiments/lsquic/bin/http_client"
@@ -73,7 +75,7 @@
     "quicly": {
         "server_path": "/home/quic/quic_experiments/quicly/cli",
         "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
-        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",        
+        "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
         "server_static_file_dir": "/www",
         "server_static_filename": "index.html",
         "client_path": "/home/quic/quic_experiments/quicly/cli"
@@ -106,8 +108,8 @@
         "client_path": "/home/quic/quic_experiments/s2n-quic/target/release/s2n-quic-qns"
     },
     "xquic": {
-        "server_path": "/home/quic/quic_experiments/xquic/build",
-        "client_path": "/home/quic/quic_experiments/xquic/build"
+        "server_path": "/home/quic/quic_experiments/xquic/build/tests",
+        "client_path": "/home/quic/quic_experiments/xquic/build/tests"
     },
     "aioquic": {
         "server_path": "/home/quic/quic_experiments/aioquic/examples/http3_server.py",
@@ -125,7 +127,7 @@
         "quiche": "parse_sqlog.py",
         "tcp": "parse_tcp.py"
     },
-    "picoquic":{
+    "picoquic": {
         "server_path": "/home/quic/quic_experiments/picoquic/picoquicdemo ",
         "server_cert_path": "/home/quic/quic_experiments/certs/quic-server.crt",
         "server_key_path": "/home/quic/quic_experiments/certs/quic-server.key",
@@ -160,7 +162,6 @@
         "server_static_filename": "index.html",
         "client_path": "/home/quic/quic_experiments/ngtcp2/ngtcp2/examples/wsslclient",
         "ca_path": "/home/quic/quic_experiments/certs/myCA.der",
-        "nginx_conf_path":"/home/quic/quic_experiments/QUIC-bench/stacks/nginx_conf/nginx.conf"
+        "nginx_conf_path": "/home/quic/quic_experiments/QUIC-bench/stacks/nginx_conf/nginx.conf"
     }
-    
 }
