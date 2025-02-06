@@ -74,6 +74,8 @@ def get_moving_window_average_rates(packets_df, window_size_s):
     average_rates = []
     window_size_sum = 0
     window_start_pointer = 0
+    if len(packets_df) < 1:
+        return average_rates
     window_start_time = packets_df.iloc[0][RELATIVE_TIME]
 
     for index, packet in packets_df.iterrows():
@@ -95,14 +97,14 @@ def get_moving_window_average_rates(packets_df, window_size_s):
 def output_throughput_traces(port_no_packets_map, trial_dir, flow_duration_s, window_size_s):
     for port_no, packets_df in port_no_packets_map.items():
         average_rates = get_moving_window_average_rates(packets_df, window_size_s)
-        
-         # check for premature flow termination
-        trace_duration_s = average_rates[-1][0] - average_rates[0][0]
-        if trace_duration_s < flow_duration_s * 0.9 * TRUNCATE_TRACES_BY:
-            raise RuntimeError("flow terminated prematurely.")
-        else:
-            # truncate flow duration
-            average_rates = list(filter(lambda row : row[0] < flow_duration_s * TRUNCATE_TRACES_BY, average_rates))
+        if len(average_rates) > 0:
+            # check for premature flow termination
+            trace_duration_s = average_rates[-1][0] - average_rates[0][0]
+            if trace_duration_s < flow_duration_s * 0.9 * TRUNCATE_TRACES_BY:
+                raise RuntimeError("flow terminated prematurely.")
+            else:
+                # truncate flow duration
+                average_rates = list(filter(lambda row : row[0] < flow_duration_s * TRUNCATE_TRACES_BY, average_rates))
 
         throughput_trace_path = os.path.join(trial_dir, port_no + THROUGHPUT_TRACE_SUFFIX)
         write_to_csv(throughput_trace_path, ["time (s)", "throughput (Mbps)"], average_rates)

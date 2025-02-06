@@ -96,6 +96,8 @@ def main():
 
     has_veth, virtual_interface = "virtual_interface" in exp_conf, exp_conf.get("virtual_interface")
     client_interface = exp_conf.get("client_interface")
+    # clear_netem(server_hostname, server_pw_path, server_ip, interface, server_ingress_interface, virtual_interface, client_interface)
+    # return
     set_netem(server_hostname, server_pw_path, server_ip, interface, 
         server_ingress_interface, exp_conf["netem_conf"], virtual_interface, client_interface)
     
@@ -108,10 +110,17 @@ def main():
         itemgetter("experiment_results_dir", "num_trials", "flow_duration_s", "stacks_combinations")(exp_conf)
     
     try:
+        # TODO: STOP COPYING HERE BEN
         # set up results dir on server-side
-        subprocess.run(get_remote_cmd(server_hostname, ["mkdir", "-p", experiment_results_dir]), check=True)
-        for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
-            subprocess.run(get_scp_file_to_remote_cmd(server_hostname, conf, experiment_results_dir), check=True)
+        if USE_CLIENT_NETEM:
+            subprocess.run(["mkdir", "-p", experiment_results_dir], check=True)
+            for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
+                subprocess.run(["cp", conf, experiment_results_dir], check=True)
+
+        else:
+            subprocess.run(get_remote_cmd(server_hostname, ["mkdir", "-p", experiment_results_dir]), check=True)
+            for conf in [args.stacks_conf, args.general_conf, args.exp_conf]:
+                subprocess.run(get_scp_file_to_remote_cmd(server_hostname, conf, experiment_results_dir), check=True)
 
         for combi in stacks_combinations:
             
@@ -128,7 +137,10 @@ def main():
                 # run a trial for stack combination
                 trial_datetime = datetime.now().strftime("%Y-%m-%d:%H:%M:%S")
                 trial_results_dir = os.path.join(combi_results_dir, trial_datetime)
-                subprocess.run(get_remote_cmd(server_hostname, ["mkdir -p", trial_results_dir]), check=True)
+                if USE_CLIENT_NETEM:
+                    subprocess.run(["mkdir", "-p", trial_results_dir], check=True)
+                else:
+                    subprocess.run(get_remote_cmd(server_hostname, ["mkdir -p", trial_results_dir]), check=True)
 
                 try:                
                     # start servers
@@ -180,29 +192,54 @@ def main():
                         tcpdump_veth.stop()
                     if USE_CLIENT_NETEM:
                         tcpdump_client.stop()
-                        subprocess.run(get_scp_file_to_remote_cmd(server_hostname, tcpdump_client_output_file, trial_results_dir), check=True)
-                        subprocess.run(get_scp_file_to_remote_cmd(server_hostname, tcpdump_interface_output_file, trial_results_dir), check=True)
+                        subprocess.run(["cp", tcpdump_client_output_file, trial_results_dir], check=True)
+                        subprocess.run(["cp", tcpdump_interface_output_file, trial_results_dir], check=True)
+                        # subprocess.run(get_scp_file_to_remote_cmd(server_hostname, tcpdump_client_output_file, trial_results_dir), check=True)
+                        # subprocess.run(get_scp_file_to_remote_cmd(server_hostname, tcpdump_interface_output_file, trial_results_dir), check=True)
 
                     print("Done with capture, starting pcap")
 
-                    subprocess.run(get_remote_cmd(server_hostname,
-                        ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
-                        "--exp_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.exp_conf))),
-                        "--general_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.general_conf))),
-                        "--name={}".format(combi_name), "--trial_dir={}".format(trial_results_dir)
-                        ]
-                    ), check=True)
+                    if USE_CLIENT_NETEM:
+                        cmd = ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
+                            "--exp_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.exp_conf))),
+                            "--general_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.general_conf))),
+                            "--name={}".format(combi_name), "--trial_dir={}".format(trial_results_dir)
+                            ]
+                        print(" ".join(cmd))
+                        subprocess.run(
+                            cmd
+                        , check=True)
 
-                    if args.stack_log:
-                        # only for single flow
-                        stack = combi_stacks[0]
-                        stack_name, stack_port_no = itemgetter("name", "port_no")(stack)
+                        if args.stack_log:
+                            # only for single flow
+                            stack = combi_stacks[0]
+                            stack_name, stack_port_no = itemgetter("name", "port_no")(stack)
+                            subprocess.run(
+                                ["python3", os.path.join(server_repo_path, "stacks", "parse_logs", stacks_conf["stack_parser_map"][stack_name]),
+                                "--infile={}".format(log_path),
+                                "--outfile={}".format(os.path.join(trial_results_dir, stack_port_no + CWND_TRACE_SUFFIX))
+                                ]
+                            , check=True)
+
+                    else:
                         subprocess.run(get_remote_cmd(server_hostname,
-                            ["python3", os.path.join(server_repo_path, "stacks", "parse_logs", stacks_conf["stack_parser_map"][stack_name]),
-                            "--infile={}".format(log_path),
-                            "--outfile={}".format(os.path.join(trial_results_dir, stack_port_no + CWND_TRACE_SUFFIX))
+                            ["python3", os.path.join(server_repo_path, "parse", "parse_pcap.py"),
+                            "--exp_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.exp_conf))),
+                            "--general_conf={}".format(os.path.join(experiment_results_dir, os.path.basename(args.general_conf))),
+                            "--name={}".format(combi_name), "--trial_dir={}".format(trial_results_dir)
                             ]
                         ), check=True)
+
+                        if args.stack_log:
+                            # only for single flow
+                            stack = combi_stacks[0]
+                            stack_name, stack_port_no = itemgetter("name", "port_no")(stack)
+                            subprocess.run(get_remote_cmd(server_hostname,
+                                ["python3", os.path.join(server_repo_path, "stacks", "parse_logs", stacks_conf["stack_parser_map"][stack_name]),
+                                "--infile={}".format(log_path),
+                                "--outfile={}".format(os.path.join(trial_results_dir, stack_port_no + CWND_TRACE_SUFFIX))
+                                ]
+                            ), check=True)
 
                     successful_trials += 1
 
@@ -228,13 +265,16 @@ def main():
                         server_ingress_interface, exp_conf["netem_conf"], virtual_interface, client_interface)
 
                     # kill processes
-                    subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, "pkill tcpdump"), shell=True)
-                    # subprocess.run(get_remote_cmd(server_hostname, ["pkill", "tcpdump"]))
-        
-                    # delete trial
-                    subprocess.run(get_remote_cmd(
-                        server_hostname, ["rm", "-rf", trial_results_dir]
-                    ))
+                    if USE_CLIENT_NETEM:
+                        subprocess.run("sudo pkill tcpdump", shell=True)
+                        subprocess.run(["sudo", "rm", "-rf", trial_results_dir])
+                    else:
+                        subprocess.run(get_remote_cmd_sudo(server_hostname, server_pw_path, "pkill tcpdump"), shell=True)
+            
+                        # delete trial
+                        subprocess.run(get_remote_cmd(
+                            server_hostname, ["rm", "-rf", trial_results_dir]
+                        ))
                     failed_trials += 1
 
     finally:

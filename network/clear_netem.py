@@ -24,7 +24,6 @@ def clear_netem(server_hostname, server_pw_path, server_ip, interface, ingress_i
         print("USE_CLIENT_NETEM = True")
         if not client_interface:
             raise Exception("USE_CLIENT_NETEM set to True but client interface is None!")
-        delete_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface)
         cmd = (
             "sudo tc qdisc del dev {client_interface} handle ffff: ingress;"
             "sudo tc qdisc del dev {ingress_interface} root;"
@@ -33,6 +32,7 @@ def clear_netem(server_hostname, server_pw_path, server_ip, interface, ingress_i
             "sudo tc qdisc show dev {client_interface}"
         ).format(client_interface=client_interface, ingress_interface=ingress_interface)
         subprocess.run(cmd, shell=True)
+        # delete_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface)
 
     else:
         delete_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface)

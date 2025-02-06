@@ -1,13 +1,13 @@
 {
-    "experiment_name": "two-flows-3stack-100rtt-1bdp",
-    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-3stack-100rtt-1bdp",
-    "num_trials": 4,
+    "experiment_name": "two-flows-3stack-10rtt-1bdp-2.03mb",
+    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-3stack-10rtt-1bdp-2.03mb",
+    "num_trials": 3,
     "netem_conf": {
-        "RTT_ms": 100,
+        "RTT_ms": 10,
         "bandwidth_Mbps": 2.03,
         "buffer_bdp": 1,
         "background_delay_ms": 0,
-        "added_delay_ms": 20
+        "added_delay_ms": 10
     },
     "flow_duration_s": 120,
     "client_interface": "enp1s0f1",

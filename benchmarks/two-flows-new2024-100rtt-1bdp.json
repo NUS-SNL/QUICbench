@@ -1,31 +1,31 @@
 {
-    "experiment_name": "two-flows-new2024-100rtt-1bdp",
-    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-new2024-100rtt-1bdp",
-    "num_trials": 1,
-    "netem_conf": {
-        "RTT_ms": 100,
-        "bandwidth_Mbps": 20,
-        "buffer_bdp": 1,
-        "background_delay_ms": 60,
-        "added_delay_ms": 40
-    },
-    "flow_duration_s": 120,
-    "client_interface": "ens4",
-    "stacks_combinations": [
-      {
-        "name": "nginx-newreno_tcp_reno",
-        "stacks": [
-            {
-              "name": "tcp",
-              "cc_algo": "reno",
-              "port_no": "4001"
-          },
-            {
-                "name": "nginx",
-                "cc_algo": "newreno",
-                "port_no": "4000"
-            }
-        ]
+  "experiment_name": "two-flows-new2024-100rtt-1bdp",
+  "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-new2024-100rtt-1bdp",
+  "num_trials": 1,
+  "netem_conf": {
+    "RTT_ms": 100,
+    "bandwidth_Mbps": 20,
+    "buffer_bdp": 1,
+    "background_delay_ms": 60,
+    "added_delay_ms": 40
+  },
+  "flow_duration_s": 120,
+  "client_interface": "ens4",
+  "stacks_combinations": [
+    {
+      "name": "nginx-newreno_tcp_reno",
+      "stacks": [
+        {
+          "name": "tcp",
+          "cc_algo": "reno",
+          "port_no": "4001"
+        },
+        {
+          "name": "nginx",
+          "cc_algo": "newreno",
+          "port_no": "4000"
+        }
+      ]
     }
-    ]
-  }
+  ]
+}

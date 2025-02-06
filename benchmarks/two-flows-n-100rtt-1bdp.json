@@ -6,12 +6,57 @@
         "RTT_ms": 100,
         "bandwidth_Mbps": 20,
         "buffer_bdp": 1,
-        "background_delay_ms": 60,
-        "added_delay_ms": 40 
+        "background_delay_ms": 0,
+        "added_delay_ms": 100
     },
     "flow_duration_s": 120,
-    "client_interface": "ens4",
+    "client_interface": "enp1s0f1",
     "stacks_combinations": [
+        {
+            "name": "neqo-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "neqo",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "neqo-newreno_tcp-reno",
+            "stacks": [
+                {
+                    "name": "neqo",
+                    "cc_algo": "newreno",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "reno",
+                    "port_no": "4001"
+                }
+            ]
+        },
+        {
+            "name": "quicly-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "quicly",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
+                },
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                }
+            ]
+        },
         {
             "name": "quicly-reno_tcp-reno",
             "stacks": [

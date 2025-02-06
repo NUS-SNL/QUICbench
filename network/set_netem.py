@@ -41,7 +41,7 @@ def set_netem(server_hostname, server_pw_path, server_ip, interface, ingress_int
         if RTT_ms != background_delay_ms + added_delay_ms:
             raise Exception(f"RTT_ms not equal to sum of background and added delay: {RTT_ms} != {background_delay_ms} + {added_delay_ms}")
 
-        add_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface)
+        # add_ingress_interface(server_hostname, server_pw_path, interface, ingress_interface)
 
 
         buffer_bytes = int(RTT_ms * bandwidth_Mbps * 1000 / 8 * buffer_bdp)
