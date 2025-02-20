@@ -30,8 +30,8 @@ class Aioquic(Stack):
         print(newcmd)
         return subprocess.Popen(newcmd, shell=True)
 
-    def run_client(self, port_no, cc_algo, duration_s):
-        cmd = self.run_client_cmd(port_no, duration_s)
+    def run_client(self, port_no, cc_algo, duration_s, client_filename=None):
+        cmd = self.run_client_cmd(port_no, duration_s, client_filename)
         # for some reason passing in " ".join(cmd) directly into subprocess.Popen does not work...
         # so we save it to a variable first
         newcmd = " ".join(cmd)
@@ -50,7 +50,8 @@ class Aioquic(Stack):
             "--host 0.0.0.0 --port {}\"".format(port_no)
         ])
 
-    def run_client_cmd(self, port_no, duration_s):
+    def run_client_cmd(self, port_no, duration_s, client_filename=None):
+        filename = client_filename if client_filename else self.server_static_filename
 
         if ENABLE_LOOP:
             return map(str, [
@@ -61,7 +62,7 @@ class Aioquic(Stack):
                 "-v",
                 "--ca-certs", self.ca_path,
                 "--zero-rtt",
-                "https://{}:{}/{}".format(self.server_ip, port_no, self.server_static_filename),
+                "https://{}:{}/{}".format(self.server_ip, port_no, filename),
                 "> /dev/null 2>&1"
             ])
 
@@ -73,7 +74,7 @@ class Aioquic(Stack):
             "-v",
             "--ca-certs", self.ca_path,
             "--zero-rtt",
-            "https://{}:{}/{}".format(self.server_ip, port_no, self.server_static_filename),
+            "https://{}:{}/{}".format(self.server_ip, port_no, filename),
             "> /dev/null 2>&1"
         ])
 
