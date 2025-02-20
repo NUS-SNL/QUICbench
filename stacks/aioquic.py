@@ -2,6 +2,8 @@ import subprocess
 from utils.remote_cmd import get_remote_cmd
 from stacks.stack import Stack
 
+ENABLE_LOOP = True
+
 class Aioquic(Stack):
     NAME = "aioquic"
     CUBIC = "cubic"
@@ -25,6 +27,7 @@ class Aioquic(Stack):
         cmd = self.run_server_cmd(port_no, cc_algo, duration_s)
         cmd = get_remote_cmd(self.server_hostname, cmd)
         newcmd = " ".join(cmd)
+        print(newcmd)
         return subprocess.Popen(newcmd, shell=True)
 
     def run_client(self, port_no, cc_algo, duration_s):
@@ -32,6 +35,7 @@ class Aioquic(Stack):
         # for some reason passing in " ".join(cmd) directly into subprocess.Popen does not work...
         # so we save it to a variable first
         newcmd = " ".join(cmd)
+        print(newcmd)
         return subprocess.Popen(newcmd, shell=True)
 
     def run_server_cmd(self, port_no, cc_algo, duration_s):
@@ -47,6 +51,20 @@ class Aioquic(Stack):
         ])
 
     def run_client_cmd(self, port_no, duration_s):
+
+        if ENABLE_LOOP:
+            return map(str, [
+                "/home/quic/quic_experiments/QUIC-bench/timeout_loop.sh", "-t", duration_s,
+                "python3",
+                self.client_path,
+                "--insecure",
+                "-v",
+                "--ca-certs", self.ca_path,
+                "--zero-rtt",
+                "https://{}:{}/{}".format(self.server_ip, port_no, self.server_static_filename),
+                "> /dev/null 2>&1"
+            ])
+
         return map(str, [
             "timeout", duration_s,
             "python3",
@@ -54,6 +72,7 @@ class Aioquic(Stack):
             "--insecure",
             "-v",
             "--ca-certs", self.ca_path,
+            "--zero-rtt",
             "https://{}:{}/{}".format(self.server_ip, port_no, self.server_static_filename),
             "> /dev/null 2>&1"
         ])
@@ -61,3 +80,7 @@ class Aioquic(Stack):
     @staticmethod
     def get_cc_algos():
         return [Aioquic.CUBIC, Aioquic.RENO]
+
+
+class AioquicLoop(Aioquic):
+    NAME = "aioquic-loop"

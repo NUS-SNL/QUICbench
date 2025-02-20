@@ -1,29 +1,29 @@
 {
-    "experiment_name": "newflows",
-    "experiment_results_dir": "/home/quic/quic_bench_results/newflows",
-    "num_trials": 1,
+    "experiment_name": "newflows-loop-10mbps-60rtt",
+    "experiment_results_dir": "/home/quic/quic_bench_results/newflows-loop-10mbps-60rtt",
+    "num_trials": 3,
     "netem_conf": {
-        "RTT_ms": 10,
-        "bandwidth_Mbps": 2.03,
+        "RTT_ms": 60,
+        "bandwidth_Mbps": 10,
         "buffer_bdp": 1,
-        "background_delay_ms": 0,
-        "added_delay_ms": 10
+        "background_delay_ms": 60,
+        "added_delay_ms": 0
     },
     "flow_duration_s": 120,
-    "client_interface": "enp1s0f1",
+    "client_interface": "ens4",
     "stacks_combinations": [
         {
-            "name": "quiche-reno_tcp-reno",
+            "name": "chromium-20MB-aioquic-loop-cubic",
             "stacks": [
                 {
-                    "name": "quiche",
-                    "cc_algo": "reno",
-                    "port_no": "4000"
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
                 },
                 {
-                    "name": "tcp",
-                    "cc_algo": "reno",
-                    "port_no": "4001"
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
                 }
             ]
         }

@@ -7,7 +7,11 @@ class Chromium(Stack):
     CUBIC = "cubic"
     BBR = "bbr"
     BBRV2 = "bbrv2"
-    NUM_BYTES_TO_TRANSFER = 2000000000 # 2GB
+    TWO_GB = 2000000000
+    TWENTY_MB = 20_000_000
+    ONE_MB = 1_000_000
+    NUM_BYTES_TO_TRANSFER = TWENTY_MB # 2GB
+    # NUM_BYTES_TO_TRANSFER = 2000000000 # 2GB
 
     def __init__(self, server_ip, server_hostname, server_pw_path, cubic_server_path, 
                  bbr_server_path, bbrv2_server_path, server_cert_path, 
