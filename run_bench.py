@@ -180,10 +180,14 @@ def main():
                     for stack in combi_stacks:
                         stack_name, stack_cc_algo, stack_port_no = itemgetter("name", "cc_algo", "port_no")(stack)
                         # keep the client consistent for non-tcp
-                        if stack_name != "tcp":
+                        if stack_name == "tcp":
+                            proc = stacks_kls[stack_name].run_client(stack_port_no, stack_cc_algo, flow_duration_s)
+                            stack_processes.append(proc)
+                        else:
                             stack_name = "aioquic-loop"
-                        proc = stacks_kls[stack_name].run_client(stack_port_no, stack_cc_algo, flow_duration_s)
-                        stack_processes.append(proc)
+                            client_filename = stack.get("filename", None)
+                            proc = stacks_kls[stack_name].run_client(stack_port_no, stack_cc_algo, flow_duration_s, client_filename)
+                            stack_processes.append(proc)
 
                     # wait for all server/client processes to finish
                     for proc in stack_processes:

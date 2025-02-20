@@ -118,7 +118,7 @@
 # python3 run_bench.py -e=benchmarks/two-flows-3stack-40rtt-1bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
 # python3 run_bench.py -e=benchmarks/two-flows-3stack-100rtt-1bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
 # python3 run_bench.py -e=benchmarks/two-flows-3stack-100rtt-5bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
-python3 run_bench.py -e=benchmarks/newflows.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
+# python3 run_bench.py -e=benchmarks/newflows.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
 # python3 run_bench.py -e=benchmarks/two-flows-new2024-100rtt-1bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
 # python3 run_bench.py -e=benchmarks/two-flows-n-100rtt-1bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
 # python3 run_bench.py -e=benchmarks/two-flows-new2024-100rtt-5bdp.json -s=config/stacks_conf_2024.json -k=config/dest_mumbai.json
@@ -126,5 +126,8 @@ python3 run_bench.py -e=benchmarks/newflows.json -s=config/stacks_conf_2024.json
 # python3 run_bench.py -e=benchmarks/two-flows-3stack-100rtt-5bdp.json
 # python3 run_bench.py -e=benchmarks/two-flows-3stack-10rtt-1bdp-2.03mb.json
 # python3 run_bench.py -e=benchmarks/newflows.json
+# python3 run_bench.py -e=benchmarks/two-flows-group1-20mbps-30rtt-1bdp-2gb.json
+# python3 run_bench.py -e=benchmarks/two-flows-group1-20mbps-30rtt-1bdp-20mb.json
+python3 run_bench.py -e=benchmarks/two-flows-group1-20mbps-30rtt-1bdp-1mb.json
 # python3 run_bench.py -e=benchmarks/two-flows-new2024-100rtt-1bdp.json
 # python3 run_bench.py -e=benchmarks/two-flows-n-100rtt-1bdp.json
