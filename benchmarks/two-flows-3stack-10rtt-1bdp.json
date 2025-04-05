@@ -1,13 +1,13 @@
 {
-    "experiment_name": "two-flows-3stack-10rtt-1bdp-2.03mb",
-    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-3stack-10rtt-1bdp-2.03mb",
+    "experiment_name": "two-flows-group1-20mbps-10rtt-1bdp",
+    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-group1-20mbps-10rtt-1bdp",
     "num_trials": 1,
     "netem_conf": {
-        "RTT_ms": 10,
-        "bandwidth_Mbps": 2.03,
+        "RTT_ms": 30,
+        "bandwidth_Mbps": 20,
         "buffer_bdp": 1,
         "background_delay_ms": 0,
-        "added_delay_ms": 10
+        "added_delay_ms": 30
     },
     "flow_duration_s": 120,
     "client_interface": "enp1s0f1",
@@ -16,14 +16,14 @@
             "name": "chromium-cubic_tcp-cubic",
             "stacks": [
                 {
-                    "name": "chromium",
-                    "cc_algo": "cubic",
-                    "port_no": "4000"
-                },
-                {
                     "name": "tcp",
                     "cc_algo": "cubic",
                     "port_no": "4001"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
                 }
             ]
         },
@@ -31,14 +31,29 @@
             "name": "chromium-bbr_tcp-bbr",
             "stacks": [
                 {
-                    "name": "chromium",
-                    "cc_algo": "bbr",
-                    "port_no": "4000"
-                },
-                {
                     "name": "tcp",
                     "cc_algo": "bbr",
                     "port_no": "4001"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4000"
+                }
+            ]
+        },
+        {
+            "name": "quiche-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4000"
                 }
             ]
         },
@@ -46,14 +61,14 @@
             "name": "quiche-reno_tcp-reno",
             "stacks": [
                 {
-                    "name": "quiche",
-                    "cc_algo": "reno",
-                    "port_no": "4000"
-                },
-                {
                     "name": "tcp",
                     "cc_algo": "reno",
                     "port_no": "4001"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "reno",
+                    "port_no": "4000"
                 }
             ]
         }

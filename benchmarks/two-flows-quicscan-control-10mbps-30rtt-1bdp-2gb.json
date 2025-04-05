@@ -1,0 +1,48 @@
+{
+    "experiment_name": "two-flows-quicscan-control-10mbps-30rtt-1bdp-2gb",
+    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-quicscan-control-10mbps-30rtt-1bdp-2gb-nonclient",
+    "num_trials": 2,
+    "netem_conf": {
+        "RTT_ms": 30,
+        "bandwidth_Mbps": 10,
+        "buffer_bdp": 1,
+        "background_delay_ms": 0,
+        "added_delay_ms": 30
+    },
+    "flow_duration_s": 120,
+    "client_interface": "enp1s0f1",
+    "stacks_combinations": [
+        {
+            "name": "chromium-bbr_tcp-bbr",
+            "stacks": [
+                {
+                    "name": "tcp",
+                    "cc_algo": "bbr",
+                    "port_no": "4001"
+                },
+                {
+                    "name": "chromium",
+                    "cc_algo": "bbr",
+                    "port_no": "4000",
+                    "filename": "2000000000"
+                }
+            ]
+        },
+        {
+            "name": "quiche-cubic_tcp-cubic",
+            "stacks": [
+                {
+                    "name": "tcp",
+                    "cc_algo": "cubic",
+                    "port_no": "4001"
+                },
+                {
+                    "name": "quiche",
+                    "cc_algo": "cubic",
+                    "port_no": "4000",
+                    "filename": "2GB.html"
+                }
+            ]
+        }
+    ]
+}

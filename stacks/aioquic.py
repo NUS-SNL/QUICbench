@@ -63,7 +63,7 @@ class Aioquic(Stack):
                 "--ca-certs", self.ca_path,
                 "--zero-rtt",
                 "https://{}:{}/{}".format(self.server_ip, port_no, filename),
-                "> /dev/null 2>&1"
+                # "> /dev/null 2>&1"
             ])
 
         return map(str, [

@@ -1,6 +1,6 @@
 {
     "experiment_name": "two-flows-3stack-40rtt-1bdp",
-    "experiment_results_dir": "/home/quic/sg_quic_bench_results/two-flows-3stack-40rtt-1bdp",
+    "experiment_results_dir": "/home/quic/quic_bench_results/two-flows-3stack-40rtt-1bdp",
     "num_trials": 5,
     "netem_conf": {
         "RTT_ms": 100,
@@ -10,7 +10,7 @@
         "added_delay_ms": 40
     },
     "flow_duration_s": 120,
-    "client_interface":"ens4",
+    "client_interface": "ens4",
     "stacks_combinations": [
         {
             "name": "quiche-cubic_tcp-cubic",

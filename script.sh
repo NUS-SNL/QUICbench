@@ -128,6 +128,7 @@
 # python3 run_bench.py -e=benchmarks/newflows.json
 # python3 run_bench.py -e=benchmarks/two-flows-group1-20mbps-30rtt-1bdp-2gb.json
 # python3 run_bench.py -e=benchmarks/two-flows-group1-20mbps-30rtt-1bdp-20mb.json
-python3 run_bench.py -e=benchmarks/two-flows-group1-20mbps-30rtt-1bdp-1mb.json
+# python3 run_bench.py -e=benchmarks/two-flows-group1-20mbps-30rtt-1bdp-1mb.json
+python3 run_bench.py -e=benchmarks/two-flows-quicscan-control-10mbps-30rtt-1bdp-2gb.json
 # python3 run_bench.py -e=benchmarks/two-flows-new2024-100rtt-1bdp.json
 # python3 run_bench.py -e=benchmarks/two-flows-n-100rtt-1bdp.json
